@@ -11,3 +11,13 @@ export const Colors = {
   orange: '#FF4900',
   yellow_900: '#FFCE00',
 };
+
+export const Sizes = {
+  xxs: 10,
+  xs: 12,
+  s: 14,
+  m: 16,
+  l: 18,
+  xl: 24,
+  xxl: 32,
+};
