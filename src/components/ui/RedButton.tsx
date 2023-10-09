@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, View} from 'react-native';
 
-import {Colors} from '../../constants/styles';
+import {Colors, Sizes} from '../../constants/styles';
 
 interface RedButtonProps {
   onPress: () => void;
@@ -24,7 +24,7 @@ export default RedButton;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 25,
-    padding: 10,
+    padding: Sizes.s,
     backgroundColor: Colors.red_500,
     elevation: 2,
     shadowColor: 'black',
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: Sizes.m,
     textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans-Bold',
   },
   disabledButton: {
     backgroundColor: Colors.gray_900,
