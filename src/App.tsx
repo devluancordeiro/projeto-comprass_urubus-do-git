@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
+import RedButton from './components/ui/RedButton';
 
 function App(): JSX.Element {
   return (
     <View>
-      <Text>Hello World</Text>
+      <RedButton onPress={function (): void {}}>LOGIN</RedButton>
     </View>
   );
 }
