@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
+import Home from './screens/Home';
 
 function App(): JSX.Element {
   return (
     <View>
-      <Text>Hello World</Text>
+      <Home />
     </View>
   );
 }
