@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import RedButton from './components/ui/RedButton';
-import AuthInput from './components/auth/AuthInput';
-import TextButton from './components/ui/TextButton';
+import Home from './screens/Home';
 
 function App(): JSX.Element {
   const [text1, setText1] = useState('');
@@ -10,22 +8,7 @@ function App(): JSX.Element {
 
   return (
     <View>
-      <AuthInput
-        label="Email"
-        onChangeText={enteredText => setText1(enteredText)}
-        value={text1}
-        validation="sucess"
-      />
-      <AuthInput
-        label="Password"
-        onChangeText={enteredText => setText2(enteredText)}
-        isPassword
-        value={text2}
-      />
-      <RedButton onPress={function (): void {}}>LOGIN</RedButton>
-      <TextButton onPress={function (): void {}}>
-        Not have an account yet? {'\n'} Sign Up
-      </TextButton>
+      <Home />
     </View>
   );
 }
