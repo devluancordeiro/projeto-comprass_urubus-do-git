@@ -9,7 +9,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {Colors} from '../constants/styles';
+import {Colors, Sizes} from '../../constants/styles';
 
 interface AuthInputProps extends TextInputProps {
   label: string;
@@ -21,13 +21,13 @@ interface AuthInputProps extends TextInputProps {
 }
 
 const passwordVisibilityIcons = {
-  visible: require('../assets/icons/ui/eye-opened.png'),
-  hidden: require('../assets/icons/ui/eye-closed.png'),
+  visible: require('../../assets/icons/ui/eye-opened.png'),
+  hidden: require('../../assets/icons/ui/eye-closed.png'),
 };
 
 const validationIcons = {
-  sucess: require('../assets/icons/ui/check.png'),
-  error: require('../assets/icons/ui/error.png'),
+  sucess: require('../../assets/icons/ui/check.png'),
+  error: require('../../assets/icons/ui/error.png'),
 };
 
 function AuthInput({
@@ -44,7 +44,7 @@ function AuthInput({
 
   const labelConditionalStyle = {
     top: !isFocused ? 22 : 11,
-    fontSize: !isFocused ? 14 : 12,
+    fontSize: !isFocused ? Sizes.s : Sizes.xs,
   };
 
   const autoCapitalizeMode = enableAutoCapitalize ? 'sentences' : 'none';
@@ -86,7 +86,7 @@ function AuthInput({
           validation && (
             <View style={styles.inputIconWrapper}>
               {validation === 'validating' ? (
-                <ActivityIndicator color={Colors.red_500} size={28} />
+                <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
               ) : (
                 <Image source={validationIcons[validation]} />
               )}
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     height: 64,
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingHorizontal: 16,
-    borderRadius: 12,
+    paddingHorizontal: Sizes.m,
+    borderRadius: 16,
     elevation: 2,
   },
   inputViewWrapperSucess: {
@@ -127,11 +127,11 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 0,
-    fontSize: 14,
+    fontSize: Sizes.s,
     color: Colors.black,
     width: '100%',
     lineHeight: 20,
-    paddingVertical: 8,
+    paddingVertical: Sizes.xxxs,
   },
   inputIconWrapper: {
     justifyContent: 'center',
