@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Cart from './screens/Cart';
 import {StoreContextProvider} from './contexts/StoreContext';
+import Profile from './screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +14,7 @@ function MyTabs() {
       <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Cart" component={Cart} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );

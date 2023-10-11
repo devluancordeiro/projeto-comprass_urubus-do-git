@@ -13,11 +13,13 @@ export const Colors = {
 };
 
 export const Sizes = {
+  xxxs: 8,
   xxs: 10,
   xs: 12,
   s: 14,
   m: 16,
   l: 18,
   xl: 24,
-  xxl: 32,
+  xxl: 28,
+  xxxl: 32,
 };
