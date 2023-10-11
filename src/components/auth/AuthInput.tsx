@@ -13,7 +13,7 @@ import {Colors, Sizes} from '../../constants/styles';
 
 interface AuthInputProps extends TextInputProps {
   label: string;
-  value: string;
+  value: string | undefined;
   enableAutoCapitalize?: boolean;
   isPassword?: boolean;
   validation?: 'validating' | 'sucess' | 'error';
@@ -40,7 +40,7 @@ function AuthInput({
   ...props
 }: AuthInputProps): JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
-  const [isShowing, setIsShowing] = useState(!!isPassword);
+  const [isShowing, setIsShowing] = useState(isPassword);
 
   const labelConditionalStyle = {
     top: !isFocused ? 22 : 11,
@@ -105,8 +105,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     paddingHorizontal: Sizes.m,
-    borderRadius: 16,
+    borderRadius: 12,
     elevation: 2,
+    marginVertical: Sizes.xxs,
   },
   inputViewWrapperSucess: {
     borderWidth: 2,
