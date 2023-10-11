@@ -147,12 +147,10 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              errors.name ||
-              errors.email ||
-              errors.password ||
-              errors.confirmPassword
-                ? true
-                : false
+              (isName && !watch('name')) ||
+              (isPassword &&
+                !watch('password') &&
+                (errors.email || errors.password ? true : false))
             }>
             Login
           </RedButton>
@@ -172,12 +170,17 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              errors.name ||
-              errors.email ||
-              errors.password ||
-              errors.confirmPassword
-                ? true
-                : false
+              (isName && !watch('name')) ||
+              (isEmail && !watch('email')) ||
+              (isPassword && !watch('password')) ||
+              (isConfirmPassword &&
+                !watch('confirmPassword') &&
+                (errors.name ||
+                errors.email ||
+                errors.password ||
+                errors.confirmPassword
+                  ? true
+                  : false))
             }>
             Sign Up
           </RedButton>
@@ -190,18 +193,20 @@ function AuthForm({
         <View>
           <RedButton
             onPress={handleSubmit(onSubmit)}
-            disabled={errors.email ? true : false}>
+            disabled={
+              isEmail && !watch('email') && (errors.email ? true : false)
+            }>
             Search
           </RedButton>
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              errors.name ||
-              errors.email ||
-              errors.password ||
-              errors.confirmPassword
+              ((isEmail && !watch('email')) ||
+                (isPassword && !watch('password')) ||
+                (isConfirmPassword && !watch('confirmPassword'))) &&
+              (errors.email || errors.password || errors.confirmPassword
                 ? true
-                : false
+                : false)
             }>
             Confirm
           </RedButton>
