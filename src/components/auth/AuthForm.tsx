@@ -36,7 +36,7 @@ function AuthForm({
     formState: {errors},
     watch,
     reset,
-  } = useForm<FormData>();
+  } = useForm<FormData>({mode: 'onChange'});
   React.useEffect(() => {
     reset({
       name: '',
@@ -44,7 +44,7 @@ function AuthForm({
       password: '',
       confirmPassword: '',
     });
-  }, [reset]);
+  }, [reset, onSubmit]);
   const navigation = useNavigation();
   return (
     <View>
@@ -147,12 +147,12 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              !errors.name ||
-              !errors.email ||
-              !errors.password ||
-              !errors.confirmPassword
-                ? false
-                : true
+              errors.name ||
+              errors.email ||
+              errors.password ||
+              errors.confirmPassword
+                ? true
+                : false
             }>
             Login
           </RedButton>
@@ -172,12 +172,12 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              !errors.name ||
-              !errors.email ||
-              !errors.password ||
-              !errors.confirmPassword
-                ? false
-                : true
+              errors.name ||
+              errors.email ||
+              errors.password ||
+              errors.confirmPassword
+                ? true
+                : false
             }>
             Sign Up
           </RedButton>
@@ -190,17 +190,21 @@ function AuthForm({
         <View>
           <RedButton
             onPress={handleSubmit(onSubmit)}
-            disabled={
-              !errors.name ||
-              !errors.email ||
-              !errors.password ||
-              !errors.confirmPassword
-                ? false
-                : true
-            }>
+            disabled={errors.email ? true : false}>
             Search
           </RedButton>
-          <RedButton onPress={handleSubmit(onSubmit)}>Confirm</RedButton>
+          <RedButton
+            onPress={handleSubmit(onSubmit)}
+            disabled={
+              errors.name ||
+              errors.email ||
+              errors.password ||
+              errors.confirmPassword
+                ? true
+                : false
+            }>
+            Confirm
+          </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>
             I remembered my password
           </TextButton>

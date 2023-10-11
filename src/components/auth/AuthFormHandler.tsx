@@ -2,12 +2,6 @@ import React from 'react';
 import AuthForm from './AuthForm';
 import {View} from 'react-native';
 
-interface AuthFormHandlerProps {
-  isLogging?: boolean;
-  isRegistering?: boolean;
-  isForgoting?: boolean;
-}
-
 interface FormData {
   name?: string | undefined;
   email?: string | undefined;
@@ -15,13 +9,26 @@ interface FormData {
   confirmPassword?: string | undefined;
 }
 
+interface AuthFormHandlerProps {
+  isLogging?: boolean;
+  isRegistering?: boolean;
+  isForgoting?: boolean;
+  authentication: (credentials: {
+    name?: string | undefined;
+    email?: string | undefined;
+    password?: string | undefined;
+    confirmPassword?: string | undefined;
+  }) => Promise<void>;
+}
+
 function AuthFormHandler({
   isLogging,
   isForgoting,
   isRegistering,
+  authentication,
 }: AuthFormHandlerProps): JSX.Element {
   function submitHandler(data: FormData) {
-    console.log(data);
+    authentication({...data});
   }
 
   return (
