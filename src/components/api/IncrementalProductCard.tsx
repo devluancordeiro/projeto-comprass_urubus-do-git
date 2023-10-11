@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Colors, Sizes} from '../../constants/styles';
 import {product} from '../../constants/storeTypes';
 import {formatCurrency} from '../../utils/formatCurrency';
+import {useStoreContext} from '../../contexts/StoreContext';
 
 interface IncrementalProductCardProps {
   item: product;
@@ -10,27 +11,27 @@ interface IncrementalProductCardProps {
 }
 
 function IncrementalProductCard({item, onTap}: IncrementalProductCardProps) {
-  const [quantity, setQuantity] = useState(0);
+  const {productsCart, increaseItemCount, reduceItemCount} = useStoreContext(); //lembrar de tipar
 
   return (
     <View style={styles.productView}>
       <View style={styles.counterWrapper}>
         <TouchableOpacity
+          hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => {
-            setQuantity(prevQuantity => Math.max(0, prevQuantity - 1));
-          }}>
+          onPress={() => reduceItemCount(item.id)}>
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/reduce-count.png')}
           />
         </TouchableOpacity>
         <View style={styles.numberView}>
-          <Text style={styles.number}>{quantity}</Text>
+          <Text style={styles.number}>{productsCart.get(item.id) || 0}</Text>
         </View>
         <TouchableOpacity
+          hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => setQuantity(prevQuantity => prevQuantity + 1)}>
+          onPress={() => increaseItemCount(item.id)}>
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/increase-count.png')}

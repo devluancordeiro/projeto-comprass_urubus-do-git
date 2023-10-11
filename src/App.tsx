@@ -3,6 +3,7 @@ import Home from './screens/Home';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Cart from './screens/Cart';
+import {StoreContextProvider} from './contexts/StoreContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +19,11 @@ function MyTabs() {
 }
 
 function App(): JSX.Element {
-  return <MyTabs />;
+  return (
+    <StoreContextProvider>
+      <MyTabs />
+    </StoreContextProvider>
+  );
 }
 
 export default App;
