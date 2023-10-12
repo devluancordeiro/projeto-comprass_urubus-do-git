@@ -1,6 +1,11 @@
 import React, {ReactNode, createContext, useContext, useState} from 'react';
 
-const StoreContext = createContext();
+const StoreContext = createContext({
+  productsCart: new Map(),
+  increaseItemCount: (_productId: number) => {},
+  reduceItemCount: (_productId: number) => {},
+  resetCart: () => {},
+});
 
 export function useStoreContext() {
   const contextValue = useContext(StoreContext);
@@ -18,7 +23,6 @@ export function StoreContextProvider({
   const [productsCart, setProductsCart] = useState(new Map());
 
   function increaseItemCount(productId: number) {
-    console.log('função chamada');
     setProductsCart(prevCart => {
       const updatedCart = new Map(prevCart);
       updatedCart.set(productId, (updatedCart.get(productId) || 0) + 1);
@@ -39,23 +43,14 @@ export function StoreContextProvider({
     });
   }
 
-  function updateItemCount(productId: number, count: number) {
-    setProductsCart(prevCart => {
-      const updatedCart = new Map(prevCart);
-      if (count >= 0) {
-        updatedCart.set(productId, count);
-      }
-      return updatedCart;
-    });
+  function resetCart() {
+    setProductsCart(new Map());
   }
-
-  function resetCart() {}
 
   const value = {
     productsCart,
     increaseItemCount,
     reduceItemCount,
-    updateItemCount,
     resetCart,
   };
   return (

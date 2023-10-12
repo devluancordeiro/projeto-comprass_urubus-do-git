@@ -9,7 +9,7 @@ interface ProductsListProps {
   title: string;
 }
 
-function ProductsList({data, title}: ProductsListProps) {
+function ProductsList({data, title, navigation}: ProductsListProps) {
   return (
     <View style={styles.productListWrapper}>
       <View style={styles.listHeader}>
@@ -23,7 +23,7 @@ function ProductsList({data, title}: ProductsListProps) {
         renderItem={({item}) => (
           <IncrementalProductCard
             item={item}
-            onTap={() => console.log('pressed item', item.id)}
+            onTap={() => navigation.navigate('details', {productOpened: item})}
           />
         )}
         keyExtractor={item => item.id}
