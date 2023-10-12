@@ -1,24 +1,22 @@
 import React from 'react';
-import Home from './screens/Home';
 import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Cart from './screens/Cart';
+import {createStackNavigator} from '@react-navigation/stack';
+import Checkout from './screens/Checkout';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-function MyTabs() {
+function Payment(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Cart" component={Cart} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Checkout">
+        <Stack.Screen name="Checkout" component={Checkout} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 function App(): JSX.Element {
-  return <MyTabs />;
+  return <Payment />;
 }
 
 export default App;
