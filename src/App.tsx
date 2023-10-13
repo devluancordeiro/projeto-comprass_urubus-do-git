@@ -1,13 +1,14 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {StoreContextProvider} from './contexts/StoreContext';
 import StoreFlow from './routes/StoreFlow';
+import {Provider} from 'react-redux';
+import {store} from './redux/store'; // Import your Redux store
 
 function App(): JSX.Element {
   return (
-    <StoreContextProvider>
+    <Provider store={store}>
       <StoreFlow />
-    </StoreContextProvider>
+    </Provider>
   );
 }
 

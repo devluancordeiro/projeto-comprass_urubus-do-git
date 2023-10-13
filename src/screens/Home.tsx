@@ -12,7 +12,7 @@ import {getCategories, getProductsById} from '../utils/fetchProducts';
 import {Colors, Sizes} from '../constants/styles';
 import {product, category} from '../constants/storeTypes';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [categories, setCategories] = useState<category[]>([]);
   const [products, setProducts] = useState<product[]>([]);
 
@@ -65,6 +65,7 @@ const Home = () => {
             key={index}
             data={data}
             title={categories[index].name}
+            navigation={navigation}
           />
         ))}
       </View>

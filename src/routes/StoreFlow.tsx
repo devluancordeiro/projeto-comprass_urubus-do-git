@@ -10,6 +10,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SingUp from '../screens/SignUp';
 import Login from '../screens/Login';
 import ForgotPassword from '../screens/ForgotPassword';
+import Details from '../screens/Details';
+import {product} from '../constants/storeTypes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,14 +88,21 @@ function AuthFlow() {
   );
 }
 
+export type StoreFlowParamList = {
+  app: undefined;
+  auth: undefined;
+  details: {productOpened: product};
+};
+
 function StoreFlow() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="auth"
+        initialRouteName="app"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="app" component={MainFlow} />
         <Stack.Screen name="auth" component={AuthFlow} />
+        <Stack.Screen name="details" component={Details} />
       </Stack.Navigator>
     </NavigationContainer>
   );

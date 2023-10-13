@@ -1,9 +1,10 @@
 export interface product {
+  category: {id: number; name: string};
   title: string;
   description: string;
   price: number;
   images: string[];
-  id: string;
+  id: number;
 }
 
 export interface category {
