@@ -6,12 +6,14 @@ import RedButton from '../ui/RedButton';
 import TextButton from '../ui/TextButton';
 import {useNavigation} from '@react-navigation/native';
 import {Colors, Sizes} from '../../constants/styles';
+import {AuthContext} from './AuthContext';
 
 interface AuthFormProps {
   isName?: boolean;
   isEmail?: boolean;
   isPassword?: boolean;
   isConfirmPassword?: boolean;
+  exists?: boolean;
   type: 'login' | 'signup' | 'forgot';
   onSubmit: SubmitHandler<FormData>;
 }
@@ -29,6 +31,7 @@ function AuthForm({
   isPassword,
   isConfirmPassword,
   type,
+  exists,
   onSubmit,
 }: AuthFormProps): JSX.Element {
   const {
@@ -36,17 +39,24 @@ function AuthForm({
     handleSubmit,
     formState: {errors},
     watch,
-    reset,
   } = useForm<FormData>({mode: 'onChange'});
-  React.useEffect(() => {
-    reset({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
-  }, [reset, onSubmit]);
   const navigation = useNavigation();
+  const ctx = React.useContext(AuthContext);
+  const [emailValidation, setEmailValidation] = React.useState<
+    'error' | 'sucess' | 'validating' | undefined
+  >();
+
+  React.useEffect(() => {
+    if (ctx.loading) {
+      console.log(ctx.loading);
+      setEmailValidation('validating');
+    } else if (errors.email) {
+      setEmailValidation('error');
+    } else {
+      setEmailValidation('sucess');
+    }
+  }, [ctx.loading, errors.email]);
+
   return (
     <View style={styles.viewStyle}>
       {type === 'login' ? (
@@ -102,9 +112,7 @@ function AuthForm({
               label={'Email'}
               value={value}
               onChangeText={onChange}
-              validation={
-                value ? (errors.email ? 'error' : 'sucess') : undefined
-              }
+              validation={value ? emailValidation : undefined}
             />
           )}
         />
@@ -114,7 +122,7 @@ function AuthForm({
           control={control}
           name="password"
           rules={{
-            required: true,
+            required: exists ? true : false,
             minLength: 6,
           }}
           render={({field: {value, onChange}}) => (
@@ -123,6 +131,7 @@ function AuthForm({
               value={value}
               onChangeText={onChange}
               isPassword
+              disabled={type === 'forgot' && !exists}
               validation={
                 value ? (errors.password ? 'error' : 'sucess') : undefined
               }
@@ -135,7 +144,7 @@ function AuthForm({
           control={control}
           name="confirmPassword"
           rules={{
-            required: true,
+            required: exists ? true : false,
             validate: (val: string | undefined) => watch('password') === val,
           }}
           render={({field: {value, onChange}}) => (
@@ -144,6 +153,7 @@ function AuthForm({
               value={value}
               onChangeText={onChange}
               isPassword
+              disabled={type === 'forgot' && !exists}
               validation={
                 value
                   ? errors.confirmPassword
@@ -178,10 +188,12 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              (isName && !watch('name')) ||
-              (isPassword &&
-                !watch('password') &&
-                (errors.email || errors.password ? true : false))
+              (!!isName && !watch('name')) ||
+              (!!isPassword && !watch('password')) ||
+              (!!isEmail && !watch('email')) ||
+              !!errors.name ||
+              !!errors.email ||
+              !!errors.password
             }>
             Login
           </RedButton>
@@ -191,7 +203,7 @@ function AuthForm({
           <TextButton onPress={() => navigation.navigate('forgot' as never)}>
             I forgot my password
           </TextButton>
-          <TextButton onPress={() => navigation.goBack}>
+          <TextButton onPress={() => navigation.goBack()}>
             I don't want to login
           </TextButton>
         </View>
@@ -201,17 +213,14 @@ function AuthForm({
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
-              (isName && !watch('name')) ||
-              (isEmail && !watch('email')) ||
-              (isPassword && !watch('password')) ||
-              (isConfirmPassword &&
-                !watch('confirmPassword') &&
-                (errors.name ||
-                errors.email ||
-                errors.password ||
-                errors.confirmPassword
-                  ? true
-                  : false))
+              (!!isName && !watch('name')) ||
+              (!!isEmail && !watch('email')) ||
+              (!!isPassword && !watch('password')) ||
+              (!!isConfirmPassword && !watch('confirmPassword')) ||
+              !!errors.name ||
+              !!errors.email ||
+              !!errors.password ||
+              !!errors.confirmPassword
             }>
             Sign Up
           </RedButton>
@@ -224,21 +233,10 @@ function AuthForm({
         <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
-            disabled={
-              isEmail && !watch('email') && (errors.email ? true : false)
-            }>
+            disabled={(!!isEmail && !watch('email')) || !!errors.email}>
             Search
           </RedButton>
-          <RedButton
-            onPress={handleSubmit(onSubmit)}
-            disabled={
-              ((isEmail && !watch('email')) ||
-                (isPassword && !watch('password')) ||
-                (isConfirmPassword && !watch('confirmPassword'))) &&
-              (errors.email || errors.password || errors.confirmPassword
-                ? true
-                : false)
-            }>
+          <RedButton onPress={handleSubmit(onSubmit)} disabled={!exists}>
             Confirm
           </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>

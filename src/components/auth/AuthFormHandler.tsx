@@ -13,6 +13,7 @@ interface AuthFormHandlerProps {
   isLogging?: boolean;
   isRegistering?: boolean;
   isForgoting?: boolean;
+  exists?: boolean;
   authentication: (credentials: {
     name?: string | undefined;
     email?: string | undefined;
@@ -26,6 +27,7 @@ function AuthFormHandler({
   isForgoting,
   isRegistering,
   authentication,
+  exists,
 }: AuthFormHandlerProps): JSX.Element {
   function submitHandler(data: FormData) {
     authentication({...data});
@@ -50,7 +52,17 @@ function AuthFormHandler({
         {isLogging && (
           <AuthForm isEmail isPassword type="login" onSubmit={submitHandler} />
         )}
-        {isForgoting && (
+        {isForgoting && exists && (
+          <AuthForm
+            isEmail
+            isPassword
+            isConfirmPassword
+            type="forgot"
+            exists
+            onSubmit={submitHandler}
+          />
+        )}
+        {isForgoting && !exists && (
           <AuthForm
             isEmail
             isPassword

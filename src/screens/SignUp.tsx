@@ -2,6 +2,7 @@ import React from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {Alert} from 'react-native';
 import {register} from '../components/api/User';
+import {useNavigation} from '@react-navigation/native';
 
 export function SingUp() {
   interface FormData {
@@ -11,10 +12,13 @@ export function SingUp() {
     confirmPassword?: string | undefined;
   }
 
+  const navigation = useNavigation();
+
   async function signUpHandler({name, email, password}: FormData) {
     try {
-      const id = await register({name, email, password});
-      console.log(id);
+      await register({name, email, password});
+      Alert.alert('SignUp succesfull', 'Login now!');
+      navigation.navigate('login' as never);
     } catch (error) {
       Alert.alert('SignUp failed', 'Please try again later!');
     }

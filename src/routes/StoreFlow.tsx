@@ -14,6 +14,7 @@ import Details from '../screens/Details';
 import {product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
+import AuthContextProvider from '../components/auth/AuthContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -92,8 +93,8 @@ function AuthFlow() {
         cardStyle: {backgroundColor: Colors.black},
         headerShown: false,
       }}>
-      <Stack.Screen name="signup" component={SingUp} />
       <Stack.Screen name="login" component={Login} />
+      <Stack.Screen name="signup" component={SingUp} />
       <Stack.Screen name="forgot" component={ForgotPassword} />
     </Stack.Navigator>
   );
@@ -107,15 +108,19 @@ export type StoreFlowParamList = {
 
 function StoreFlow() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="app"
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen name="app" component={MainFlow} />
-        <Stack.Screen name="auth" component={AuthFlow} />
-        <Stack.Screen name="details" component={Details} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <AuthContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="auth"
+            screenOptions={{headerShown: false}}>
+            <Stack.Screen name="app" component={MainFlow} />
+            <Stack.Screen name="auth" component={AuthFlow} />
+            <Stack.Screen name="details" component={Details} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthContextProvider>
+    </>
   );
 }
 
