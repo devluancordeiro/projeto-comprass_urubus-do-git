@@ -12,11 +12,15 @@ import Login from '../screens/Login';
 import ForgotPassword from '../screens/ForgotPassword';
 import Details from '../screens/Details';
 import {product} from '../constants/storeTypes';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function MainFlow() {
+  const hasItemsInCart =
+    Object.keys(useSelector((state: RootState) => state.counter)).length !== 0;
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
@@ -51,6 +55,13 @@ function MainFlow() {
             return <Ionicons name={'cart-outline'} size={size} color={color} />;
           },
           tabBarActiveTintColor: Colors.red_500,
+          tabBarBadge: hasItemsInCart ? ' ' : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.red_500,
+            height: 10,
+            minWidth: 10,
+            borderRadius: 5,
+          },
         }}
       />
       <Tab.Screen

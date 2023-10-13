@@ -64,7 +64,7 @@ const Home = ({navigation}) => {
           <ProductsList
             key={index}
             data={data}
-            title={categories[index].name}
+            title={categories[index]?.name}
             navigation={navigation}
           />
         ))}
