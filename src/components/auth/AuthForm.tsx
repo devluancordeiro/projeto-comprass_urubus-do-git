@@ -103,6 +103,7 @@ function AuthForm({
         <Controller
           control={control}
           name="email"
+          defaultValue={ctx.email}
           rules={{
             required: true,
             pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,

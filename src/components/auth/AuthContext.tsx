@@ -5,7 +5,7 @@ export const AuthContext = React.createContext({
   isLogged: false,
   email: '',
   loading: false,
-  authLogin: (_newId: number | undefined) => {},
+  authLogin: (_newId: string | undefined) => {},
   authLogout: () => {},
   saveEmail: (_email: string | undefined) => {},
   isLoading: (_loading: boolean | undefined) => {},
@@ -16,12 +16,14 @@ interface AuthContextProviderProps {
 }
 
 function AuthContextProvider({children}: AuthContextProviderProps) {
-  const [id, setId] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [loading, setLoading] = React.useState(false); // Correct the type to boolean
+  const [id, setId] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  function authLogin(newId: number | undefined) {
-    setId(newId);
+  function authLogin(newId: string | undefined) {
+    if (newId) {
+      setId(newId);
+    }
   }
 
   function authLogout() {
@@ -29,11 +31,15 @@ function AuthContextProvider({children}: AuthContextProviderProps) {
   }
 
   function saveEmail(newEmail: string | undefined) {
-    setEmail(newEmail);
+    if (newEmail) {
+      setEmail(newEmail);
+    }
   }
 
   function isLoading(newLoading: boolean | undefined) {
-    setLoading(newLoading);
+    if (newLoading !== undefined) {
+      setLoading(newLoading);
+    }
   }
 
   const value = {
