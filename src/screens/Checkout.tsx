@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -14,11 +14,17 @@ import RedButton from '../components/ui/RedButton';
 const Checkout: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedPayment, setSelectedPayment] = useState('None added');
+  const [deliveryPrice, setDeliveryPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [price, setPrice] = useState(0);
 
-  let price = 0.99;
-  let deliveryPrice = 15;
-  let totalPrice = 0;
-  totalPrice += price + deliveryPrice;
+  const handleDeliverySelect = () => {
+    setDeliveryPrice(15.0);
+  };
+
+  useEffect(() => {
+    setTotalPrice(price + deliveryPrice);
+  }, [deliveryPrice, price]);
 
   return (
     <>
@@ -39,7 +45,7 @@ const Checkout: React.FC = () => {
         <Text style={styles.textNone}>None added</Text>
         <Text style={styles.textBold}>Delivery method</Text>
         <View style={styles.deliveryView}>
-          <DeliverySection />
+          <DeliverySection onPress={handleDeliverySelect}/>
         </View>
         <View style={styles.priceContainer}>
           <Text style={styles.textInfo}>Order: </Text>
