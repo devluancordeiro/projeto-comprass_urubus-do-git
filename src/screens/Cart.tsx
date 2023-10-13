@@ -7,7 +7,7 @@ import RedButton from '../components/ui/RedButton';
 
 function Cart() {
   const {productsCart}: any = useStoreContext();
-  const test = true;
+  const test = false;
 
   if (test) {
     return (
@@ -90,7 +90,11 @@ function Cart() {
               </View>
               <View style={styles.lastView}>
                 <View style={styles.remove}>
-                  <Ionicons name='trash-outline' size={20} color={Colors.white}/>
+                  <Ionicons
+                    name="trash-outline"
+                    size={20}
+                    color={Colors.white}
+                  />
                 </View>
                 <Text style={styles.itemPrice}>58,90 R$</Text>
               </View>
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
   },
   cartScroll: {
     marginTop: '16%',
+    height: '60%',
   },
   cartText: {
     fontFamily: 'OpenSans-Regular',
