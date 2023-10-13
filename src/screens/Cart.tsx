@@ -12,11 +12,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RedButton from '../components/ui/RedButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import {increaseItemCount, reduceItemCount} from '../redux/counterSlice';
+import {deleteItemCount, increaseItemCount, reduceItemCount} from '../redux/counterSlice';
 
 function Cart() {
   const productsCart: any = useSelector((state: RootState) => state.counter);
-  const test = false;
+  const test = !(
+    Object.keys(useSelector((state: RootState) => state.counter)).length !== 0
+  );
   const cartItems = Object.entries(productsCart);
   const dispatch = useDispatch();
   if (test) {
@@ -99,13 +101,15 @@ function Cart() {
                 </View>
               </View>
               <View style={styles.lastView}>
-                <View style={styles.remove}>
+                <TouchableOpacity
+                  style={styles.remove}
+                  onPress={() => dispatch(deleteItemCount(Number(productId)))}>
                   <Ionicons
                     name="trash-outline"
-                    size={25}
+                    size={22}
                     color={Colors.white}
                   />
-                </View>
+                </TouchableOpacity>
                 <Text style={styles.itemPrice}>58,90 R$</Text>
               </View>
             </View>
