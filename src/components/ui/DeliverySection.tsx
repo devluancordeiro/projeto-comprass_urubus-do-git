@@ -11,10 +11,10 @@ import {Sizes} from '../../constants/styles';
 
 const deliveryMethods = [
   {id: '1', image: require('../../assets/images/fedex.png')},
-  {id: '2', image: require('../../assets/imgages/usps.png')},
-  {id: '3', image: require('../../assets/imgages/dhl.png')},
-  {id: '4', image: require('../../assets/imgages/fedex.png')},
-  {id: '5', image: require('../../assets/imgages/usps.png')},
+  {id: '2', image: require('../../assets/images/usps.png')},
+  {id: '3', image: require('../../assets/images/dhl.png')},
+  {id: '4', image: require('../../assets/images/fedex.png')},
+  {id: '5', image: require('../../assets/images/usps.png')},
   {id: '6', image: require('../../assets/images/dhl.png')},
 ];
 
@@ -52,12 +52,13 @@ export default DeliverySection;
 
 const styles = StyleSheet.create({
   item: {
+    backgroundColor: Colors.white,
     width: 100,
     height: 72,
     marginLeft: 16,
     marginBottom: 20,
     borderRadius: 8,
-    elevation: 8,
+    elevation: 2,
     shadowColor: Colors.black,
     alignItems: 'center',
     textAlign: 'center',

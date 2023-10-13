@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Bold',
     fontWeight: 'bold',
     marginHorizontal: 16,
+    color: Colors.black,
   },
 
   touchable: {
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     marginHorizontal: 16,
+    color: Colors.black,
   },
 
   flexContainer: {
