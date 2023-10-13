@@ -24,6 +24,7 @@ export function ForgotPassword() {
         ctx.saveEmail(email);
         ctx.isLoading(false);
       } catch (error) {
+        ctx.isLoading(false);
         Alert.alert(
           'Failed to search',
           'Check your credentials or try again later',
@@ -48,11 +49,14 @@ export function ForgotPassword() {
 
   async function forgotHandler({email, password}: FormData) {
     try {
+      ctx.isLoading(true);
       const data = await resetPassword({email, password});
       console.log(data);
       setExists(false);
+      ctx.isLoading(false);
     } catch (error) {
       setExists(false);
+      ctx.isLoading(false);
       Alert.alert(
         'Failed to reset password',
         'Check your credentials or try again later',

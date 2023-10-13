@@ -195,7 +195,8 @@ function AuthForm({
               !!errors.name ||
               !!errors.email ||
               !!errors.password
-            }>
+            }
+            validating={ctx.loading}>
             Login
           </RedButton>
           <TextButton onPress={() => navigation.navigate('signup' as never)}>
@@ -222,7 +223,8 @@ function AuthForm({
               !!errors.email ||
               !!errors.password ||
               !!errors.confirmPassword
-            }>
+            }
+            validating={ctx.loading}>
             Sign Up
           </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>
@@ -234,10 +236,14 @@ function AuthForm({
         <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
-            disabled={(!!isEmail && !watch('email')) || !!errors.email}>
+            disabled={(!!isEmail && !watch('email')) || !!errors.email}
+            validating={ctx.loading}>
             Search
           </RedButton>
-          <RedButton onPress={handleSubmit(onSubmit)} disabled={!exists}>
+          <RedButton
+            onPress={handleSubmit(onSubmit)}
+            disabled={!exists}
+            validating={ctx.loading}>
             Confirm
           </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>

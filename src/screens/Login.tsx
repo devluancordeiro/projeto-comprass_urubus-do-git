@@ -16,9 +16,12 @@ export function Login() {
 
   async function loginHandler({email, password}: FormData) {
     try {
+      ctx.isLoading(true);
       const id = await login({email, password});
       ctx.authLogin(id?.toString());
+      ctx.isLoading(false);
     } catch (error) {
+      ctx.isLoading(false);
       Alert.alert(
         'Failed to login',
         'Check your credentials or try again later',
