@@ -1,9 +1,11 @@
 import React from 'react';
-import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {Colors, Sizes} from '../../constants/styles';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {product} from '../../constants/storeTypes';
+import {Colors, Sizes} from '../../constants/styles';
+import {increaseItemCount, reduceItemCount} from '../../redux/counterSlice';
+import type {RootState} from '../../redux/store';
 import {formatCurrency} from '../../utils/formatCurrency';
-import {useStoreContext} from '../../contexts/StoreContext';
 
 interface IncrementalProductCardProps {
   item: product;
@@ -11,7 +13,8 @@ interface IncrementalProductCardProps {
 }
 
 function IncrementalProductCard({item, onTap}: IncrementalProductCardProps) {
-  const {productsCart, increaseItemCount, reduceItemCount} = useStoreContext(); //lembrar de tipar
+  const count = useSelector((state: RootState) => state.counter[item.id]);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.productView}>
@@ -19,19 +22,19 @@ function IncrementalProductCard({item, onTap}: IncrementalProductCardProps) {
         <TouchableOpacity
           hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => reduceItemCount(item.id)}>
+          onPress={() => dispatch(reduceItemCount(item.id))}>
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/reduce-count.png')}
           />
         </TouchableOpacity>
         <View style={styles.numberView}>
-          <Text style={styles.number}>{productsCart.get(item.id) || 0}</Text>
+          <Text style={styles.number}>{count || 0}</Text>
         </View>
         <TouchableOpacity
           hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => increaseItemCount(item.id)}>
+          onPress={() => dispatch(increaseItemCount(item.id))}>
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/increase-count.png')}

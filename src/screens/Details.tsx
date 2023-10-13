@@ -1,3 +1,5 @@
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
@@ -9,16 +11,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import ProductCard from '../components/api/ProductCard';
 import ExpansableItem from '../components/ui/ExpansableItem';
+import {product} from '../constants/storeTypes';
 import {Colors} from '../constants/styles';
-import {useStoreContext} from '../contexts/StoreContext';
+import {increaseItemCount, reduceItemCount} from '../redux/counterSlice';
+import type {RootState} from '../redux/store';
+import {StoreFlowParamList} from '../routes/StoreFlow';
 import {getProductsById} from '../utils/fetchProducts';
 import {formatCurrency} from '../utils/formatCurrency';
-import {product} from '../constants/storeTypes';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {StoreFlowParamList} from '../routes/StoreFlow';
-import {RouteProp} from '@react-navigation/native';
 
 type DetailsProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'details'>;
@@ -28,7 +30,10 @@ type DetailsProps = {
 function Details({navigation, route}: DetailsProps): JSX.Element {
   const {productOpened} = route.params;
   const [recommendedProducts, setRecommendedProducts] = useState<product[]>([]);
-  const {productsCart, increaseItemCount, reduceItemCount} = useStoreContext();
+  const count = useSelector(
+    (state: RootState) => state.counter[productOpened.id],
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getRecommended() {
@@ -115,21 +120,19 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
           <TouchableOpacity
             hitSlop={20}
             activeOpacity={0.7}
-            onPress={() => reduceItemCount(productOpened.id)}>
+            onPress={() => dispatch(reduceItemCount(productOpened.id))}>
             <Image
               style={styles.quantityModifier}
               source={require('../assets/images/big-reduce-count.png')}
             />
           </TouchableOpacity>
           <View style={styles.numberView}>
-            <Text style={styles.number}>
-              {productsCart.get(productOpened.id) || 0}
-            </Text>
+            <Text style={styles.number}>{count || 0}</Text>
           </View>
           <TouchableOpacity
             hitSlop={20}
             activeOpacity={0.7}
-            onPress={() => increaseItemCount(productOpened.id)}>
+            onPress={() => dispatch(increaseItemCount(productOpened.id))}>
             <Image
               style={styles.quantityModifier}
               source={require('../assets/images/big-increase-count.png')}
