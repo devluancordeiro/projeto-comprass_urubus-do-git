@@ -13,7 +13,10 @@ const SuccessCC = () => {
         barStyle={'dark-content'}
       />
       <View style={styles.container}>
-        <Image source={require('../assets/img/bags.png')} style={styles.bags} />
+        <Image
+          source={require('../assets/images/bags.png')}
+          style={styles.bags}
+        />
         <Text style={styles.textSuccess}>Success!</Text>
         <Text style={styles.textOrder}>Your order will be delivered soon.</Text>
         <Text style={styles.textThanks}>Thank you for choosing our app!</Text>
@@ -32,7 +35,6 @@ export default SuccessCC;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
   },
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxl,
     fontFamily: 'OpenSans-ExtraBold',
     marginBottom: 16,
+    textAlign: 'center',
   },
 
   textOrder: {
@@ -55,6 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 4,
+    textAlign: 'center',
   },
 
   textThanks: {
@@ -62,6 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 14,
+    textAlign: 'center',
   },
 
   button: {

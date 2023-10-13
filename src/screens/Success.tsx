@@ -13,7 +13,9 @@ const Success = () => {
         barStyle={'dark-content'}
       />
       <View style={styles.view}>
-        <ImageBackground source={require('../assets/img/success.png')}>
+        <ImageBackground
+          style={styles.image}
+          source={require('../assets/images/success.png')}>
           <Text style={styles.textBold}>Success!</Text>
           <Text style={styles.textOrder}>
             Your order will be delivered soon.
@@ -33,7 +35,15 @@ export default Success;
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    textAlign: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
     justifyContent: 'center',
   },
 
@@ -43,18 +53,23 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-ExtraBold',
     marginTop: 114,
     marginBottom: 14,
+    textAlign: 'center',
   },
 
   textOrder: {
+    color: Colors.black,
     fontSize: 16,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 4,
+    textAlign: 'center',
   },
 
   textThanks: {
+    color: Colors.black,
     fontSize: 16,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 14,
+    textAlign: 'center',
   },
 
   button: {
@@ -62,6 +77,5 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     alignSelf: 'center',
     fontSize: 14,
-    fontWeight: 800,
   },
 });

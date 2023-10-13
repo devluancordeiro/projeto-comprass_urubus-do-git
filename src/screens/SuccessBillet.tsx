@@ -16,7 +16,10 @@ const SuccessBillet = () => {
         barStyle={'dark-content'}
       />
       <View style={styles.container}>
-        <Image source={require('../assets/img/bags.png')} style={styles.bags} />
+        <Image
+          source={require('../assets/images/bags.png')}
+          style={styles.bags}
+        />
         <Text style={styles.textSuccess}>Success!</Text>
         <Text style={styles.textPay}>
           Pay the invoice by {billetDate} and then
@@ -40,7 +43,6 @@ export default SuccessBillet;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
   },
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxl,
     fontFamily: 'OpenSans-ExtraBold',
     marginBottom: 16,
+    textAlign: 'center',
   },
 
   textPay: {
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 4,
+    textAlign: 'center',
   },
 
   textSteps: {
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 14,
+    textAlign: 'center',
   },
 
   buttonBillet: {

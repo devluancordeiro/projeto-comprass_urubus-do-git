@@ -14,7 +14,7 @@ const SuccessPix = () => {
       />
       <View style={styles.container}>
         <Image
-          source={require('../assets/img/QRcode.png')}
+          source={require('../assets/images/QRcode.png')}
           style={styles.qrCode}
         />
         <Text style={styles.textSuccess}>Success!</Text>
@@ -39,7 +39,6 @@ export default SuccessPix;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
   },
@@ -55,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.xxl,
     fontFamily: 'OpenSans-ExtraBold',
     marginBottom: 16,
+    textAlign: 'center',
   },
 
   textPay: {
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 4,
+    textAlign: 'center',
   },
 
   textSteps: {
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'OpenSans-Bold',
     marginBottom: 14,
+    textAlign: 'center',
   },
 
   button: {

@@ -36,6 +36,7 @@ const Checkout: React.FC = () => {
             <Text style={styles.changePaymentText}>Change</Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.textNone}>None added</Text>
         <Text style={styles.textBold}>Delivery method</Text>
         <View style={styles.deliveryView}>
           <DeliverySection />
@@ -75,6 +76,7 @@ export default Checkout;
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
 
   textCheckout: {
@@ -94,10 +96,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 16,
     color: Colors.black,
+    textAlign: 'center',
   },
 
   touchable: {
-    width: 300,
+    width: 340,
     height: 108,
     backgroundColor: Colors.white,
     elevation: 6,
@@ -141,25 +144,13 @@ const styles = StyleSheet.create({
     marginLeft: 86,
   },
 
-  modalContainer: {
-    backgroundColor: Colors.white,
-    height: 270,
-    borderTopLeftRadius: 34,
-    borderTopRightRadius: 34,
-  },
-
-  modalTitle: {
-    color: Colors.black,
-    fontSize: Sizes.l,
-    fontFamily: 'OpenSans-ExtraBold',
-    fontWeight: 'bold',
-    marginBottom: 34,
-  },
-
-  modalCloseText: {
-    color: Colors.black,
-    fontSize: Sizes.m,
-    marginTop: 16,
+  textNone: {
+    color: Colors.gray_500,
+    fontSize: Sizes.s,
+    marginHorizontal: 16,
+    marginTop: 24,
+    marginBottom: 70,
+    fontFamily: 'OpenSans-Bold',
   },
 
   deliveryView: {
@@ -170,7 +161,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     marginHorizontal: 16,
-    color: Colors.black,
   },
 
   flexContainer: {
@@ -181,24 +171,28 @@ const styles = StyleSheet.create({
   textInfo: {
     fontSize: Sizes.s,
     fontFamily: 'OpenSans-Bold',
+    color: Colors.black,
   },
 
   textPrice: {
     position: 'absolute',
     fontFamily: 'OpenSans-Bold',
     fontSize: Sizes.m,
+    color: Colors.black,
   },
 
   textSummary: {
     fontSize: Sizes.m,
     fontFamily: 'OpenSans-ExtraBold',
     fontWeight: 'bold',
+    color: Colors.black,
   },
 
   textPriceSumarry: {
     fontSize: Sizes.l,
     fontFamily: 'OpenSans-ExtraBold',
     fontWeight: 'bold',
+    color: Colors.black,
   },
 
   button: {
