@@ -111,7 +111,10 @@ const Profile = () => {
           <View style={styles.viewTopics}>
             <Text style={styles.textTopics}>Language</Text>
             <TouchableOpacity onPress={show}>
-              <Icon name={'chevron-up'} size={25} />
+              <Icon
+                name={openModal ? 'chevron-down' : 'chevron-up'}
+                size={25}
+              />
             </TouchableOpacity>
           </View>
           <View style={styles.viewTopics}>
@@ -154,7 +157,7 @@ const Profile = () => {
       <View style={styles.viewTopics}>
         <Text style={styles.textTopics}>Language</Text>
         <TouchableOpacity onPress={show}>
-          <Icon name={'chevron-up'} size={25} />
+          <Icon name={openModal ? 'chevron-down' : 'chevron-up'} size={25} />
         </TouchableOpacity>
         {modalHandler()}
       </View>
@@ -266,11 +269,9 @@ const styles = StyleSheet.create({
   },
   languageButton: {
     backgroundColor: 'transparent',
-    hieght: 50,
   },
   languageButtonP: {
     backgroundColor: Colors.red_500,
-    hieght: 50,
   },
   languageText: {
     fontFamily: 'OpenSans-SemiBold',
