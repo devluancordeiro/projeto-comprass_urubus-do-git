@@ -24,12 +24,13 @@ export default RedButton;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 25,
-    padding: 10,
+    padding: Sizes.m,
     backgroundColor: Colors.red_500,
     elevation: 2,
     shadowColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: Sizes.m,
   },
   buttonText: {
     color: 'white',

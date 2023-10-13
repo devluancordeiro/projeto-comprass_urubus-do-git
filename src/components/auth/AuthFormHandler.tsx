@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthForm from './AuthForm';
-import {View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 
 interface FormData {
   name?: string | undefined;
@@ -32,31 +32,52 @@ function AuthFormHandler({
   }
 
   return (
-    <View>
-      {isRegistering && (
-        <AuthForm
-          isName
-          isEmail
-          isPassword
-          isConfirmPassword
-          type="signup"
-          onSubmit={submitHandler}
-        />
-      )}
-      {isLogging && (
-        <AuthForm isEmail isPassword type="login" onSubmit={submitHandler} />
-      )}
-      {isForgoting && (
-        <AuthForm
-          isEmail
-          isPassword
-          isConfirmPassword
-          type="forgot"
-          onSubmit={submitHandler}
-        />
-      )}
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/images/auth-background.png')}
+        resizeMode="cover"
+        style={styles.backgroundImage}>
+        {isRegistering && (
+          <AuthForm
+            isName
+            isEmail
+            isPassword
+            isConfirmPassword
+            type="signup"
+            onSubmit={submitHandler}
+          />
+        )}
+        {isLogging && (
+          <AuthForm isEmail isPassword type="login" onSubmit={submitHandler} />
+        )}
+        {isForgoting && (
+          <AuthForm
+            isEmail
+            isPassword
+            isConfirmPassword
+            type="forgot"
+            onSubmit={submitHandler}
+          />
+        )}
+      </ImageBackground>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default AuthFormHandler;

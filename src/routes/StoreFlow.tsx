@@ -75,7 +75,10 @@ function MainFlow() {
 function AuthFlow() {
   return (
     <Stack.Navigator
-      screenOptions={{cardStyle: {backgroundColor: Colors.black}}}>
+      screenOptions={{
+        cardStyle: {backgroundColor: Colors.black},
+        headerShown: false,
+      }}>
       <Stack.Screen name="signup" component={SingUp} />
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="forgot" component={ForgotPassword} />
@@ -86,7 +89,9 @@ function AuthFlow() {
 function StoreFlow() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="app" headerMode="none">
+      <Stack.Navigator
+        initialRouteName="auth"
+        screenOptions={{headerShown: false}}>
         <Stack.Screen name="app" component={MainFlow} />
         <Stack.Screen name="auth" component={AuthFlow} />
       </Stack.Navigator>

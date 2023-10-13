@@ -1,10 +1,11 @@
 import React from 'react';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
-import {Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import AuthInput from './AuthInput';
 import RedButton from '../ui/RedButton';
 import TextButton from '../ui/TextButton';
 import {useNavigation} from '@react-navigation/native';
+import {Colors, Sizes} from '../../constants/styles';
 
 interface AuthFormProps {
   isName?: boolean;
@@ -47,7 +48,29 @@ function AuthForm({
   }, [reset, onSubmit]);
   const navigation = useNavigation();
   return (
-    <View>
+    <View style={styles.viewStyle}>
+      {type === 'login' ? (
+        <Image
+          style={styles.logo}
+          source={require('../../assets/images/comprass-logo.png')}
+        />
+      ) : type === 'signup' ? (
+        <View>
+          <Text style={styles.title}>Sign Up</Text>
+          <Text style={styles.text}>
+            Choose a really cool name that only contains spaces as special
+            characters. Oh, and your password must have more than 4 digits! :)
+          </Text>
+        </View>
+      ) : (
+        <View>
+          <Text style={styles.title}>Forgot Password</Text>
+          <Text style={styles.text}>
+            Enter your email and let us see if it exists for you to change your
+            password :)
+          </Text>
+        </View>
+      )}
       {isName && (
         <Controller
           control={control}
@@ -133,17 +156,25 @@ function AuthForm({
         />
       )}
       {errors.name && (
-        <Text>Your name is not valid, use only letters and numbers </Text>
+        <Text style={styles.errorText}>
+          Your name is not valid, use only letters and numbers{' '}
+        </Text>
       )}
-      {errors.email && <Text>Your email is not valid</Text>}
+      {errors.email && (
+        <Text style={styles.errorText}>Your email is not valid</Text>
+      )}
       {errors.password && (
-        <Text>Your password must be longer than 6 digits. </Text>
+        <Text style={styles.errorText}>
+          Your password must be longer than 6 digits.{' '}
+        </Text>
       )}
       {errors.confirmPassword && (
-        <Text>Your password is not the same as your confirmation</Text>
+        <Text style={styles.errorText}>
+          Your password is not the same as your confirmation
+        </Text>
       )}
       {type === 'login' && (
-        <View>
+        <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
@@ -166,7 +197,7 @@ function AuthForm({
         </View>
       )}
       {type === 'signup' && (
-        <View>
+        <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
@@ -190,7 +221,7 @@ function AuthForm({
         </View>
       )}
       {type === 'forgot' && (
-        <View>
+        <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={
@@ -220,3 +251,32 @@ function AuthForm({
 }
 
 export default AuthForm;
+
+const styles = StyleSheet.create({
+  viewStyle: {
+    marginHorizontal: Sizes.m,
+  },
+  logo: {
+    marginLeft: '10%',
+    resizeMode: 'contain',
+    width: 263,
+    height: 100,
+    marginTop: 56,
+    marginBottom: Sizes.xxxl,
+  },
+  buttons: {
+    width: 320,
+    marginTop: 64,
+  },
+  errorText: {
+    color: Colors.red_500,
+    textAlign: 'left',
+  },
+  title: {
+    fontFamily: 'OpenSans-Bold',
+    fontSize: Sizes.xxxl,
+    color: Colors.white,
+    paddingBottom: Sizes.m,
+  },
+  text: {color: Colors.white, marginBottom: Sizes.xxl},
+});
