@@ -260,11 +260,14 @@ export default AuthForm;
 const styles = StyleSheet.create({
   viewStyle: {
     marginHorizontal: Sizes.m,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logo: {
-    marginLeft: '10%',
+    marginHorizontal: '5%',
+    marginLeft: '5%',
     resizeMode: 'contain',
-    width: 263,
+    width: 300,
     height: 100,
     marginTop: 56,
     marginBottom: Sizes.xxxl,

@@ -3,6 +3,7 @@ import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {login} from '../components/api/User';
 import {Alert} from 'react-native';
 import {AuthContext} from '../components/auth/AuthContext';
+import {useNavigation} from '@react-navigation/native';
 
 export function Login() {
   interface FormData {
@@ -13,6 +14,7 @@ export function Login() {
   }
 
   const ctx = React.useContext(AuthContext);
+  const navigation = useNavigation();
 
   async function loginHandler({email, password}: FormData) {
     try {
@@ -20,6 +22,7 @@ export function Login() {
       const id = await login({email, password});
       ctx.authLogin(id?.toString());
       ctx.isLoading(false);
+      navigation.navigate('app' as never);
     } catch (error) {
       ctx.isLoading(false);
       Alert.alert(
