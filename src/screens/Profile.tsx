@@ -12,8 +12,14 @@ import {
 import {Colors} from '../constants/styles';
 import Icon from 'react-native-vector-icons/Feather';
 import RedButton from '../components/ui/RedButton';
+import i18next from '../utils/i18next';
+import {useTranslation} from 'react-i18next';
 
 const Profile = () => {
+  const {t} = useTranslation();
+  const changeLanguage = (value: any) => {
+    i18next.changeLanguage(value);
+  };
   const [on, setOn] = useState(false);
   const toggleOn = () => setOn(!on);
   const [logged, setLogged] = useState(false);
@@ -47,6 +53,7 @@ const Profile = () => {
             onPress={() => {
               setPressLanguage1(true);
               setPressLanguage2(false);
+              changeLanguage('en');
             }}>
             <Text
               style={
@@ -62,6 +69,7 @@ const Profile = () => {
             onPress={() => {
               setPressLanguage2(true);
               setPressLanguage1(false);
+              changeLanguage('pt');
             }}>
             <Text
               style={
@@ -84,7 +92,7 @@ const Profile = () => {
           barStyle={'dark-content'}
         />
         <View style={styles.titleView}>
-          <Text style={styles.title}>My profile</Text>
+          <Text style={styles.title}>{t('My Profile')}</Text>
         </View>
         <View style={styles.imageView}>
           <Image
@@ -100,7 +108,7 @@ const Profile = () => {
         </View>
         <View>
           <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>Edit informations</Text>
+            <Text style={styles.textTopics}>{t('Edit informations')}</Text>
             <Switch
               trackColor={{false: Colors.white, true: Colors.red_500}}
               thumbColor={on ? Colors.gray_200 : Colors.gray_200}
@@ -109,7 +117,7 @@ const Profile = () => {
             />
           </View>
           <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>Language</Text>
+            <Text style={styles.textTopics}>{t('Language')}</Text>
             <TouchableOpacity onPress={show}>
               <Icon
                 name={openModal ? 'chevron-down' : 'chevron-up'}
@@ -118,7 +126,7 @@ const Profile = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>Log out</Text>
+            <Text style={styles.textTopics}>{t('Log out')}</Text>
             <TouchableOpacity
               onPress={() => {
                 setLogged(false);
@@ -139,15 +147,15 @@ const Profile = () => {
         barStyle={'dark-content'}
       />
       <View style={styles.titleView}>
-        <Text style={styles.title}>My profile</Text>
+        <Text style={styles.title}>{t('My Profile')}</Text>
       </View>
       <View style={styles.notLogInfo}>
         <Text style={styles.textLog}>
-          You need to log in to see your details
+          {t('You need to log in to see your details')}
         </Text>
         <View style={styles.logInButton}>
           <RedButton
-            children={'login'}
+            children={t('login')}
             onPress={() => {
               setLogged(true);
             }}
@@ -155,7 +163,7 @@ const Profile = () => {
         </View>
       </View>
       <View style={styles.viewTopics}>
-        <Text style={styles.textTopics}>Language</Text>
+        <Text style={styles.textTopics}>{t('Language')}</Text>
         <TouchableOpacity onPress={show}>
           <Icon name={openModal ? 'chevron-down' : 'chevron-up'} size={25} />
         </TouchableOpacity>
@@ -202,6 +210,8 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-SemiBold',
     color: Colors.black,
     marginBottom: 18,
+    marginHorizontal: 18,
+    textAlign: 'center',
   },
   logInButton: {
     width: '35%',

@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View, Pressable} from 'react-native';
 import IncrementalProductCard from './IncrementalProductCard';
 import {product} from '../../constants/storeTypes';
 import {Colors, Sizes} from '../../constants/styles';
+import {useTranslation} from 'react-i18next';
 
 interface ProductsListProps {
   data: product[];
@@ -10,12 +11,13 @@ interface ProductsListProps {
 }
 
 function ProductsList({data, title, navigation}: ProductsListProps) {
+  const {t} = useTranslation();
   return (
     <View style={styles.productListWrapper}>
       <View style={styles.listHeader}>
         <Text style={styles.listName}>{title}</Text>
         <Pressable>
-          <Text style={styles.viewAll}>View all</Text>
+          <Text style={styles.viewAll}>{t('View all')}</Text>
         </Pressable>
       </View>
       <FlatList

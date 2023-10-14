@@ -12,8 +12,10 @@ import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
 import {Colors, Sizes} from '../constants/styles';
 import {product, category} from '../constants/storeTypes';
 import SearchForProducts from '../components/api/SearchForProducts';
+import {useTranslation} from 'react-i18next';
 
 const Home = ({navigation}) => {
+  const {t} = useTranslation();
   const [categories, setCategories] = useState<category[]>([]);
   const [products, setProducts] = useState<product[]>([]);
 
@@ -49,7 +51,7 @@ const Home = ({navigation}) => {
               style={styles.headerImage}
             />
             <View style={styles.viewTextCart}>
-              <Text style={styles.text}>Aqui você sempre ganha!</Text>
+              <Text style={styles.text}>{t('Here you always win!')}</Text>
               <Image
                 source={require('../assets/images/cart-icon.png')}
                 style={styles.imageCart}
