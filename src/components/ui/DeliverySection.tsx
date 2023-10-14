@@ -1,11 +1,10 @@
-import React, {JSXElementConstructor, ReactElement, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   FlatList,
   StyleSheet,
   Image,
   TouchableOpacity,
-  ListRenderItemInfo,
   View,
 } from 'react-native';
 import {Colors} from '../../constants/styles';
@@ -14,7 +13,7 @@ import {Sizes} from '../../constants/styles';
 interface DeliveryMethod {
   id: string;
   image: any;
-};
+}
 
 const deliveryMethods = [
   {id: '1', image: require('../../assets/images/fedex.png')},
@@ -30,29 +29,46 @@ interface deliveryMethods {
   image: any;
 }
 
-const DeliverySection: React.FC = () => {
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+interface DeliverySectionProps {
+  onPress: () => void;
+}
 
-  const renderItem = ({ item, index }: { item: DeliveryMethod; index: number }) => (
+function DeliverySection({onPress}: DeliverySectionProps) {
+  const [selectedMethod, setSelectedMethod] = useState<string>('');
+
+  function renderItem({item, index}: {item: DeliveryMethod; index: number}) {
     const isSelected = selectedMethod === item.id;
     return (
-      <TouchableOpacity style={styles.item} onPress={() => handleDeliverySelect(item.id)}>
-        <Image source={item.image} style={[styles.image, index === 0 && styles.firstImage, index === 3 && styles.firstImage]} />
-        {isSelected && <View style={styles.selectedMethod}>
-          <Image source={require('../../assets/images/verified.png')} style={styles.selectedImage} />
-        </View>}
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => {
+          handleDeliverySelect(item.id);
+          onPress();
+        }}>
+        <Image
+          source={item.image}
+          style={[
+            styles.image,
+            index === 0 && styles.firstImage,
+            index === 3 && styles.firstImage,
+          ]}
+        />
+        {isSelected && (
+          <View style={styles.selectedMethod}>
+            <Image
+              source={require('../../assets/images/verified.png')}
+              style={styles.selectedImage}
+            />
+          </View>
+        )}
         <Text style={styles.textDays}>2-3 days</Text>
       </TouchableOpacity>
     );
-  );
+  }
 
   const handleDeliverySelect = (methodId: string) => {
     setSelectedMethod(methodId);
   };
-
-function renderItem(info: ListRenderItemInfo<{ id: string; image: any; }>): ReactElement<any, string | JSXElementConstructor<any>> | null {
-  throw new Error('Function not implemented.');
-}
 
   return (
     <FlatList
@@ -62,7 +78,7 @@ function renderItem(info: ListRenderItemInfo<{ id: string; image: any; }>): Reac
       horizontal={true}
     />
   );
-};
+}
 
 export default DeliverySection;
 
@@ -112,8 +128,3 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
-
-function setSelectedMethod(methodId: any) {
-  throw new Error('Function not implemented.');
-}
-

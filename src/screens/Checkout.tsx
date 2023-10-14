@@ -45,7 +45,7 @@ const Checkout: React.FC = () => {
         <Text style={styles.textNone}>None added</Text>
         <Text style={styles.textBold}>Delivery method</Text>
         <View style={styles.deliveryView}>
-          <DeliverySection onPress={handleDeliverySelect}/>
+          <DeliverySection onPress={handleDeliverySelect} />
         </View>
         <View style={styles.priceContainer}>
           <Text style={styles.textInfo}>Order: </Text>
