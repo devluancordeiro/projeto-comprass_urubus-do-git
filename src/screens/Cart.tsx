@@ -12,7 +12,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RedButton from '../components/ui/RedButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import {deleteItemCount, increaseItemCount, reduceItemCount} from '../redux/counterSlice';
+import {
+  deleteItemCount,
+  increaseItemCount,
+  reduceItemCount,
+} from '../redux/counterSlice';
 
 function Cart() {
   const productsCart: any = useSelector((state: RootState) => state.counter);

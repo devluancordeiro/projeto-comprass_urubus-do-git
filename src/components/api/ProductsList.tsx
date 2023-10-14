@@ -26,7 +26,7 @@ function ProductsList({data, title, navigation}: ProductsListProps) {
             onTap={() => navigation.navigate('details', {productOpened: item})}
           />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.listItems}

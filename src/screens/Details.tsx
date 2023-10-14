@@ -19,7 +19,7 @@ import {Colors} from '../constants/styles';
 import {increaseItemCount, reduceItemCount} from '../redux/counterSlice';
 import type {RootState} from '../redux/store';
 import {StoreFlowParamList} from '../routes/StoreFlow';
-import {getProductsById} from '../utils/fetchProducts';
+import {getProductsByCategoryId} from '../utils/fetchProducts';
 import {formatCurrency} from '../utils/formatCurrency';
 
 type DetailsProps = {
@@ -38,7 +38,7 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
   useEffect(() => {
     async function getRecommended() {
       const id = productOpened.category.id;
-      const productsFetched = await getProductsById(id);
+      const productsFetched = await getProductsByCategoryId(id);
       setRecommendedProducts(
         productsFetched.filter(
           (productFetched: product) => productFetched.id !== productOpened.id,

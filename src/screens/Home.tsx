@@ -8,9 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import ProductsList from '../components/api/ProductsList';
-import {getCategories, getProductsById} from '../utils/fetchProducts';
+import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
 import {Colors, Sizes} from '../constants/styles';
 import {product, category} from '../constants/storeTypes';
+import SearchForProducts from '../components/api/SearchForProducts';
 
 const Home = ({navigation}) => {
   const [categories, setCategories] = useState<category[]>([]);
@@ -23,7 +24,9 @@ const Home = ({navigation}) => {
         setCategories(categoriesFetched);
         for (const categoryFetched of categoriesFetched) {
           if (categoryFetched.id <= 5) {
-            const productsFetched = await getProductsById(categoryFetched.id);
+            const productsFetched = await getProductsByCategoryId(
+              categoryFetched.id,
+            );
             setProducts(prevProducts => [...prevProducts, productsFetched]);
           }
         }
@@ -35,41 +38,38 @@ const Home = ({navigation}) => {
   }, []);
 
   return (
-    <ScrollView style={styles.view}>
-      <ImageBackground
-        source={require('../assets/images/background-compass.png')}
-        style={styles.headerBackground}>
-        <View style={styles.headerWrapper}>
-          <View style={styles.viewSearch}>
+    <>
+      <ScrollView style={styles.view}>
+        <ImageBackground
+          source={require('../assets/images/background-compass.png')}
+          style={styles.headerBackground}>
+          <View style={styles.headerWrapper}>
             <Image
-              source={require('../assets/images/search.png')}
-              style={styles.search}
+              source={require('../assets/images/comprass-logo.png')}
+              style={styles.headerImage}
             />
+            <View style={styles.viewTextCart}>
+              <Text style={styles.text}>Aqui você sempre ganha!</Text>
+              <Image
+                source={require('../assets/images/cart-icon.png')}
+                style={styles.imageCart}
+              />
+            </View>
           </View>
-          <Image
-            source={require('../assets/images/comprass-logo.png')}
-            style={styles.headerImage}
-          />
-          <View style={styles.viewTextCart}>
-            <Text style={styles.text}>Aqui você sempre ganha!</Text>
-            <Image
-              source={require('../assets/images/cart-icon.png')}
-              style={styles.imageCart}
+        </ImageBackground>
+        <View style={styles.shoppingSection}>
+          {products.map((data, index) => (
+            <ProductsList
+              key={index}
+              data={data}
+              title={categories[index]?.name}
+              navigation={navigation}
             />
-          </View>
+          ))}
         </View>
-      </ImageBackground>
-      <View style={styles.shoppingSection}>
-        {products.map((data, index) => (
-          <ProductsList
-            key={index}
-            data={data}
-            title={categories[index]?.name}
-            navigation={navigation}
-          />
-        ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <SearchForProducts navigation={navigation} />
+    </>
   );
 };
 
@@ -92,19 +92,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '75%',
     resizeMode: 'contain',
-  },
-  viewSearch: {
-    alignSelf: 'flex-end',
-    backgroundColor: Colors.red_500,
-    borderRadius: 23,
-    height: 42,
-    width: 42,
-  },
-  search: {
-    marginTop: 8,
-    marginLeft: 8,
-    height: 22,
-    width: 22,
+    marginTop: '33%',
   },
   viewTextCart: {
     flexDirection: 'row',

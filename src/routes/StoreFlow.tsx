@@ -112,7 +112,7 @@ function StoreFlow() {
       <AuthContextProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="auth"
+            initialRouteName="app"
             screenOptions={{headerShown: false}}>
             <Stack.Screen name="app" component={MainFlow} />
             <Stack.Screen name="auth" component={AuthFlow} />

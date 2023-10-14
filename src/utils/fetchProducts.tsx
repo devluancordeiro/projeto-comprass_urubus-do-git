@@ -10,9 +10,19 @@ export async function getCategories() {
   }
 }
 
-export async function getProductsById(id: number) {
+export async function getProductsByCategoryId(id: number) {
   try {
     const response = await fetch(`${base_url}/categories/${id}/products`);
+    const products = await response.json();
+    return products;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getProductsByTitle(title: string) {
+  try {
+    const response = await fetch(`${base_url}/products/?title=${title}`);
     const products = await response.json();
     return products;
   } catch (e) {
