@@ -35,6 +35,7 @@ const counterSlice = createSlice({
   },
 });
 
-export const {increaseItemCount, reduceItemCount, deleteItemCount} = counterSlice.actions;
+export const {increaseItemCount, reduceItemCount, deleteItemCount} =
+  counterSlice.actions;
 
 export default counterSlice.reducer;
