@@ -29,3 +29,13 @@ export async function getProductsByTitle(title: string) {
     console.error(e);
   }
 }
+
+export async function getProductById(id: number) {
+  try {
+    const response = await fetch(`${base_url}/products/${id}`);
+    const products = await response.json();
+    return products;
+  } catch (e) {
+    console.error(e);
+  }
+}

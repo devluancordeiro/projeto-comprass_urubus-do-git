@@ -1,30 +1,16 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from '../constants/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RedButton from '../components/ui/RedButton';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import {
-  deleteItemCount,
-  increaseItemCount,
-  reduceItemCount,
-} from '../redux/counterSlice';
+import CartProduct from '../components/api/CartProducts';
 
 function Cart() {
-  const productsCart: any = useSelector((state: RootState) => state.counter);
   const test = !(
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0
   );
-  const cartItems = Object.entries(productsCart);
-  const dispatch = useDispatch();
   if (test) {
     return (
       <>
@@ -63,62 +49,7 @@ function Cart() {
         <View style={styles.titleView}>
           <Text style={styles.title}>Cart</Text>
         </View>
-        <ScrollView style={styles.cartScroll}>
-          {cartItems.map(([productId, quantity]) => (
-            <View key={productId} style={styles.viewProduct}>
-              <View style={styles.viewProductImage}>
-                <Image
-                  source={require('../assets/images/productImage.png')}
-                  style={styles.productImage}
-                />
-              </View>
-              <View style={styles.middleView}>
-                <Text style={styles.productName}>Name</Text>
-                <View style={styles.viewProductCount}>
-                  <View>
-                    <TouchableOpacity
-                      style={styles.buttonCount}
-                      onPress={() =>
-                        dispatch(reduceItemCount(Number(productId)))
-                      }>
-                      <Ionicons
-                        name="remove-outline"
-                        size={30}
-                        color={Colors.white}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.numberCount}>{String(quantity)}</Text>
-                  <View>
-                    <TouchableOpacity
-                      style={styles.buttonCount}
-                      onPress={() =>
-                        dispatch(increaseItemCount(Number(productId)))
-                      }>
-                      <Ionicons
-                        name="add-outline"
-                        size={30}
-                        color={Colors.white}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.lastView}>
-                <TouchableOpacity
-                  style={styles.remove}
-                  onPress={() => dispatch(deleteItemCount(Number(productId)))}>
-                  <Ionicons
-                    name="trash-outline"
-                    size={22}
-                    color={Colors.white}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.itemPrice}>58,90 R$</Text>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
+        <CartProduct />
       </View>
       <View style={styles.bottomView}>
         <View style={styles.priceView}>
