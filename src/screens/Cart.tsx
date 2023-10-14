@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
   numberCount: {
     marginTop: '8%',
     marginHorizontal: 18,
+    color: Colors.black,
   },
   lastView: {
     flex: 1,

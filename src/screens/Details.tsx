@@ -21,6 +21,7 @@ import type {RootState} from '../redux/store';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 import {getProductsByCategoryId} from '../utils/fetchProducts';
 import {formatCurrency} from '../utils/formatCurrency';
+import Header from '../components/ui/Header';
 
 type DetailsProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'details'>;
@@ -52,6 +53,7 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
   return (
     <View>
       <ScrollView>
+        <Header title="Details" goBack={() => navigation.goBack()} />
         <View style={styles.container}>
           <FlatList
             data={productOpened.images}
