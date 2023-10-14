@@ -19,23 +19,29 @@ const counterSlice = createSlice({
     },
     reduceItemCount: (state, action: PayloadAction<number>) => {
       if (state[action.payload]) {
-        if (state[action.payload] !== 1) {
+        if (state[action.payload] > 2) {
           state[action.payload] -= 1;
         } else {
           delete state[action.payload];
         }
       }
     },
-    deleteItemCount: (state, action: PayloadAction<number>) => {
-      if (state[action.payload] > 0) {
-        state[action.payload] = 0;
-        delete state[action.payload];
+    reduceItemCountWithoutRemove: (state, action: PayloadAction<number>) => {
+      if (state[action.payload] >= 1) {
+        state[action.payload] -= 1;
       }
+    },
+    deleteItemCount: (state, action: PayloadAction<number>) => {
+      delete state[action.payload];
     },
   },
 });
 
-export const {increaseItemCount, reduceItemCount, deleteItemCount} =
-  counterSlice.actions;
+export const {
+  increaseItemCount,
+  reduceItemCount,
+  reduceItemCountWithoutRemove,
+  deleteItemCount,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;

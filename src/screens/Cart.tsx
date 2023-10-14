@@ -4,14 +4,14 @@ import {Colors} from '../constants/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RedButton from '../components/ui/RedButton';
 import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
+import type {RootState} from '../redux/store';
 import CartProduct from '../components/api/CartProducts';
 
-function Cart() {
-  const test = !(
+function Cart({navigation}) {
+  const cartHasItems = !(
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0
   );
-  if (test) {
+  if (cartHasItems) {
     return (
       <>
         <View>
@@ -49,7 +49,7 @@ function Cart() {
         <View style={styles.titleView}>
           <Text style={styles.title}>Cart</Text>
         </View>
-        <CartProduct />
+        <CartProduct navigation={navigation} />
       </View>
       <View style={styles.bottomView}>
         <View style={styles.priceView}>
