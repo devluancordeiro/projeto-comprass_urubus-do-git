@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   StatusBar,
+  Modal,
 } from 'react-native';
 import DeliverySection from '../components/ui/DeliverySection';
 import {Colors} from '../constants/styles';
@@ -18,6 +19,10 @@ const Checkout: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [price, setPrice] = useState(0);
 
+  const [openModal, setOpenModal] = useState(false);
+  const hide = () => setOpenModal(false);
+  const [methodPayment, setMethodPayment] = useState(false);
+
   const handleDeliverySelect = () => {
     setDeliveryPrice(15.0);
   };
@@ -25,6 +30,59 @@ const Checkout: React.FC = () => {
   useEffect(() => {
     setTotalPrice(price + deliveryPrice);
   }, [deliveryPrice, price]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const modalHandler = () => {
+    return (
+      <Modal visible={openModal} animationType="slide" transparent={true}>
+        <Modal
+          visible={openModal}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setOpenModal(false)}>
+          <View style={styles.viewTransparent}>
+            <TouchableOpacity onPress={hide} style={styles.pressOutside} />
+          </View>
+        </Modal>
+        <View style={styles.viewTeste}>
+          <View style={styles.modalHeader}>
+            <View style={styles.grayLine} />
+            <Text style={styles.modalTitle}>Choose your payment method</Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
+          onPress={() => {
+            setMethodPayment(!methodPayment);
+          }}>
+          <Text
+            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
+            Cartão de crédito ou débito
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
+          onPress={() => {
+            setMethodPayment(!methodPayment);
+          }}>
+          <Text
+            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
+            Pix
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
+          onPress={() => {
+            setMethodPayment(!methodPayment);
+          }}>
+          <Text
+            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
+            Boleto bancário
+          </Text>
+        </TouchableOpacity>
+      </Modal>
+    );
+  };
 
   return (
     <>
@@ -38,7 +96,7 @@ const Checkout: React.FC = () => {
         </TouchableOpacity>
         <View style={styles.container}>
           <Text style={styles.textBold}>Payment Method</Text>
-          <TouchableOpacity onPress={function (): void {}}>
+          <TouchableOpacity onPress={() => setOpenModal(true)}>
             <Text style={styles.changePaymentText}>Change</Text>
           </TouchableOpacity>
         </View>
@@ -207,5 +265,66 @@ const styles = StyleSheet.create({
     marginTop: 38,
     alignSelf: 'center',
     fontSize: Sizes.s,
+  },
+
+  viewTransparent: {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+  },
+
+  viewTeste: {
+    borderTopRightRadius: 35,
+    borderTopLeftRadius: 35,
+    backgroundColor: Colors.white,
+    width: '100%',
+    height: '35%',
+    marginTop: '140%',
+  },
+
+  modalHeader: {
+    alignItems: 'center',
+    marginBottom: 34,
+  },
+
+  modalTitle: {
+    color: Colors.black,
+    fontFamily: 'OpenSans-Bold',
+    fontSize: 20,
+  },
+
+  grayLine: {
+    width: 60,
+    height: 6,
+    backgroundColor: Colors.gray_500,
+    borderRadius: 3,
+    marginVertical: 16,
+  },
+
+  pressOutside: {
+    width: '100%',
+    height: '100%',
+  },
+
+  buttonNotPressed: {
+    backgroundColor: 'transparent',
+  },
+
+  buttonPressed: {
+    backgroundColor: Colors.red_500,
+  },
+
+  textNotPressed: {
+    fontFamily: 'OpenSans-SemiBold',
+    color: Colors.black,
+    fontSize: 18,
+    paddingVertical: 15,
+    paddingLeft: 16,
+  },
+
+  textPressed: {
+    fontFamily: 'OpenSans-SemiBold',
+    color: Colors.white,
+    fontSize: 18,
+    paddingVertical: 15,
+    paddingLeft: 16,
   },
 });

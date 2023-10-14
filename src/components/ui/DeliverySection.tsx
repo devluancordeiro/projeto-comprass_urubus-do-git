@@ -24,11 +24,6 @@ const deliveryMethods = [
   {id: '6', image: require('../../assets/images/dhl.png')},
 ];
 
-interface deliveryMethods {
-  id: string;
-  image: any;
-}
-
 interface DeliverySectionProps {
   onPress: () => void;
 }
