@@ -16,6 +16,8 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import AuthContextProvider from '../components/auth/AuthContext';
 import LoadingOverlay from '../screens/LoadingOverlay';
+import Checkout from '../screens/Checkout';
+import Address from '../screens/Address';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -130,6 +132,8 @@ function StoreFlow() {
             <Stack.Screen name="app" component={MainFlow} />
             <Stack.Screen name="auth" component={AuthFlow} />
             <Stack.Screen name="details" component={Details} />
+            <Stack.Screen name="checkout" component={Checkout} />
+            <Stack.Screen name="address" component={Address} />
             <Stack.Screen name="load" component={LoadingOverlay} />
           </Stack.Navigator>
         </NavigationContainer>

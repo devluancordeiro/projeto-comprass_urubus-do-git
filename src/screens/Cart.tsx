@@ -43,7 +43,7 @@ function Cart({navigation}: CartProps) {
               children={t('Buy')}
               disabled
               onPress={() => {
-                return console.log('Buy');
+                navigation.navigate('checkout');
               }}
             />
           </View>
