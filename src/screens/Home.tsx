@@ -13,8 +13,14 @@ import {Colors, Sizes} from '../constants/styles';
 import {product, category} from '../constants/storeTypes';
 import SearchForProducts from '../components/api/SearchForProducts';
 import {useTranslation} from 'react-i18next';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {MainFlowParamList} from '../routes/StoreFlow';
 
-const Home = ({navigation}) => {
+type HomeProps = {
+  navigation: StackNavigationProp<MainFlowParamList, 'Home'>;
+};
+
+const Home = ({navigation}: HomeProps) => {
   const {t} = useTranslation();
   const [categories, setCategories] = useState<category[]>([]);
   const [products, setProducts] = useState<product[]>([]);
