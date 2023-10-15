@@ -8,8 +8,11 @@ import type {RootState} from '../../redux/counterSlice';
 import RedButton from '../ui/RedButton';
 import {Colors} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../../routes/StoreFlow';
 
-const CartProduct = ({navigation}) => {
+const CartProducts = () => {
   const {t} = useTranslation();
   let add: number = 0;
   const [addPrices, setAddPrices] = useState(0);
@@ -17,6 +20,7 @@ const CartProduct = ({navigation}) => {
   const [products, setProducts] = useState(
     new Map<number, {productItem: product; quantity: number}>(),
   );
+  const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
 
   function amount(value: number) {
     add += Number(value);
@@ -95,7 +99,7 @@ const CartProduct = ({navigation}) => {
   );
 };
 
-export default CartProduct;
+export default CartProducts;
 
 const styles = StyleSheet.create({
   cartScroll: {

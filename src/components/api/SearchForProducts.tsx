@@ -12,16 +12,20 @@ import SearchedProductCard from './SearchedProductCard';
 import {getProductsByTitle} from '../../utils/fetchProducts';
 import {product} from '../../constants/storeTypes';
 import {useTranslation} from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../../routes/StoreFlow';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
-function SearchForProducts({navigation}) {
+function SearchForProducts() {
   const {t} = useTranslation();
   const [isSearching, setisSearching] = useState(false);
   const [searchedTitle, setSearchedTitle] = useState('');
   const [searchedProducts, setSearchedProducts] = useState<product[]>([]);
+  const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
 
   useEffect(() => {
     async function getProducts() {

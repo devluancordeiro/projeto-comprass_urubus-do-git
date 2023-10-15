@@ -4,13 +4,17 @@ import IncrementalProductCard from './IncrementalProductCard';
 import {product} from '../../constants/storeTypes';
 import {Colors, Sizes} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../../routes/StoreFlow';
+import {useNavigation} from '@react-navigation/native';
 
 interface ProductsListProps {
   data: product[];
   title: string;
 }
 
-function ProductsList({data, title, navigation}: ProductsListProps) {
+function ProductsList({data, title}: ProductsListProps) {
+  const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
   const {t} = useTranslation();
   return (
     <View style={styles.productListWrapper}>
