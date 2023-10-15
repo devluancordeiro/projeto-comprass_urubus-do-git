@@ -7,8 +7,14 @@ import {useSelector} from 'react-redux';
 import type {RootState} from '../redux/store';
 import CartProduct from '../components/api/CartProducts';
 import {useTranslation} from 'react-i18next';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {MainFlowParamList} from '../routes/StoreFlow';
 
-function Cart({navigation}) {
+type CartProps = {
+  navigation: StackNavigationProp<MainFlowParamList, 'Cart'>;
+};
+
+function Cart({navigation}: CartProps) {
   const {t} = useTranslation();
   const cartHasItems = !(
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0

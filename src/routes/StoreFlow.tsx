@@ -22,6 +22,39 @@ import Address from '../screens/Address';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+export type MainFlowParamList = {
+  Home: undefined;
+  Cart: undefined;
+  Profile: undefined;
+};
+
+interface TabBarIconProps {
+  size: number;
+  color: string;
+  focused: boolean;
+}
+
+function HomeTabBarIcon({size, color, focused}: TabBarIconProps) {
+  if (focused) {
+    return <Ionicons name={'home-sharp'} size={size} color={Colors.red_500} />;
+  }
+  return <Ionicons name={'home-outline'} size={size} color={color} />;
+}
+
+function CartTabBarIcon({size, color, focused}: TabBarIconProps) {
+  if (focused) {
+    return <Ionicons name={'cart'} size={size} color={Colors.red_500} />;
+  }
+  return <Ionicons name={'cart-outline'} size={size} color={color} />;
+}
+
+function ProfileTabBarIcon({size, color, focused}: TabBarIconProps) {
+  if (focused) {
+    return <Ionicons name={'person'} size={size} color={Colors.red_500} />;
+  }
+  return <Ionicons name={'person-outline'} size={size} color={color} />;
+}
+
 function MainFlow() {
   const hasItemsInCart =
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0;
@@ -31,18 +64,7 @@ function MainFlow() {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({size, color, focused}) => {
-            if (focused) {
-              return (
-                <Ionicons
-                  name={'home-sharp'}
-                  size={size}
-                  color={Colors.red_500}
-                />
-              );
-            }
-            return <Ionicons name={'home-outline'} size={size} color={color} />;
-          },
+          tabBarIcon: HomeTabBarIcon,
           tabBarActiveTintColor: Colors.red_500,
         }}
       />
@@ -50,14 +72,7 @@ function MainFlow() {
         name="Cart"
         component={Cart}
         options={{
-          tabBarIcon: ({size, color, focused}) => {
-            if (focused) {
-              return (
-                <Ionicons name={'cart'} size={size} color={Colors.red_500} />
-              );
-            }
-            return <Ionicons name={'cart-outline'} size={size} color={color} />;
-          },
+          tabBarIcon: CartTabBarIcon,
           tabBarActiveTintColor: Colors.red_500,
           tabBarBadge: hasItemsInCart ? ' ' : undefined,
           tabBarBadgeStyle: {
@@ -72,22 +87,19 @@ function MainFlow() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({size, color, focused}) => {
-            if (focused) {
-              return (
-                <Ionicons name={'person'} size={size} color={Colors.red_500} />
-              );
-            }
-            return (
-              <Ionicons name={'person-outline'} size={size} color={color} />
-            );
-          },
+          tabBarIcon: ProfileTabBarIcon,
           tabBarActiveTintColor: Colors.red_500,
         }}
       />
     </Tab.Navigator>
   );
 }
+
+export type AuthFlowParamList = {
+  login: undefined;
+  signup: undefined;
+  forgot: undefined;
+};
 
 function AuthFlow() {
   return (
