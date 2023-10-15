@@ -27,7 +27,6 @@ const Profile = () => {
     i18next.changeLanguage(value);
   };
   const [on, setOn] = useState(false);
-  const toggleOn = () => setOn(!on);
   const [openModal, setOpenModal] = useState(false);
   const show = () => setOpenModal(true);
   const hide = () => setOpenModal(false);
@@ -101,11 +100,30 @@ const Profile = () => {
     }
   }
 
+  const toggleOn = () => {
+    if (data?.name !== name) {
+      if (on) {
+        Alert.alert('Warning', 'Do you want to abandon your changes?', [
+          {
+            text: 'Yes',
+            onPress: () => {
+              setOn(!on);
+            },
+          },
+          {text: 'No'},
+        ]);
+      } else {
+        setOn(!on);
+      }
+    } else {
+      setOn(!on);
+    }
+  };
+
   async function changeData() {
     try {
-      const oldData = data;
       const userData = await editData(ctx.id, name);
-      if (oldData !== userData) {
+      if (data !== userData) {
         Alert.alert(
           'Do you realy want to change your data?',
           'You can reverse it later',
