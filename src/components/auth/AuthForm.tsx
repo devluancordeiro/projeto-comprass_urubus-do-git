@@ -217,6 +217,7 @@ function AuthForm({
               onPress={() => {
                 navigation.navigate('signup' as never);
                 ctx.generateError(false);
+                ctx.saveEmail('');
               }}>
               {t('Not have an account yet?')} {'\n'} {t('Sign up')}
             </TextButton>
@@ -228,6 +229,7 @@ function AuthForm({
               onPress={() => {
                 navigation.navigate('forgot' as never);
                 ctx.generateError(false);
+                ctx.saveEmail('');
               }}>
               {t('I forgot my password')}
             </TextButton>
@@ -239,6 +241,7 @@ function AuthForm({
               onPress={() => {
                 navigation.goBack();
                 ctx.generateError(false);
+                ctx.saveEmail('');
               }}>
               {t('I dont want to login')}
             </TextButton>
@@ -270,6 +273,7 @@ function AuthForm({
               onPress={() => {
                 navigation.navigate('login' as never);
                 ctx.generateError(false);
+                ctx.saveEmail('');
               }}>
               {t('I dont want to register')}
             </TextButton>
@@ -283,7 +287,9 @@ function AuthForm({
         <View style={styles.buttons}>
           <RedButton
             onPress={handleSubmit(onSubmit)}
-            disabled={(!!isEmail && !watch('email')) || !!errors.email}
+            disabled={
+              (!!isEmail && !watch('email')) || !!errors.email || exists
+            }
             validating={ctx.loading}>
             {t('Search')}
           </RedButton>
@@ -298,6 +304,7 @@ function AuthForm({
               onPress={() => {
                 navigation.navigate('login' as never);
                 ctx.generateError(false);
+                ctx.saveEmail('');
               }}>
               {t('I remembered my password')}
             </TextButton>
