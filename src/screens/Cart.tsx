@@ -33,13 +33,7 @@ function Cart() {
             <Text style={styles.priceText}>0 R$</Text>
           </View>
           <View style={styles.buttonView}>
-            <RedButton
-              children={t('Buy')}
-              disabled
-              onPress={() => {
-                navigation.navigate('checkout');
-              }}
-            />
+            <RedButton children={t('Buy')} disabled onPress={() => {}} />
           </View>
         </View>
       </>
