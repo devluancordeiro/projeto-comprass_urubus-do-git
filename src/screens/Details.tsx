@@ -22,6 +22,7 @@ import {StoreFlowParamList} from '../routes/StoreFlow';
 import {getProductsByCategoryId} from '../utils/fetchProducts';
 import {formatCurrency} from '../utils/formatCurrency';
 import Header from '../components/ui/Header';
+import {useTranslation} from 'react-i18next';
 
 type DetailsProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'details'>;
@@ -29,6 +30,7 @@ type DetailsProps = {
 };
 
 function Details({navigation, route}: DetailsProps): JSX.Element {
+  const {t} = useTranslation();
   const {productOpened} = route.params;
   const [recommendedProducts, setRecommendedProducts] = useState<product[]>([]);
   const count = useSelector(
@@ -53,7 +55,7 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
   return (
     <View>
       <ScrollView>
-        <Header title="Details" goBack={() => navigation.goBack()} />
+        <Header title={t('Details')} goBack={() => navigation.goBack()} />
         <View style={styles.container}>
           <FlatList
             data={productOpened.images}
@@ -84,16 +86,21 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
               {productOpened.description}
             </Text>
           </View>
-          <ExpansableItem label="Description" details="Here goes description" />
           <ExpansableItem
-            label="Support"
-            details="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
+            label={t('Description')}
+            details={t('Here goes description')}
+          />
+          <ExpansableItem
+            label={t('Support')}
+            details={t(
+              'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
+            )}
             style={styles.supportExpansableItem}
           />
           <View style={styles.recommendedSectionWrapper}>
             <View style={styles.recommendedSectionHeader}>
               <Text style={styles.recommendedSectionTitle}>
-                You can also like this
+                {t('You can also like this')}
               </Text>
               <Text style={styles.recommendedSectionInfo}>
                 {recommendedProducts.length} items

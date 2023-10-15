@@ -6,8 +6,10 @@ import RedButton from '../components/ui/RedButton';
 import {useSelector} from 'react-redux';
 import type {RootState} from '../redux/store';
 import CartProduct from '../components/api/CartProducts';
+import {useTranslation} from 'react-i18next';
 
 function Cart({navigation}) {
+  const {t} = useTranslation();
   const cartHasItems = !(
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0
   );
@@ -16,23 +18,23 @@ function Cart({navigation}) {
       <>
         <View>
           <View style={styles.titleView}>
-            <Text style={styles.title}>Cart</Text>
+            <Text style={styles.title}>{t('Cart')}</Text>
           </View>
           <View style={styles.cartView}>
             <Ionicons name={'cart-outline'} size={62} />
             <Text style={styles.cartText}>
-              Your cart is so empty and abandoned...
+              {t('Your cart is so empty and abandoned...')}
             </Text>
           </View>
         </View>
         <View style={styles.bottomView}>
           <View style={styles.priceView}>
-            <Text style={styles.amountText}>Total amount:</Text>
+            <Text style={styles.amountText}>{t('Total amount:')}</Text>
             <Text style={styles.priceText}>0 R$</Text>
           </View>
           <View style={styles.buttonView}>
             <RedButton
-              children={'Buy'}
+              children={t('Buy')}
               disabled
               onPress={() => {
                 return console.log('Buy');
@@ -47,7 +49,7 @@ function Cart({navigation}) {
     <>
       <View>
         <View style={styles.titleView}>
-          <Text style={styles.title}>Cart</Text>
+          <Text style={styles.title}>{t('Cart')}</Text>
         </View>
         <View style={styles.viewAll}>
           <CartProduct navigation={navigation} />

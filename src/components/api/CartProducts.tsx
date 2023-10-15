@@ -7,8 +7,10 @@ import {useSelector} from 'react-redux';
 import type {RootState} from '../../redux/counterSlice';
 import RedButton from '../ui/RedButton';
 import {Colors} from '../../constants/styles';
+import {useTranslation} from 'react-i18next';
 
 const CartProduct = ({navigation}) => {
+  const {t} = useTranslation();
   let add: number = 0;
   const [addPrices, setAddPrices] = useState(0);
   const productsCart = useSelector((state: RootState) => state.counter);
@@ -77,12 +79,12 @@ const CartProduct = ({navigation}) => {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.priceView}>
-          <Text style={styles.amountText}>Total amount:</Text>
+          <Text style={styles.amountText}>{t('Total amount:')}</Text>
           <Text style={styles.priceText}>R$ {addPrices.toString()},00</Text>
         </View>
         <View style={styles.buttonView}>
           <RedButton
-            children={'Buy'}
+            children={t('Buy')}
             onPress={() => {
               return console.log('Buy');
             }}
