@@ -49,22 +49,22 @@ export async function register({name, email, password}: FormData) {
 
     if (userWithEmailExists) {
       throw new Error('User with this email already exists');
+    } else {
+      const response = await axios.post(
+        'https://api.escuelajs.co/api/v1/users/',
+        {
+          name: name,
+          email: email,
+          password: password,
+          avatar: 'https://100k-faces.glitch.me/random-image',
+          role: 'customer',
+        },
+      );
+
+      console.log(response.data);
+      let id = response.data.id;
+      return id;
     }
-
-    const response = await axios.post(
-      'https://api.escuelajs.co/api/v1/users/',
-      {
-        name: name,
-        email: email,
-        password: password,
-        avatar: 'https://100k-faces.glitch.me/random-image',
-        role: 'customer',
-      },
-    );
-
-    console.log(response.data);
-    let id = response.data.id;
-    return id;
   } catch (error) {
     Alert.alert('Registration error', `${error}`);
   }

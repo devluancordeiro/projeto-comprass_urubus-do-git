@@ -19,10 +19,16 @@ export function SingUp() {
   async function signUpHandler({name, email, password}: FormData) {
     try {
       ctx.isLoading(true);
-      await register({name, email, password});
-      Alert.alert('SignUp succesfull', 'Login now!');
+      try {
+        const id = await register({name, email, password});
+        if (id) {
+          Alert.alert('SignUp succesfully', 'login now');
+          navigation.navigate('login' as never);
+        }
+      } catch (error) {
+        Alert.alert('SignUp failed', 'Please try again later!');
+      }
       ctx.isLoading(false);
-      navigation.navigate('login' as never);
     } catch (error) {
       ctx.isLoading(false);
       Alert.alert('SignUp failed', 'Please try again later!');
