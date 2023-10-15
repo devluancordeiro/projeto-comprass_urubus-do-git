@@ -21,7 +21,7 @@ function Cart() {
             <Text style={styles.title}>{t('Cart')}</Text>
           </View>
           <View style={styles.cartView}>
-            <Ionicons name={'cart-outline'} size={62} />
+            <Ionicons name={'cart-outline'} size={62} color={Colors.gray_900} />
             <Text style={styles.cartText}>
               {t('Your cart is so empty and abandoned...')}
             </Text>
