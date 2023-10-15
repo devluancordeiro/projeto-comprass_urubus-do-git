@@ -15,7 +15,7 @@ interface LoadingOverlayProps {
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({message}) => {
   return (
     <ImageBackground
-      source={require('../../assets/images/auth-background.png')}
+      source={require('../assets/images/auth-background.png')}
       resizeMode="cover"
       style={styles.backgroundImage}>
       <Text style={styles.message}>{message}</Text>
