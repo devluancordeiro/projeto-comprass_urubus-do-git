@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Modal,
   Alert,
+  TextInput,
 } from 'react-native';
 import {Colors} from '../constants/styles';
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,7 +18,8 @@ import i18next from '../utils/i18next';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../components/auth/AuthContext';
-import {User, fetchUser} from '../components/api/User';
+import {User, editData, fetchUser} from '../components/api/User';
+import IconFAB from '../components/ui/IconFAB';
 
 const Profile = () => {
   const {t} = useTranslation();
@@ -31,6 +33,7 @@ const Profile = () => {
   const hide = () => setOpenModal(false);
   const [pressLanguage1, setPressLanguage1] = useState(false);
   const [pressLanguage2, setPressLanguage2] = useState(false);
+  const [name, setName] = useState('');
   const [data, setData] = useState<User | undefined>(undefined);
   const navigation = useNavigation();
   const ctx = useContext(AuthContext);
@@ -98,6 +101,33 @@ const Profile = () => {
     }
   }
 
+  async function changeData() {
+    try {
+      const oldData = data;
+      const userData = await editData(ctx.id, name);
+      if (oldData !== userData) {
+        Alert.alert(
+          'Do you realy want to change your data?',
+          'You can reverse it later',
+          [
+            {
+              text: 'Yes',
+              onPress: () => {
+                setData(userData);
+                setOn(false);
+              },
+            },
+            {text: 'No'},
+          ],
+        );
+      } else {
+        setOn(false);
+      }
+    } catch (error) {
+      Alert.alert('Error changing Data', `${error}`);
+    }
+  }
+
   if (ctx.isLogged) {
     loadData();
     if (data) {
@@ -108,15 +138,44 @@ const Profile = () => {
             translucent={false}
             barStyle={'dark-content'}
           />
+          {on && (
+            <View style={styles.fabCheck}>
+              <IconFAB
+                onPress={changeData}
+                color={Colors.green_900}
+                icon="check"
+                size={50}
+              />
+            </View>
+          )}
           <View style={styles.titleView}>
             <Text style={styles.title}>{t('My Profile')}</Text>
           </View>
           <View style={styles.imageView}>
             <Image source={{uri: data.avatar}} style={styles.profileImage} />
+            {on && (
+              <View style={styles.fabEdit}>
+                <IconFAB
+                  onPress={() => {}}
+                  color={Colors.red_500}
+                  icon="edit-2"
+                  size={40}
+                />
+              </View>
+            )}
           </View>
           <View style={styles.profileInfo}>
             <View>
-              <Text style={styles.name}>{data.name}</Text>
+              {on ? (
+                <TextInput
+                  style={styles.name}
+                  defaultValue={data.name}
+                  onChangeText={setName}
+                />
+              ) : (
+                <Text style={styles.name}>{data.name}</Text>
+              )}
+
               <Text style={styles.email}>{data.email}</Text>
             </View>
           </View>
@@ -203,6 +262,16 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fabEdit: {
+    position: 'absolute',
+    top: 0,
+    right: '30%',
+  },
+  fabCheck: {
+    position: 'absolute',
+    top: '2%',
+    right: '7%',
   },
   profileImage: {
     height: 150,

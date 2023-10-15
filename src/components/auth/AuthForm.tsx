@@ -112,7 +112,7 @@ function AuthForm({
           defaultValue={ctx.email}
           rules={{
             required: true,
-            pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
           }}
           render={({field: {value, onChange}}) => (
             <AuthInput

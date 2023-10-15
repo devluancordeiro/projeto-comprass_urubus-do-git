@@ -90,7 +90,7 @@ const CartProducts = () => {
           <RedButton
             children={t('Buy')}
             onPress={() => {
-              return console.log('Buy');
+              navigation.navigate('checkout');
             }}
           />
         </View>

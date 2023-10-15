@@ -12,7 +12,7 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 
-const Checkout: React.FC = () => {
+const Checkout: React.FC = ({navigation}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedPayment, setSelectedPayment] = useState('None added');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
@@ -21,7 +21,9 @@ const Checkout: React.FC = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const hide = () => setOpenModal(false);
-  const [methodPayment, setMethodPayment] = useState(false);
+  const [methodPayment1, setMethodPayment1] = useState(false);
+  const [methodPayment2, setMethodPayment2] = useState(false);
+  const [methodPayment3, setMethodPayment3] = useState(false);
 
   const handleDeliverySelect = () => {
     setDeliveryPrice(15.0);
@@ -31,13 +33,12 @@ const Checkout: React.FC = () => {
     setTotalPrice(price + deliveryPrice);
   }, [deliveryPrice, price]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const modalHandler = () => {
     return (
       <Modal visible={openModal} animationType="slide" transparent={true}>
         <Modal
           visible={openModal}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           onRequestClose={() => setOpenModal(false)}>
           <View style={styles.viewTransparent}>
@@ -49,37 +50,55 @@ const Checkout: React.FC = () => {
             <View style={styles.grayLine} />
             <Text style={styles.modalTitle}>Choose your payment method</Text>
           </View>
+          <TouchableOpacity
+            style={
+              methodPayment1 ? styles.buttonPressed : styles.buttonNotPressed
+            }
+            onPress={() => {
+              setMethodPayment1(true);
+              setMethodPayment2(false);
+              setMethodPayment3(false);
+            }}>
+            <Text
+              style={
+                methodPayment1 ? styles.textPressed : styles.textNotPressed
+              }>
+              Cartão de crédito ou débito
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={
+              methodPayment2 ? styles.buttonPressed : styles.buttonNotPressed
+            }
+            onPress={() => {
+              setMethodPayment1(false);
+              setMethodPayment2(true);
+              setMethodPayment3(false);
+            }}>
+            <Text
+              style={
+                methodPayment2 ? styles.textPressed : styles.textNotPressed
+              }>
+              Pix
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={
+              methodPayment3 ? styles.buttonPressed : styles.buttonNotPressed
+            }
+            onPress={() => {
+              setMethodPayment1(false);
+              setMethodPayment2(false);
+              setMethodPayment3(true);
+            }}>
+            <Text
+              style={
+                methodPayment3 ? styles.textPressed : styles.textNotPressed
+              }>
+              Boleto bancário
+            </Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
-          onPress={() => {
-            setMethodPayment(!methodPayment);
-          }}>
-          <Text
-            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
-            Cartão de crédito ou débito
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
-          onPress={() => {
-            setMethodPayment(!methodPayment);
-          }}>
-          <Text
-            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
-            Pix
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={methodPayment ? styles.buttonPressed : styles.buttonNotPressed}
-          onPress={() => {
-            setMethodPayment(!methodPayment);
-          }}>
-          <Text
-            style={methodPayment ? styles.textPressed : styles.textNotPressed}>
-            Boleto bancário
-          </Text>
-        </TouchableOpacity>
       </Modal>
     );
   };
@@ -90,7 +109,11 @@ const Checkout: React.FC = () => {
       <View style={styles.view}>
         <Text style={styles.textCheckout}>Checkout</Text>
         <Text style={styles.textBold}>Shipping address</Text>
-        <TouchableOpacity style={styles.touchable}>
+        <TouchableOpacity
+          style={styles.touchable}
+          onPress={() => {
+            navigation.navigate('address');
+          }}>
           <Text style={styles.touchableClickText}>Click to add an adress</Text>
           <Text style={styles.touchableChangeText}>Change</Text>
         </TouchableOpacity>
@@ -130,6 +153,7 @@ const Checkout: React.FC = () => {
             Submit Order
           </RedButton>
         </View>
+        {modalHandler()}
       </View>
     </>
   );
@@ -159,19 +183,21 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Bold',
     fontWeight: 'bold',
     marginHorizontal: 16,
+    marginVertical: 10,
     color: Colors.black,
     textAlign: 'center',
+    alignSelf: 'flex-start',
   },
 
   touchable: {
-    width: 340,
+    width: '91%',
     height: 108,
     backgroundColor: Colors.white,
     elevation: 6,
     shadowColor: Colors.black,
     alignSelf: 'center',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 
@@ -197,6 +223,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: 32,
   },
 
@@ -205,7 +232,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: Sizes.s,
     fontFamily: 'OpenSans-Bold',
-    marginLeft: 86,
+    marginRight: '12%',
   },
 
   textNone: {
@@ -277,7 +304,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     width: '100%',
     height: '35%',
-    marginTop: '140%',
+    marginTop: '135%',
   },
 
   modalHeader: {
