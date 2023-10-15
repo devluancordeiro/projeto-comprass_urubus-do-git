@@ -19,6 +19,7 @@ import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../components/auth/AuthContext';
 import {User, editData, fetchUser} from '../components/api/User';
+import IconFAB from '../components/ui/IconFAB';
 
 const Profile = () => {
   const {t} = useTranslation();
@@ -137,11 +138,31 @@ const Profile = () => {
             translucent={false}
             barStyle={'dark-content'}
           />
+          {on && (
+            <View style={styles.fabCheck}>
+              <IconFAB
+                onPress={changeData}
+                color={Colors.green_900}
+                icon="check"
+                size={50}
+              />
+            </View>
+          )}
           <View style={styles.titleView}>
             <Text style={styles.title}>{t('My Profile')}</Text>
           </View>
           <View style={styles.imageView}>
             <Image source={{uri: data.avatar}} style={styles.profileImage} />
+            {on && (
+              <View style={styles.fabEdit}>
+                <IconFAB
+                  onPress={() => {}}
+                  color={Colors.red_500}
+                  icon="edit-2"
+                  size={40}
+                />
+              </View>
+            )}
           </View>
           <View style={styles.profileInfo}>
             <View>
@@ -241,6 +262,16 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fabEdit: {
+    position: 'absolute',
+    top: 0,
+    right: '30%',
+  },
+  fabCheck: {
+    position: 'absolute',
+    top: '2%',
+    right: '7%',
   },
   profileImage: {
     height: 150,
