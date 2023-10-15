@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,16 @@ import {
   Switch,
   TouchableOpacity,
   Modal,
+  Alert,
 } from 'react-native';
 import {Colors} from '../constants/styles';
 import Icon from 'react-native-vector-icons/Feather';
 import RedButton from '../components/ui/RedButton';
 import i18next from '../utils/i18next';
 import {useTranslation} from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../components/auth/AuthContext';
+import {User, fetchUser} from '../components/api/User';
 
 const Profile = () => {
   const {t} = useTranslation();
@@ -22,12 +26,14 @@ const Profile = () => {
   };
   const [on, setOn] = useState(false);
   const toggleOn = () => setOn(!on);
-  const [logged, setLogged] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const show = () => setOpenModal(true);
   const hide = () => setOpenModal(false);
   const [pressLanguage1, setPressLanguage1] = useState(false);
   const [pressLanguage2, setPressLanguage2] = useState(false);
+  const [data, setData] = useState<User | undefined>(undefined);
+  const navigation = useNavigation();
+  const ctx = useContext(AuthContext);
 
   const modalHandler = () => {
     return (
@@ -83,61 +89,71 @@ const Profile = () => {
     );
   };
 
-  if (logged) {
-    return (
-      <>
-        <StatusBar
-          backgroundColor={Colors.white}
-          translucent={false}
-          barStyle={'dark-content'}
-        />
-        <View style={styles.titleView}>
-          <Text style={styles.title}>{t('My Profile')}</Text>
-        </View>
-        <View style={styles.imageView}>
-          <Image
-            source={require('../assets/images/picProfile.png')}
-            style={styles.profileImage}
+  async function loadData() {
+    try {
+      const userData = await fetchUser(ctx.id);
+      setData(userData);
+    } catch (error) {
+      Alert.alert('Error trying to load user data', `${error}`);
+    }
+  }
+
+  if (ctx.isLogged) {
+    loadData();
+    if (data) {
+      return (
+        <>
+          <StatusBar
+            backgroundColor={Colors.white}
+            translucent={false}
+            barStyle={'dark-content'}
           />
-        </View>
-        <View style={styles.profileInfo}>
+          <View style={styles.titleView}>
+            <Text style={styles.title}>{t('My Profile')}</Text>
+          </View>
+          <View style={styles.imageView}>
+            <Image source={{uri: data.avatar}} style={styles.profileImage} />
+          </View>
+          <View style={styles.profileInfo}>
+            <View>
+              <Text style={styles.name}>{data.name}</Text>
+              <Text style={styles.email}>{data.email}</Text>
+            </View>
+          </View>
           <View>
-            <Text style={styles.name}>Juliane Gonçalves Freitas</Text>
-            <Text style={styles.email}>matildabrown@mail.com</Text>
-          </View>
-        </View>
-        <View>
-          <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>{t('Edit informations')}</Text>
-            <Switch
-              trackColor={{false: Colors.white, true: Colors.red_500}}
-              thumbColor={on ? Colors.gray_200 : Colors.gray_200}
-              value={on}
-              onValueChange={toggleOn}
-            />
-          </View>
-          <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>{t('Language')}</Text>
-            <TouchableOpacity onPress={show}>
-              <Icon
-                name={openModal ? 'chevron-down' : 'chevron-up'}
-                size={25}
+            <View style={styles.viewTopics}>
+              <Text style={styles.textTopics}>{t('Edit informations')}</Text>
+              <Switch
+                trackColor={{false: Colors.white, true: Colors.red_500}}
+                thumbColor={on ? Colors.gray_200 : Colors.gray_200}
+                value={on}
+                onValueChange={toggleOn}
               />
-            </TouchableOpacity>
+            </View>
+            <View style={styles.viewTopics}>
+              <Text style={styles.textTopics}>{t('Language')}</Text>
+              <TouchableOpacity onPress={show}>
+                <Icon
+                  name={openModal ? 'chevron-down' : 'chevron-up'}
+                  size={25}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.viewTopics}>
+              <Text style={styles.textTopics}>{t('Log out')}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  ctx.authLogout();
+                  navigation.navigate('Home' as never);
+                }}>
+                <Icon name={'log-out'} size={20} />
+              </TouchableOpacity>
+            </View>
+            {modalHandler()}
           </View>
-          <View style={styles.viewTopics}>
-            <Text style={styles.textTopics}>{t('Log out')}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setLogged(false);
-              }}>
-              <Icon name={'log-out'} size={20} />
-            </TouchableOpacity>
-          </View>
-          {modalHandler()}
-        </View>
-      </>
-    );
+        </>
+      );
+    }
   }
   return (
     <>
@@ -156,9 +172,7 @@ const Profile = () => {
         <View style={styles.logInButton}>
           <RedButton
             children={t('login')}
-            onPress={() => {
-              setLogged(true);
-            }}
+            onPress={() => navigation.navigate('auth' as never)}
           />
         </View>
       </View>
@@ -193,6 +207,7 @@ const styles = StyleSheet.create({
   profileImage: {
     height: 150,
     width: 150,
+    borderRadius: 75,
   },
   profileInfo: {
     alignItems: 'center',

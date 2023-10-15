@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 
-interface User {
+export interface User {
   id: number | undefined;
   email: string | undefined;
   password: string | undefined;
@@ -51,14 +51,13 @@ export async function register({name, email, password}: FormData) {
       throw new Error('User with this email already exists');
     }
 
-    const random = Math.floor(Math.random() * (1000 - 1) + 1);
     const response = await axios.post(
       'https://api.escuelajs.co/api/v1/users/',
       {
         name: name,
         email: email,
         password: password,
-        avatar: `https://api.lorem.space/image/face?w=640&h=480&r=${random}`,
+        avatar: 'https://100k-faces.glitch.me/random-image',
         role: 'customer',
       },
     );
@@ -111,5 +110,17 @@ export async function resetPassword({email, password}: FormData) {
     console.log(updateUserResponse.data);
   } catch (error) {
     Alert.alert('Password reset error', `${error}`);
+  }
+}
+
+export async function fetchUser(id: string) {
+  try {
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/users/${id}`,
+    );
+    let data: User = response.data;
+    return data;
+  } catch (error) {
+    Alert.alert('Fetch user error', `${error}`);
   }
 }
