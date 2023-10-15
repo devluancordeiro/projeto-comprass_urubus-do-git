@@ -66,5 +66,6 @@
     "Submit Order": "Submit Order",
     "Failed to search": "Failed to search",
     "Check your credentials or try again later": "Check your credentials or try again later",
-    "Failed to reset password": "Failed to reset password"
+    "Failed to reset password": "Failed to reset password",
+    "Your email or password is incorrect": "Your email or password is incorrect"
 }

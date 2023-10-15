@@ -87,12 +87,16 @@ const CartProducts = () => {
           <Text style={styles.priceText}>R$ {addPrices.toString()},00</Text>
         </View>
         <View style={styles.buttonView}>
-          <RedButton
-            children={t('Buy')}
-            onPress={() => {
-              navigation.navigate('checkout');
-            }}
-          />
+          {addPrices > 0 ? (
+            <RedButton
+              children={t('Buy')}
+              onPress={() => {
+                navigation.navigate('checkout');
+              }}
+            />
+          ) : (
+            <RedButton children={t('Buy')} disabled onPress={() => {}} />
+          )}
         </View>
       </View>
     </>
