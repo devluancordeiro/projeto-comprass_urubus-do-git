@@ -124,3 +124,20 @@ export async function fetchUser(id: string) {
     Alert.alert('Fetch user error', `${error}`);
   }
 }
+
+export async function editData(id: string, name: string) {
+  try {
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/users/${id}`,
+    );
+    let user: User = response.data;
+    user.name = name;
+    await axios.put(`https://api.escuelajs.co/api/v1/users/${id}`, user);
+    const editedResponse = await axios.get(
+      `https://api.escuelajs.co/api/v1/users/${id}`,
+    );
+    return editedResponse.data;
+  } catch (error) {
+    Alert.alert('Edit data error', `${error}`);
+  }
+}
