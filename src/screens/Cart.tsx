@@ -49,21 +49,8 @@ function Cart({navigation}) {
         <View style={styles.titleView}>
           <Text style={styles.title}>Cart</Text>
         </View>
-        <CartProduct navigation={navigation} />
-      </View>
-      <View style={styles.bottomView}>
-        <View style={styles.priceView}>
-          <Text style={styles.amountText}>Total amount:</Text>
-          <Text style={styles.priceText}>0 R$</Text>
-        </View>
-        <View style={styles.buttonView}>
-          <RedButton
-            children={'Buy'}
-            disabled
-            onPress={() => {
-              return console.log('Buy');
-            }}
-          />
+        <View style={styles.viewAll}>
+          <CartProduct navigation={navigation} />
         </View>
       </View>
     </>
@@ -72,6 +59,9 @@ function Cart({navigation}) {
 export default Cart;
 
 const styles = StyleSheet.create({
+  viewAll: {
+    height: '80%',
+  },
   viewProduct: {
     flexDirection: 'row',
     backgroundColor: Colors.white,
@@ -164,9 +154,11 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 24,
+    marginTop: 16,
+    marginBottom: 10,
   },
   priceView: {
+    marginTop: 12,
     marginHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
