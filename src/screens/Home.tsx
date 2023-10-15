@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
-  View,
-  ImageBackground,
-  StyleSheet,
   Image,
-  Text,
+  ImageBackground,
   ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import ProductsList from '../components/api/ProductsList';
-import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
-import {Colors, Sizes} from '../constants/styles';
-import {product, category} from '../constants/storeTypes';
 import SearchForProducts from '../components/api/SearchForProducts';
-import {useTranslation} from 'react-i18next';
+import AuthWelcome from '../components/auth/AuthWelcome';
+import {category, product} from '../constants/storeTypes';
+import {Colors, Sizes} from '../constants/styles';
+import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
 
 const Home = () => {
   const {t} = useTranslation();
@@ -46,6 +47,7 @@ const Home = () => {
           source={require('../assets/images/background-compass.png')}
           style={styles.headerBackground}>
           <View style={styles.headerWrapper}>
+            <AuthWelcome />
             <Image
               source={require('../assets/images/comprass-logo.png')}
               style={styles.headerImage}
