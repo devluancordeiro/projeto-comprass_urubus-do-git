@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {Pressable, View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import {product} from '../../constants/storeTypes';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Colors} from '../../constants/styles';
