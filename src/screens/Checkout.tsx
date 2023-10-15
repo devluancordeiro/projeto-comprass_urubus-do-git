@@ -11,9 +11,10 @@ import DeliverySection from '../components/ui/DeliverySection';
 import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
+import {useTranslation} from 'react-i18next';
 
 const Checkout: React.FC = ({navigation}) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {t} = useTranslation();
   const [selectedPayment, setSelectedPayment] = useState('None added');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -48,7 +49,9 @@ const Checkout: React.FC = ({navigation}) => {
         <View style={styles.viewTeste}>
           <View style={styles.modalHeader}>
             <View style={styles.grayLine} />
-            <Text style={styles.modalTitle}>Choose your payment method</Text>
+            <Text style={styles.modalTitle}>
+              {t('Choose your payment method')}
+            </Text>
           </View>
           <TouchableOpacity
             style={
@@ -63,7 +66,7 @@ const Checkout: React.FC = ({navigation}) => {
               style={
                 methodPayment1 ? styles.textPressed : styles.textNotPressed
               }>
-              Cartão de crédito ou débito
+              {t('Credit or debit card')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -79,7 +82,7 @@ const Checkout: React.FC = ({navigation}) => {
               style={
                 methodPayment2 ? styles.textPressed : styles.textNotPressed
               }>
-              Pix
+              {t('Pix')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -95,7 +98,7 @@ const Checkout: React.FC = ({navigation}) => {
               style={
                 methodPayment3 ? styles.textPressed : styles.textNotPressed
               }>
-              Boleto bancário
+              {t('Bank slip')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -107,41 +110,43 @@ const Checkout: React.FC = ({navigation}) => {
     <>
       <StatusBar backgroundColor={'transparent'} barStyle={'dark-content'} />
       <View style={styles.view}>
-        <Text style={styles.textCheckout}>Checkout</Text>
-        <Text style={styles.textBold}>Shipping address</Text>
+        <Text style={styles.textCheckout}>{t('Checkout')}</Text>
+        <Text style={styles.textBold}>{t('Shipping address')}</Text>
         <TouchableOpacity
           style={styles.touchable}
           onPress={() => {
             navigation.navigate('address');
           }}>
-          <Text style={styles.touchableClickText}>Click to add an adress</Text>
-          <Text style={styles.touchableChangeText}>Change</Text>
+          <Text style={styles.touchableClickText}>
+            {t('Click to add an adress')}
+          </Text>
+          <Text style={styles.touchableChangeText}>{t('Change')}</Text>
         </TouchableOpacity>
         <View style={styles.container}>
-          <Text style={styles.textBold}>Payment Method</Text>
+          <Text style={styles.textBold}>{t('Payment Method')}</Text>
           <TouchableOpacity onPress={() => setOpenModal(true)}>
-            <Text style={styles.changePaymentText}>Change</Text>
+            <Text style={styles.changePaymentText}>{t('Change')}</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.textNone}>None added</Text>
-        <Text style={styles.textBold}>Delivery method</Text>
+        <Text style={styles.textNone}>{t('None added')}</Text>
+        <Text style={styles.textBold}>{t('Delivery method')}</Text>
         <View style={styles.deliveryView}>
           <DeliverySection onPress={handleDeliverySelect} />
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.textInfo}>Order: </Text>
+          <Text style={styles.textInfo}>{t('Order')}: </Text>
           <View style={styles.flexContainer}>
             <Text style={styles.textPrice}>{price.toFixed(2)} R$ </Text>
           </View>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.textInfo}>Delivery: </Text>
+          <Text style={styles.textInfo}>{t('Delivery')}: </Text>
           <View style={styles.flexContainer}>
             <Text style={styles.textPrice}>{deliveryPrice.toFixed(2)} R$ </Text>
           </View>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.textSummary}>Summary: </Text>
+          <Text style={styles.textSummary}>{t('Summary')}: </Text>
           <View style={styles.flexContainer}>
             <Text style={styles.textPriceSumarry}>
               {totalPrice.toFixed(2)} R${' '}
@@ -150,7 +155,7 @@ const Checkout: React.FC = ({navigation}) => {
         </View>
         <View style={styles.button}>
           <RedButton disabled onPress={function (): void {}}>
-            Submit Order
+            {t('Submit Order')}
           </RedButton>
         </View>
         {modalHandler()}

@@ -4,8 +4,10 @@ import AuthInput from '../components/auth/AuthInput';
 import Header from '../components/ui/Header';
 import RedButton from '../components/ui/RedButton';
 import {validation} from '../components/auth/AuthInput';
+import {useTranslation} from 'react-i18next';
 
 function Address() {
+  const {t} = useTranslation();
   const [cep, setCep] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -46,11 +48,11 @@ function Address() {
 
   return (
     <View style={styles.container}>
-      <Header title="Adding Shipping Address" />
+      <Header title={t('Adding Shipping Address')} />
       <View style={styles.form}>
         <View>
           <AuthInput
-            label="Zip Code (Postal Code)"
+            label={t('Zip Code (Postal Code)')}
             validation={status}
             onChangeText={text => setCep(text)}
             value={cep}
@@ -58,7 +60,7 @@ function Address() {
             border
           />
           <AuthInput
-            label="Address"
+            label={t('Address')}
             value={address}
             disabled={status === 'validating'}
             onChangeText={text => setAddress(text)}
@@ -66,7 +68,7 @@ function Address() {
             border
           />
           <AuthInput
-            label="City"
+            label={t('City')}
             value={city}
             disabled={status === 'validating'}
             onChangeText={text => setCity(text)}
@@ -74,7 +76,7 @@ function Address() {
             border
           />
           <AuthInput
-            label="State/Province/Region"
+            label={t('State/Province/Region')}
             value={state}
             disabled={status === 'validating'}
             onChangeText={text => setState(text)}
@@ -82,7 +84,7 @@ function Address() {
             border
           />
           <AuthInput
-            label="Full name"
+            label={t('Full name')}
             value={fullName}
             onChangeText={text => setFullName(text)}
             enableAutoCapitalize
@@ -94,7 +96,7 @@ function Address() {
           disabled={
             !(status === 'sucess') || !address || !city || !state || !fullName
           }>
-          Save Address
+          {t('Save Address')}
         </RedButton>
       </View>
     </View>
