@@ -57,10 +57,10 @@ function AuthInput({
     <View
       style={[
         styles.inputViewWrapper,
-        disabled && styles.inputViewWrapperDisabled,
         validation === 'sucess' && styles.inputViewWrapperSucess,
         validation === 'error' && styles.inputViewWrapperError,
         border && styles.borderConditionalStyle,
+        disabled && styles.inputViewWrapperDisabled,
       ]}>
       <View style={styles.inputContainer}>
         <Text style={[styles.inputLabel, labelConditionalStyle]}>{label}</Text>
@@ -77,27 +77,25 @@ function AuthInput({
           />
         </View>
       </View>
-
-      {!disabled &&
-        (isPassword ? (
-          <Pressable
-            style={styles.inputIconWrapper}
-            onPress={() => setIsShowing(!isShowing)}>
-            <Image
-              source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
-            />
-          </Pressable>
-        ) : (
-          validation && (
-            <View style={styles.inputIconWrapper}>
-              {validation === 'validating' ? (
-                <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
-              ) : (
-                <Image source={validationIcons[validation]} />
-              )}
-            </View>
-          )
-        ))}
+      {isPassword ? (
+        <Pressable
+          style={styles.inputIconWrapper}
+          onPress={() => setIsShowing(!isShowing)}>
+          <Image
+            source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
+          />
+        </Pressable>
+      ) : (
+        validation && (
+          <View style={styles.inputIconWrapper}>
+            {validation === 'validating' ? (
+              <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
+            ) : (
+              <Image source={validationIcons[validation]} />
+            )}
+          </View>
+        )
+      )}
     </View>
   );
 }

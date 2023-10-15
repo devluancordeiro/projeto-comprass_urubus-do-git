@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AuthForm from './AuthForm';
 import {ImageBackground, StyleSheet, View} from 'react-native';
+import {AuthContext} from './AuthContext';
 
 interface FormData {
   name?: string | undefined;
@@ -30,8 +31,11 @@ function AuthFormHandler({
   exists,
 }: AuthFormHandlerProps): JSX.Element {
   function submitHandler(data: FormData) {
+    ctx.generateError(false);
     authentication({...data});
   }
+
+  const ctx = useContext(AuthContext);
 
   return (
     <View style={styles.container}>

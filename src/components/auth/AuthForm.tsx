@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import {Image, StyleSheet, Text, View} from 'react-native';
@@ -49,15 +50,14 @@ function AuthForm({
   >();
 
   React.useEffect(() => {
-    if (ctx.loading) {
-      console.log(ctx.loading);
+    if (ctx.searching) {
       setEmailValidation('validating');
     } else if (errors.email) {
       setEmailValidation('error');
     } else {
       setEmailValidation('sucess');
     }
-  }, [ctx.loading, errors.email]);
+  }, [ctx, ctx.searching, errors.email]);
 
   return (
     <View style={styles.viewStyle}>
@@ -101,6 +101,7 @@ function AuthForm({
               validation={
                 value ? (errors.name ? 'error' : 'sucess') : undefined
               }
+              disabled={ctx.loading}
             />
           )}
         />
@@ -120,6 +121,7 @@ function AuthForm({
               value={value}
               onChangeText={onChange}
               validation={value ? emailValidation : undefined}
+              disabled={ctx.loading}
             />
           )}
         />
@@ -138,7 +140,7 @@ function AuthForm({
               value={value}
               onChangeText={onChange}
               isPassword
-              disabled={type === 'forgot' && !exists}
+              disabled={(type === 'forgot' && !exists) || ctx.loading}
               validation={
                 value ? (errors.password ? 'error' : 'sucess') : undefined
               }
@@ -160,7 +162,7 @@ function AuthForm({
               value={value}
               onChangeText={onChange}
               isPassword
-              disabled={type === 'forgot' && !exists}
+              disabled={(type === 'forgot' && !exists) || ctx.loading}
               validation={
                 value
                   ? errors.confirmPassword
@@ -190,6 +192,11 @@ function AuthForm({
           {t('Your password is not the same as your confirmation')}
         </Text>
       )}
+      {ctx.error && (
+        <Text style={styles.errorText}>
+          {t('Your email or password is incorrect')}
+        </Text>
+      )}
       {type === 'login' && (
         <View style={styles.buttons}>
           <RedButton
@@ -205,17 +212,42 @@ function AuthForm({
             validating={ctx.loading}>
             {t('Login')}
           </RedButton>
-          <TextButton onPress={() => navigation.navigate('signup' as never)}>
-            {t('Not have an account yet?')} {'\n'} {t('Sign up')}
-          </TextButton>
-          <TextButton onPress={() => navigation.navigate('forgot' as never)}>
-            {t('I forgot my password')}
-          </TextButton>
-          <TextButton onPress={() => navigation.goBack()}>
-            {t('I dont want to login')}
-          </TextButton>
+          {!ctx.loading ? (
+            <TextButton
+              onPress={() => {
+                navigation.navigate('signup' as never);
+                ctx.generateError(false);
+              }}>
+              {t('Not have an account yet?')} {'\n'} {t('Sign up')}
+            </TextButton>
+          ) : (
+            <View style={{height: 56.5}} />
+          )}
+          {!ctx.loading ? (
+            <TextButton
+              onPress={() => {
+                navigation.navigate('forgot' as never);
+                ctx.generateError(false);
+              }}>
+              {t('I forgot my password')}
+            </TextButton>
+          ) : (
+            <View style={{height: 56.5}} />
+          )}
+          {!ctx.loading ? (
+            <TextButton
+              onPress={() => {
+                navigation.goBack();
+                ctx.generateError(false);
+              }}>
+              {t('I dont want to login')}
+            </TextButton>
+          ) : (
+            <View style={{height: 56.5}} />
+          )}
         </View>
       )}
+
       {type === 'signup' && (
         <View style={styles.buttons}>
           <RedButton
@@ -233,11 +265,20 @@ function AuthForm({
             validating={ctx.loading}>
             {t('Sign Up')}
           </RedButton>
-          <TextButton onPress={() => navigation.navigate('login' as never)}>
-            {t('I dont want to register')}
-          </TextButton>
+          {!ctx.loading ? (
+            <TextButton
+              onPress={() => {
+                navigation.navigate('login' as never);
+                ctx.generateError(false);
+              }}>
+              {t('I dont want to register')}
+            </TextButton>
+          ) : (
+            <View style={{height: 56.5}} />
+          )}
         </View>
       )}
+
       {type === 'forgot' && (
         <View style={styles.buttons}>
           <RedButton
@@ -252,9 +293,17 @@ function AuthForm({
             validating={ctx.loading}>
             {t('Confirm')}
           </RedButton>
-          <TextButton onPress={() => navigation.navigate('login' as never)}>
-            {t('I remembered my password')}
-          </TextButton>
+          {!ctx.loading ? (
+            <TextButton
+              onPress={() => {
+                navigation.navigate('login' as never);
+                ctx.generateError(false);
+              }}>
+              {t('I remembered my password')}
+            </TextButton>
+          ) : (
+            <View style={{height: 56.5}} />
+          )}
         </View>
       )}
     </View>

@@ -19,12 +19,15 @@ export function ForgotPassword() {
     async ({email}: FormData) => {
       try {
         ctx.isLoading(true);
+        ctx.isSearching(true);
         const result = await search({email});
         setExists(result);
         ctx.saveEmail(email);
         ctx.isLoading(false);
+        ctx.isSearching(false);
       } catch (error) {
         ctx.isLoading(false);
+        ctx.isSearching(false);
         Alert.alert(
           'Failed to search',
           'Check your credentials or try again later',
@@ -33,17 +36,6 @@ export function ForgotPassword() {
     },
     [ctx],
   );
-
-  let authFormComponent;
-  if (exists) {
-    authFormComponent = (
-      <AuthFormHandler isForgoting exists authentication={forgotHandler} />
-    );
-  } else {
-    authFormComponent = (
-      <AuthFormHandler isForgoting authentication={searchHandler} />
-    );
-  }
 
   useEffect(() => {}, [exists, searchHandler]);
 
@@ -62,6 +54,17 @@ export function ForgotPassword() {
         'Check your credentials or try again later',
       );
     }
+  }
+
+  let authFormComponent;
+  if (exists) {
+    authFormComponent = (
+      <AuthFormHandler isForgoting exists authentication={forgotHandler} />
+    );
+  } else {
+    authFormComponent = (
+      <AuthFormHandler isForgoting authentication={searchHandler} />
+    );
   }
 
   return authFormComponent;

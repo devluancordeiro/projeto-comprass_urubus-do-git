@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {login} from '../components/api/User';
-import {Alert} from 'react-native';
 import {AuthContext} from '../components/auth/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 
@@ -19,19 +18,24 @@ export function Login() {
   async function loginHandler({email, password}: FormData) {
     try {
       ctx.isLoading(true);
+      ctx.generateError(false);
       const id = await login({email, password});
-      ctx.authLogin(id?.toString());
-      navigation.navigate('app' as never);
+      if (typeof id === 'number') {
+        ctx.authLogin(id?.toString());
+      } else {
+        ctx.generateError(true);
+      }
       ctx.isLoading(false);
-    } catch (error) {
+    } catch {
       navigation.navigate('auth' as never);
-      ctx.isLoading(false);
-      Alert.alert(
-        'Failed to login',
-        'Check your credentials or try again later',
-      );
     }
   }
+
+  useEffect(() => {
+    if (ctx.isLogged) {
+      navigation.navigate('app' as never);
+    }
+  }, [ctx.isLogged, navigation]);
 
   return <AuthFormHandler isLogging authentication={loginHandler} />;
 }

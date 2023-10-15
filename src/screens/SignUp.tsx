@@ -35,6 +35,16 @@ export function SingUp() {
     }
   }
 
-  return <AuthFormHandler isRegistering authentication={signUpHandler} />;
+  function resetError() {
+    ctx.generateError('');
+  }
+
+  return (
+    <AuthFormHandler
+      isRegistering
+      authentication={signUpHandler}
+      resetError={resetError}
+    />
+  );
 }
 export default SingUp;

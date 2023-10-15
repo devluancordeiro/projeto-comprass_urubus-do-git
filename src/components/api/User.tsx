@@ -32,7 +32,7 @@ export async function login({email, password}: FormData) {
       throw new Error('Invalid email or password');
     }
   } catch (error) {
-    Alert.alert('Login error', `${error}`);
+    return error;
   }
 }
 
