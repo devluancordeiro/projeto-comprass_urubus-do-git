@@ -21,9 +21,10 @@ export function Login() {
       ctx.isLoading(true);
       const id = await login({email, password});
       ctx.authLogin(id?.toString());
-      ctx.isLoading(false);
       navigation.navigate('app' as never);
+      ctx.isLoading(false);
     } catch (error) {
+      navigation.navigate('auth' as never);
       ctx.isLoading(false);
       Alert.alert(
         'Failed to login',
