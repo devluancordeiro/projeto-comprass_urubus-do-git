@@ -52,7 +52,7 @@ const Profile = () => {
         <View style={styles.viewTeste}>
           <View style={styles.modalHeader}>
             <View style={styles.grayLine} />
-            <Text style={styles.modalTitle}>Languages</Text>
+            <Text style={styles.modalTitle}>{t('Languages')}</Text>
           </View>
           <TouchableOpacity
             style={
@@ -67,7 +67,7 @@ const Profile = () => {
               style={
                 pressLanguage1 ? styles.languageTextP : styles.languageText
               }>
-              English
+              {t('English')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -83,7 +83,7 @@ const Profile = () => {
               style={
                 pressLanguage2 ? styles.languageTextP : styles.languageText
               }>
-              Portuguese - Brazil
+              {t('Portuguese - Brazil')}
             </Text>
           </TouchableOpacity>
         </View>

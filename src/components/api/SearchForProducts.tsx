@@ -11,12 +11,14 @@ import {Colors} from '../../constants/styles';
 import SearchedProductCard from './SearchedProductCard';
 import {getProductsByTitle} from '../../utils/fetchProducts';
 import {product} from '../../constants/storeTypes';
+import {useTranslation} from 'react-i18next';
 
 function Separator() {
   return <View style={styles.separator} />;
 }
 
 function SearchForProducts({navigation}) {
+  const {t} = useTranslation();
   const [isSearching, setisSearching] = useState(false);
   const [searchedTitle, setSearchedTitle] = useState('');
   const [searchedProducts, setSearchedProducts] = useState<product[]>([]);
@@ -49,7 +51,7 @@ function SearchForProducts({navigation}) {
         <View style={styles.search}>
           <View style={styles.inputWrapper}>
             <TextInput
-              placeholder="Enter the product name"
+              placeholder={t('Enter the product name')}
               style={styles.input}
               onChangeText={text => setSearchedTitle(text)}
               value={searchedTitle}

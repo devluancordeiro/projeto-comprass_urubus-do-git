@@ -20,41 +20,47 @@ interface CartProductCardProps {
 function CartProductCard({item, quantity, onTap}: CartProductCardProps) {
   const dispatch = useDispatch();
   return (
-    <Pressable onPress={onTap} style={styles.viewProduct}>
+    <TouchableOpacity onPress={onTap} style={styles.viewProduct}>
       <View style={styles.viewProductImage}>
         <Image source={{uri: item?.images[0]}} style={styles.productImage} />
       </View>
-      <View style={styles.middleView}>
-        <View>
-          <Text style={styles.productName}>{item.title}</Text>
+      <View style={styles.viewInfo}>
+        <View style={styles.middleView}>
+          <View>
+            <Text style={styles.productName}>{item.title}</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.remove}
+            onPress={() => dispatch(deleteItemCount(item.id))}>
+            <Ionicons name="trash-outline" size={22} color={Colors.white} />
+          </TouchableOpacity>
         </View>
-        <View style={styles.viewProductCount}>
-          <View>
-            <TouchableOpacity
-              style={styles.buttonCount}
-              onPress={() => dispatch(reduceItemCountWithoutRemove(item.id))}>
-              <Ionicons name="remove-outline" size={30} color={Colors.white} />
-            </TouchableOpacity>
+        <View style={styles.lastView}>
+          <View style={styles.viewProductCount}>
+            <View>
+              <TouchableOpacity
+                style={styles.buttonCount}
+                onPress={() => dispatch(reduceItemCountWithoutRemove(item.id))}>
+                <Ionicons
+                  name="remove-outline"
+                  size={30}
+                  color={Colors.white}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.numberCount}>{quantity}</Text>
+            <View>
+              <TouchableOpacity
+                style={styles.buttonCount}
+                onPress={() => dispatch(increaseItemCount(item.id))}>
+                <Ionicons name="add-outline" size={30} color={Colors.white} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <Text style={styles.numberCount}>{quantity}</Text>
-          <View>
-            <TouchableOpacity
-              style={styles.buttonCount}
-              onPress={() => dispatch(increaseItemCount(item.id))}>
-              <Ionicons name="add-outline" size={30} color={Colors.white} />
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.itemPrice}>R$ {item.price},00</Text>
         </View>
       </View>
-      <View style={styles.lastView}>
-        <TouchableOpacity
-          style={styles.remove}
-          onPress={() => dispatch(deleteItemCount(item.id))}>
-          <Ionicons name="trash-outline" size={22} color={Colors.white} />
-        </TouchableOpacity>
-        <Text style={styles.itemPrice}>R$ {item.price},00</Text>
-      </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -70,15 +76,21 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   viewProductImage: {
-    flex: 1,
+    marginRight: 12,
   },
   productImage: {
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
     width: 100,
     height: '100%',
   },
-  middleView: {
+  viewInfo: {
     flex: 1,
-    marginHorizontal: 4,
+  },
+  middleView: {
+    textAlign: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   productName: {
     fontFamily: 'OpenSans-Bold',
@@ -101,11 +113,11 @@ const styles = StyleSheet.create({
   },
   numberCount: {
     marginTop: '8%',
-    marginHorizontal: 18,
+    marginHorizontal: 15,
     color: Colors.black,
   },
   lastView: {
-    flex: 1,
+    flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
   },

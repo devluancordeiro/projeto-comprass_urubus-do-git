@@ -5,7 +5,7 @@ import {Colors} from '../../constants/styles';
 
 interface HeaderProps {
   title: string;
-  goBack: () => void;
+  goBack?: () => void;
 }
 
 function Header({title, goBack}: HeaderProps) {

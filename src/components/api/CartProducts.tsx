@@ -1,16 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList, View, Text} from 'react-native';
 import {getProductById} from '../../utils/fetchProducts';
 import {product} from '../../constants/storeTypes';
 import CartProductCard from './CartProductCard';
 import {useSelector} from 'react-redux';
 import type {RootState} from '../../redux/counterSlice';
+import RedButton from '../ui/RedButton';
+import {Colors} from '../../constants/styles';
+import {useTranslation} from 'react-i18next';
 
 const CartProduct = ({navigation}) => {
+  const {t} = useTranslation();
+  let add: number = 0;
+  const [addPrices, setAddPrices] = useState(0);
   const productsCart = useSelector((state: RootState) => state.counter);
   const [products, setProducts] = useState(
     new Map<number, {productItem: product; quantity: number}>(),
   );
+
+  function amount(value: number) {
+    add += Number(value);
+    setAddPrices(add);
+    return addPrices;
+  }
 
   useEffect(() => {
     async function fetchProducts() {
@@ -42,21 +54,44 @@ const CartProduct = ({navigation}) => {
   }, [productsCart]);
 
   return (
-    <FlatList
-      style={styles.cartScroll}
-      data={Array.from(products.values())}
-      keyExtractor={({productItem}) => productItem.id.toString()}
-      renderItem={({item}) => (
-        <CartProductCard
-          key={item.productItem.id}
-          quantity={item.quantity}
-          item={item.productItem}
-          onTap={() =>
-            navigation.navigate('details', {productOpened: item.productItem})
-          }
+    <>
+      <View>
+        <FlatList
+          style={styles.cartScroll}
+          data={Array.from(products.values())}
+          keyExtractor={({productItem}) => productItem.id.toString()}
+          renderItem={({item}) => {
+            amount(Number(item.productItem.price) * Number(item.quantity));
+            return (
+              <CartProductCard
+                key={item.productItem.id}
+                quantity={item.quantity}
+                item={item.productItem}
+                onTap={() =>
+                  navigation.navigate('details', {
+                    productOpened: item.productItem,
+                  })
+                }
+              />
+            );
+          }}
         />
-      )}
-    />
+      </View>
+      <View style={styles.bottomView}>
+        <View style={styles.priceView}>
+          <Text style={styles.amountText}>{t('Total amount:')}</Text>
+          <Text style={styles.priceText}>R$ {addPrices.toString()},00</Text>
+        </View>
+        <View style={styles.buttonView}>
+          <RedButton
+            children={t('Buy')}
+            onPress={() => {
+              return console.log('Buy');
+            }}
+          />
+        </View>
+      </View>
+    </>
   );
 };
 
@@ -65,6 +100,31 @@ export default CartProduct;
 const styles = StyleSheet.create({
   cartScroll: {
     marginTop: '16%',
-    height: '60%',
+    height: '76%',
+  },
+  bottomView: {
+    justifyContent: 'flex-end',
+    marginTop: 9,
+    marginBottom: 10,
+  },
+  priceView: {
+    marginHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  amountText: {
+    fontFamily: 'OpenSans-Regular',
+    color: Colors.gray_500,
+    fontSize: 16,
+  },
+  priceText: {
+    fontFamily: 'OpenSans-SemiBold',
+    fontSize: 20,
+    color: Colors.black,
+  },
+  buttonView: {
+    marginTop: 28,
+    marginHorizontal: 16,
   },
 });

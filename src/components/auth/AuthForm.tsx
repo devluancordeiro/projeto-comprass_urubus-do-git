@@ -7,6 +7,7 @@ import TextButton from '../ui/TextButton';
 import {useNavigation} from '@react-navigation/native';
 import {Colors, Sizes} from '../../constants/styles';
 import {AuthContext} from './AuthContext';
+import {useTranslation} from 'react-i18next';
 
 interface AuthFormProps {
   isName?: boolean;
@@ -34,6 +35,7 @@ function AuthForm({
   exists,
   onSubmit,
 }: AuthFormProps): JSX.Element {
+  const {t} = useTranslation();
   const {
     control,
     handleSubmit,
@@ -66,18 +68,22 @@ function AuthForm({
         />
       ) : type === 'signup' ? (
         <View>
-          <Text style={styles.title}>Sign Up</Text>
+          <Text style={styles.title}>{t('Sign Up')}</Text>
           <Text style={styles.text}>
-            Choose a really cool name that only contains spaces as special
-            characters. Oh, and your password must have more than 4 digits! :)
+            {t(
+              'Choose a really cool name that only contains spaces as special characters. Oh, and your password must have more than 4 digits!',
+            )}{' '}
+            :)
           </Text>
         </View>
       ) : (
         <View>
-          <Text style={styles.title}>Forgot Password</Text>
+          <Text style={styles.title}>{t('Forgot Password')}</Text>
           <Text style={styles.text}>
-            Enter your email and let us see if it exists for you to change your
-            password :)
+            {t(
+              'Enter your email and let us see if it exists for you to change your password',
+            )}{' '}
+            :)
           </Text>
         </View>
       )}
@@ -88,7 +94,7 @@ function AuthForm({
           rules={{required: true, pattern: /^[A-Za-z0-9]+$/}}
           render={({field: {value, onChange}}) => (
             <AuthInput
-              label={'Name'}
+              label={t('Name')}
               value={value}
               onChangeText={onChange}
               enableAutoCapitalize
@@ -128,7 +134,7 @@ function AuthForm({
           }}
           render={({field: {value, onChange}}) => (
             <AuthInput
-              label={'Password'}
+              label={t('Password')}
               value={value}
               onChangeText={onChange}
               isPassword
@@ -150,7 +156,7 @@ function AuthForm({
           }}
           render={({field: {value, onChange}}) => (
             <AuthInput
-              label={'Confirm Password'}
+              label={t('Confirm Password')}
               value={value}
               onChangeText={onChange}
               isPassword
@@ -168,20 +174,20 @@ function AuthForm({
       )}
       {errors.name && (
         <Text style={styles.errorText}>
-          Your name is not valid, use only letters and numbers{' '}
+          {t('Your name is not valid, use only letters and numbers')}{' '}
         </Text>
       )}
       {errors.email && (
-        <Text style={styles.errorText}>Your email is not valid</Text>
+        <Text style={styles.errorText}>{t('Your email is not valid')}</Text>
       )}
       {errors.password && (
         <Text style={styles.errorText}>
-          Your password must be longer than 6 digits.{' '}
+          {t('Your password must be longer than 6 digits.')}{' '}
         </Text>
       )}
       {errors.confirmPassword && (
         <Text style={styles.errorText}>
-          Your password is not the same as your confirmation
+          {t('Your password is not the same as your confirmation')}
         </Text>
       )}
       {type === 'login' && (
@@ -197,16 +203,16 @@ function AuthForm({
               !!errors.password
             }
             validating={ctx.loading}>
-            Login
+            {t('Login')}
           </RedButton>
           <TextButton onPress={() => navigation.navigate('signup' as never)}>
-            Not have an account yet? {'\n'} Sign up
+            {t('Not have an account yet?')} {'\n'} {t('Sign up')}
           </TextButton>
           <TextButton onPress={() => navigation.navigate('forgot' as never)}>
-            I forgot my password
+            {t('I forgot my password')}
           </TextButton>
           <TextButton onPress={() => navigation.goBack()}>
-            I don't want to login
+            {t('I dont want to login')}
           </TextButton>
         </View>
       )}
@@ -225,10 +231,10 @@ function AuthForm({
               !!errors.confirmPassword
             }
             validating={ctx.loading}>
-            Sign Up
+            {t('Sign Up')}
           </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>
-            I don't want to register
+            {t('I dont want to register')}
           </TextButton>
         </View>
       )}
@@ -238,16 +244,16 @@ function AuthForm({
             onPress={handleSubmit(onSubmit)}
             disabled={(!!isEmail && !watch('email')) || !!errors.email}
             validating={ctx.loading}>
-            Search
+            {t('Search')}
           </RedButton>
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={!exists}
             validating={ctx.loading}>
-            Confirm
+            {t('Confirm')}
           </RedButton>
           <TextButton onPress={() => navigation.navigate('login' as never)}>
-            I remembered my password
+            {t('I remembered my password')}
           </TextButton>
         </View>
       )}
