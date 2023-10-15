@@ -11,13 +11,16 @@ import {
 } from 'react-native';
 import {Colors, Sizes} from '../../constants/styles';
 
+export type validation = 'validating' | 'sucess' | 'error' | '';
+
 interface AuthInputProps extends TextInputProps {
   label: string;
   value: string | undefined;
   enableAutoCapitalize?: boolean;
   isPassword?: boolean;
-  validation?: 'validating' | 'sucess' | 'error';
+  validation?: validation;
   disabled?: boolean;
+  border?: boolean;
 }
 
 const passwordVisibilityIcons = {
@@ -37,13 +40,14 @@ function AuthInput({
   validation,
   enableAutoCapitalize,
   disabled,
+  border,
   ...props
 }: AuthInputProps): JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
   const [isShowing, setIsShowing] = useState(isPassword);
 
   const labelConditionalStyle = {
-    top: !isFocused ? 22 : 11,
+    top: !isFocused && !value ? 22 : 11,
     fontSize: !isFocused ? Sizes.s : Sizes.xs,
   };
 
@@ -56,6 +60,7 @@ function AuthInput({
         disabled && styles.inputViewWrapperDisabled,
         validation === 'sucess' && styles.inputViewWrapperSucess,
         validation === 'error' && styles.inputViewWrapperError,
+        border && styles.borderConditionalStyle,
       ]}>
       <View style={styles.inputContainer}>
         <Text style={[styles.inputLabel, labelConditionalStyle]}>{label}</Text>
@@ -119,6 +124,10 @@ const styles = StyleSheet.create({
   },
   inputViewWrapperDisabled: {
     backgroundColor: Colors.gray_200,
+  },
+  borderConditionalStyle: {
+    borderWidth: 1,
+    borderColor: Colors.gray_200,
   },
   inputContainer: {
     flex: 1,
