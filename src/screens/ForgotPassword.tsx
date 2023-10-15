@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {resetPassword, search} from '../components/api/User';
 import {Alert} from 'react-native';
 import {AuthContext} from '../components/auth/AuthContext';
+import {useNavigation} from '@react-navigation/native';
 
 export function ForgotPassword() {
   interface FormData {
@@ -13,51 +14,58 @@ export function ForgotPassword() {
   }
 
   const ctx = React.useContext(AuthContext);
+  const navigation = useNavigation();
   const [exists, setExists] = useState<boolean | undefined>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const searchHandler = useCallback(
     async ({email}: FormData) => {
       try {
+        setIsLoading(true);
         ctx.isLoading(true);
         ctx.isSearching(true);
         const result = await search({email});
         setExists(result);
         ctx.saveEmail(email);
-        ctx.isLoading(false);
-        ctx.isSearching(false);
       } catch (error) {
-        ctx.isLoading(false);
-        ctx.isSearching(false);
         Alert.alert(
           'Failed to search',
           'Check your credentials or try again later',
         );
+      } finally {
+        setIsLoading(false);
+        ctx.isLoading(false);
+        ctx.isSearching(false);
       }
     },
     [ctx],
   );
 
-  useEffect(() => {}, [exists, searchHandler]);
-
   async function forgotHandler({email, password}: FormData) {
     try {
+      setIsLoading(true);
       ctx.isLoading(true);
-      const data = await resetPassword({email, password});
-      console.log(data);
+      await resetPassword({email, password});
+      Alert.alert('Password succesfully changed', 'Try to login now!');
       setExists(false);
-      ctx.isLoading(false);
+      navigation.navigate('login' as never);
     } catch (error) {
-      setExists(false);
-      ctx.isLoading(false);
       Alert.alert(
         'Failed to reset password',
         'Check your credentials or try again later',
       );
+    } finally {
+      setIsLoading(false);
+      ctx.isLoading(false);
     }
   }
 
   let authFormComponent;
-  if (exists) {
+  if (isLoading) {
+    authFormComponent = (
+      <AuthFormHandler isForgoting authentication={searchHandler} />
+    );
+  } else if (exists) {
     authFormComponent = (
       <AuthFormHandler isForgoting exists authentication={forgotHandler} />
     );
