@@ -66,5 +66,6 @@
     "Submit Order": "Finalizar pedido",
     "Failed to search": "Falha ao pesquisar", 
     "Check your credentials or try again later": "Verifique suas credenciais ou tente novamente mais tarde",
-    "Failed to reset password": "Falha ao redefinir a senha"
+    "Failed to reset password": "Falha ao redefinir a senha",
+    "Your email or password is incorrect": "Seu email ou senha está incorreto"
 }
