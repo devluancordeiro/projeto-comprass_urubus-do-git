@@ -3,8 +3,10 @@ import {View, ImageBackground, StyleSheet, Text, StatusBar} from 'react-native';
 import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
+import {useTranslation} from 'react-i18next';
 
 const Success = () => {
+  const {t} = useTranslation();
   return (
     <>
       <StatusBar
@@ -16,13 +18,17 @@ const Success = () => {
         <ImageBackground
           style={styles.image}
           source={require('../assets/images/success.png')}>
-          <Text style={styles.textBold}>Success!</Text>
+          <Text style={styles.textBold}>{t('Success')}!</Text>
           <Text style={styles.textOrder}>
-            Your order will be delivered soon.
+            {t('Your order will be delivered soon')}.
           </Text>
-          <Text style={styles.textThanks}>Thank you for choosing our app!</Text>
+          <Text style={styles.textThanks}>
+            {t('Thank you for choosing our app')}!
+          </Text>
           <View style={styles.button}>
-            <RedButton onPress={function (): void {}}>Continue</RedButton>
+            <RedButton onPress={function (): void {}}>
+              {t('Continue')}
+            </RedButton>
           </View>
         </ImageBackground>
       </View>

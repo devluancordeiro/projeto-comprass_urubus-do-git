@@ -4,8 +4,10 @@ import {resetPassword, search} from '../components/api/User';
 import {Alert} from 'react-native';
 import {AuthContext} from '../components/auth/AuthContext';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export function ForgotPassword() {
+  const {t} = useTranslation();
   interface FormData {
     name?: string | undefined;
     email?: string | undefined;
@@ -29,8 +31,8 @@ export function ForgotPassword() {
         ctx.saveEmail(email);
       } catch (error) {
         Alert.alert(
-          'Failed to search',
-          'Check your credentials or try again later',
+          t('Failed to search'),
+          t('Check your credentials or try again later'),
         );
       } finally {
         setIsLoading(false);
@@ -46,13 +48,13 @@ export function ForgotPassword() {
       setIsLoading(true);
       ctx.isLoading(true);
       await resetPassword({email, password});
-      Alert.alert('Password succesfully changed', 'Try to login now!');
+      Alert.alert(t('Password succesfully changed'), t('Try to login now!'));
       setExists(false);
       navigation.navigate('login' as never);
     } catch (error) {
       Alert.alert(
-        'Failed to reset password',
-        'Check your credentials or try again later',
+        t('Failed to reset password'),
+        t('Check your credentials or try again later'),
       );
     } finally {
       setIsLoading(false);

@@ -3,8 +3,10 @@ import {View, Image, StyleSheet, Text, StatusBar} from 'react-native';
 import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
+import {useTranslation} from 'react-i18next';
 
 const SuccessPix = () => {
+  const {t} = useTranslation();
   return (
     <>
       <StatusBar
@@ -17,16 +19,16 @@ const SuccessPix = () => {
           source={require('../assets/images/QRcode.png')}
           style={styles.qrCode}
         />
-        <Text style={styles.textSuccess}>Success!</Text>
+        <Text style={styles.textSuccess}>{t('Success')}!</Text>
         <Text style={styles.textPay}>
-          Pay your pix using the QR code above and
+          {t('Pay your pix using the QR code above and')}
         </Text>
         <Text style={styles.textSteps}>
-          then follow the steps sent by email.
+          {t('then follow the steps sent by email')}.
         </Text>
         <View style={styles.button}>
           <RedButton onPress={function (): void {}}>
-            CONTINUE SHOPPING
+            {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>
       </View>

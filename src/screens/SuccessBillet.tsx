@@ -4,8 +4,10 @@ import moment from 'moment';
 import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
+import {useTranslation} from 'react-i18next';
 
 const SuccessBillet = () => {
+  const {t} = useTranslation();
   const billetDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
   return (
@@ -20,17 +22,21 @@ const SuccessBillet = () => {
           source={require('../assets/images/bags.png')}
           style={styles.bags}
         />
-        <Text style={styles.textSuccess}>Success!</Text>
+        <Text style={styles.textSuccess}>{t('Success')}!</Text>
         <Text style={styles.textPay}>
-          Pay the invoice by {billetDate} and then
+          {t('Pay the invoice by')} {billetDate} {t('and then')}
         </Text>
-        <Text style={styles.textSteps}>follow the steps sent by email.</Text>
+        <Text style={styles.textSteps}>
+          {t('follow the steps sent by email')}.
+        </Text>
         <View style={styles.buttonBillet}>
-          <RedButton onPress={function (): void {}}>BAIXAR BOLETO</RedButton>
+          <RedButton onPress={function (): void {}}>
+            {t('DOWNLOAD TICKET')}
+          </RedButton>
         </View>
         <View style={styles.buttonContinue}>
           <RedButton onPress={function (): void {}}>
-            CONTINUE SHOPPING
+            {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>
       </View>

@@ -4,8 +4,10 @@ import {Alert} from 'react-native';
 import {register} from '../components/api/User';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../components/auth/AuthContext';
+import {useTranslation} from 'react-i18next';
 
 export function SingUp() {
+  const {t} = useTranslation();
   interface FormData {
     name?: string | undefined;
     email?: string | undefined;
@@ -22,16 +24,16 @@ export function SingUp() {
       try {
         const id = await register({name, email, password});
         if (id) {
-          Alert.alert('SignUp succesfully', 'login now');
+          Alert.alert(t('SignUp succesfully'), t('login now'));
           navigation.navigate('login' as never);
         }
       } catch (error) {
-        Alert.alert('SignUp failed', 'Please try again later!');
+        Alert.alert(t('SignUp failed'), t('Please try again later!'));
       }
       ctx.isLoading(false);
     } catch (error) {
       ctx.isLoading(false);
-      Alert.alert('SignUp failed', 'Please try again later!');
+      Alert.alert(t('SignUp failed'), t('Please try again later!'));
     }
   }
 

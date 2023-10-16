@@ -96,21 +96,21 @@ const Profile = () => {
       const userData = await fetchUser(ctx.id);
       setData(userData);
     } catch (error) {
-      Alert.alert('Error trying to load user data', `${error}`);
+      Alert.alert(t('Error trying to load user data'), `${error}`);
     }
   }
 
   const toggleOn = () => {
     if (data?.name !== name) {
       if (on) {
-        Alert.alert('Warning', 'Do you want to abandon your changes?', [
+        Alert.alert(t('Warning'), t('Do you want to abandon your changes?'), [
           {
-            text: 'Yes',
+            text: t('Yes'),
             onPress: () => {
               setOn(!on);
             },
           },
-          {text: 'No'},
+          {text: t('No')},
         ]);
       } else {
         setOn(!on);
@@ -125,24 +125,24 @@ const Profile = () => {
       const userData = await editData(ctx.id, name);
       if (data !== userData) {
         Alert.alert(
-          'Do you realy want to change your data?',
-          'You can reverse it later',
+          t('Do you realy want to change your data?'),
+          t('You can reverse it later'),
           [
             {
-              text: 'Yes',
+              text: t('Yes'),
               onPress: () => {
                 setData(userData);
                 setOn(false);
               },
             },
-            {text: 'No'},
+            {text: t('No')},
           ],
         );
       } else {
         setOn(false);
       }
     } catch (error) {
-      Alert.alert('Error changing Data', `${error}`);
+      Alert.alert(t('Error changing Data'), `${error}`);
     }
   }
 
@@ -213,6 +213,7 @@ const Profile = () => {
                 <Icon
                   name={openModal ? 'chevron-down' : 'chevron-up'}
                   size={25}
+                  color={Colors.gray_500}
                 />
               </TouchableOpacity>
             </View>
@@ -223,7 +224,7 @@ const Profile = () => {
                   ctx.authLogout();
                   navigation.navigate('Home' as never);
                 }}>
-                <Icon name={'log-out'} size={20} />
+                <Icon name={'log-out'} size={20} color={Colors.gray_500} />
               </TouchableOpacity>
             </View>
             {modalHandler()}
@@ -256,7 +257,11 @@ const Profile = () => {
       <View style={styles.viewTopics}>
         <Text style={styles.textTopics}>{t('Language')}</Text>
         <TouchableOpacity onPress={show}>
-          <Icon name={openModal ? 'chevron-down' : 'chevron-up'} size={25} />
+          <Icon
+            name={openModal ? 'chevron-down' : 'chevron-up'}
+            size={25}
+            color={Colors.gray_500}
+          />
         </TouchableOpacity>
         {modalHandler()}
       </View>

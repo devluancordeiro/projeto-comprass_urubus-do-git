@@ -4,8 +4,10 @@ import {Colors} from '../../constants/styles';
 import {User, fetchUser} from '../api/User';
 import {AuthContext} from './AuthContext';
 import {StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 function AuthWelcome() {
+  const {t} = useTranslation();
   const [data, setData] = useState<User | undefined>(undefined);
   const ctx = useContext(AuthContext);
 
@@ -27,7 +29,9 @@ function AuthWelcome() {
             }}
             style={styles.userAvatar}
           />
-          <Text style={styles.userName}>Hello, {data.name}</Text>
+          <Text style={styles.userName}>
+            {t('Hello')}, {data.name}
+          </Text>
         </View>
       );
     }
