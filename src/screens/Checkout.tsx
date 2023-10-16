@@ -169,7 +169,7 @@ function Checkout({navigation, route}: CheckoutProps) {
         </View>
         <View style={styles.button}>
           <RedButton
-            disabled={methodPayment !== 'None'}
+            disabled={methodPayment === 'None'}
             onPress={() => {
               navigation.navigate('success', {paymentMethod: methodPayment});
             }}>
