@@ -91,7 +91,7 @@ const CartProducts = () => {
             <RedButton
               children={t('Buy')}
               onPress={() => {
-                navigation.navigate('checkout');
+                navigation.navigate('checkout', {orderPrice: addPrices});
               }}
             />
           ) : (

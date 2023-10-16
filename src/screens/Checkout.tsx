@@ -13,12 +13,13 @@ import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
 
-const Checkout: React.FC = ({navigation}) => {
+const Checkout: React.FC = ({navigation, route}) => {
   const {t} = useTranslation();
+  const {orderPrice} = route.params;
+
   const [selectedPayment, setSelectedPayment] = useState('None added');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [price, setPrice] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
   const hide = () => setOpenModal(false);
@@ -31,8 +32,8 @@ const Checkout: React.FC = ({navigation}) => {
   };
 
   useEffect(() => {
-    setTotalPrice(price + deliveryPrice);
-  }, [deliveryPrice, price]);
+    setTotalPrice(orderPrice + deliveryPrice);
+  }, [deliveryPrice, orderPrice]);
 
   const modalHandler = () => {
     return (
@@ -136,7 +137,7 @@ const Checkout: React.FC = ({navigation}) => {
         <View style={styles.priceContainer}>
           <Text style={styles.textInfo}>{t('Order')}: </Text>
           <View style={styles.flexContainer}>
-            <Text style={styles.textPrice}>{price.toFixed(2)} R$ </Text>
+            <Text style={styles.textPrice}>{orderPrice.toFixed(2)} R$ </Text>
           </View>
         </View>
         <View style={styles.priceContainer}>
