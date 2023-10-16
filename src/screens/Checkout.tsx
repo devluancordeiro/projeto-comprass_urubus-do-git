@@ -12,8 +12,16 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../routes/StoreFlow';
+import {RouteProp} from '@react-navigation/native';
 
-const Checkout: React.FC = ({navigation, route}) => {
+type CheckoutProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'checkout'>;
+  route: RouteProp<StoreFlowParamList, 'checkout'>;
+};
+
+function Checkout({navigation, route}: CheckoutProps) {
   const {t} = useTranslation();
   const {orderPrice} = route.params;
 
@@ -118,6 +126,7 @@ const Checkout: React.FC = ({navigation, route}) => {
         <Text style={styles.textBold}>{t('Shipping address')}</Text>
         <TouchableOpacity
           style={styles.touchable}
+          activeOpacity={0.8}
           onPress={() => {
             navigation.navigate('address');
           }}>
@@ -166,7 +175,7 @@ const Checkout: React.FC = ({navigation, route}) => {
       </View>
     </>
   );
-};
+}
 
 export default Checkout;
 

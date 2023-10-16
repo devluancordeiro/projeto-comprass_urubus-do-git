@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import AuthInput from '../components/auth/AuthInput';
-import Header from '../components/ui/Header';
-import RedButton from '../components/ui/RedButton';
-import {validation} from '../components/auth/AuthInput';
 import {useTranslation} from 'react-i18next';
+import {StyleSheet, View} from 'react-native';
+import Header from '../components/ui/Header';
+import Input, {validation} from '../components/ui/Input';
+import RedButton from '../components/ui/RedButton';
 
 function Address() {
   const {t} = useTranslation();
@@ -51,7 +50,7 @@ function Address() {
       <Header title={t('Adding Shipping Address')} />
       <View style={styles.form}>
         <View>
-          <AuthInput
+          <Input
             label={t('Zip Code (Postal Code)')}
             validation={status}
             onChangeText={text => setCep(text)}
@@ -59,7 +58,7 @@ function Address() {
             keyboardType="number-pad"
             border
           />
-          <AuthInput
+          <Input
             label={t('Address')}
             value={address}
             disabled={status === 'validating'}
@@ -67,7 +66,7 @@ function Address() {
             enableAutoCapitalize
             border
           />
-          <AuthInput
+          <Input
             label={t('City')}
             value={city}
             disabled={status === 'validating'}
@@ -75,7 +74,7 @@ function Address() {
             enableAutoCapitalize
             border
           />
-          <AuthInput
+          <Input
             label={t('State/Province/Region')}
             value={state}
             disabled={status === 'validating'}
@@ -83,7 +82,7 @@ function Address() {
             enableAutoCapitalize
             border
           />
-          <AuthInput
+          <Input
             label={t('Full name')}
             value={fullName}
             onChangeText={text => setFullName(text)}

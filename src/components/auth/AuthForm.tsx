@@ -1,14 +1,13 @@
-/* eslint-disable react-native/no-inline-styles */
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import AuthInput from './AuthInput';
+import {Colors, Sizes} from '../../constants/styles';
+import Input from '../ui/Input';
 import RedButton from '../ui/RedButton';
 import TextButton from '../ui/TextButton';
-import {useNavigation} from '@react-navigation/native';
-import {Colors, Sizes} from '../../constants/styles';
 import {AuthContext} from './AuthContext';
-import {useTranslation} from 'react-i18next';
 
 interface AuthFormProps {
   isName?: boolean;
@@ -93,7 +92,7 @@ function AuthForm({
           name="name"
           rules={{required: true, pattern: /^[A-Za-z0-9]+$/}}
           render={({field: {value, onChange}}) => (
-            <AuthInput
+            <Input
               label={t('Name')}
               value={value}
               onChangeText={onChange}
@@ -116,7 +115,7 @@ function AuthForm({
             pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
           }}
           render={({field: {value, onChange}}) => (
-            <AuthInput
+            <Input
               label={'Email'}
               value={value}
               onChangeText={onChange}
@@ -135,7 +134,7 @@ function AuthForm({
             minLength: 6,
           }}
           render={({field: {value, onChange}}) => (
-            <AuthInput
+            <Input
               label={t('Password')}
               value={value}
               onChangeText={onChange}
@@ -157,7 +156,7 @@ function AuthForm({
             validate: (val: string | undefined) => watch('password') === val,
           }}
           render={({field: {value, onChange}}) => (
-            <AuthInput
+            <Input
               label={t('Confirm Password')}
               value={value}
               onChangeText={onChange}

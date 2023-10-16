@@ -13,7 +13,7 @@ import {Colors, Sizes} from '../../constants/styles';
 
 export type validation = 'validating' | 'sucess' | 'error' | '';
 
-export interface AuthInputProps extends TextInputProps {
+interface InputProps extends TextInputProps {
   label: string;
   value: string | undefined;
   enableAutoCapitalize?: boolean;
@@ -33,7 +33,7 @@ const validationIcons = {
   error: require('../../assets/icons/ui/error.png'),
 };
 
-function AuthInput({
+function Input({
   label,
   value,
   isPassword,
@@ -42,7 +42,7 @@ function AuthInput({
   disabled,
   border,
   ...props
-}: AuthInputProps): JSX.Element {
+}: InputProps): JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
   const [isShowing, setIsShowing] = useState(isPassword);
 
@@ -55,7 +55,6 @@ function AuthInput({
 
   return (
     <View
-      testID="auth-input-container"
       style={[
         styles.inputViewWrapper,
         validation === 'sucess' && styles.inputViewWrapperSucess,
@@ -64,14 +63,9 @@ function AuthInput({
         disabled && styles.inputViewWrapperDisabled,
       ]}>
       <View style={styles.inputContainer}>
-        <Text
-          testID="auth-input-label"
-          style={[styles.inputLabel, labelConditionalStyle]}>
-          {label}
-        </Text>
+        <Text style={[styles.inputLabel, labelConditionalStyle]}>{label}</Text>
         <View>
           <TextInput
-            testID="auth-input-text"
             style={styles.input}
             value={value}
             onFocus={() => setIsFocused(true)}
@@ -85,11 +79,9 @@ function AuthInput({
       </View>
       {isPassword ? (
         <Pressable
-          testID="password-visibility-icon"
           style={styles.inputIconWrapper}
           onPress={() => setIsShowing(!isShowing)}>
           <Image
-            testID="check-or-error"
             source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
           />
         </Pressable>
@@ -97,16 +89,9 @@ function AuthInput({
         validation && (
           <View style={styles.inputIconWrapper}>
             {validation === 'validating' ? (
-              <ActivityIndicator
-                testID="validating-icon"
-                color={Colors.red_500}
-                size={Sizes.xxl}
-              />
+              <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
             ) : (
-              <Image
-                testID={validation === 'sucess' ? 'sucess-icon' : 'error-icon'}
-                source={validationIcons[validation]}
-              />
+              <Image source={validationIcons[validation]} />
             )}
           </View>
         )
@@ -115,7 +100,7 @@ function AuthInput({
   );
 }
 
-export default AuthInput;
+export default Input;
 
 const styles = StyleSheet.create({
   inputViewWrapper: {

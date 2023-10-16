@@ -36,6 +36,7 @@ function DeliverySection({onPress}: DeliverySectionProps) {
     return (
       <TouchableOpacity
         style={styles.item}
+        activeOpacity={0.8}
         onPress={() => {
           handleDeliverySelect(item.id);
           onPress();

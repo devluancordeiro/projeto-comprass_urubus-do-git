@@ -1,14 +1,14 @@
 import React, {memo} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {product} from '../../constants/storeTypes';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Colors} from '../../constants/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
+import {product} from '../../constants/storeTypes';
+import {Colors} from '../../constants/styles';
 import {
-  reduceItemCountWithoutRemove,
-  increaseItemCount,
   deleteItemCount,
+  increaseItemCount,
+  reduceItemCountWithoutRemove,
 } from '../../redux/counterSlice';
 
 interface CartProductCardProps {
@@ -20,7 +20,10 @@ interface CartProductCardProps {
 function CartProductCard({item, quantity, onTap}: CartProductCardProps) {
   const dispatch = useDispatch();
   return (
-    <TouchableOpacity onPress={onTap} style={styles.viewProduct}>
+    <TouchableOpacity
+      onPress={onTap}
+      style={styles.viewProduct}
+      activeOpacity={0.9}>
       <View style={styles.viewProductImage}>
         <Image source={{uri: item?.images[0]}} style={styles.productImage} />
       </View>
@@ -31,7 +34,8 @@ function CartProductCard({item, quantity, onTap}: CartProductCardProps) {
           </View>
           <TouchableOpacity
             style={styles.remove}
-            onPress={() => dispatch(deleteItemCount(item.id))}>
+            onPress={() => dispatch(deleteItemCount(item.id))}
+            activeOpacity={0.6}>
             <Ionicons name="trash-outline" size={22} color={Colors.white} />
           </TouchableOpacity>
         </View>
@@ -40,7 +44,8 @@ function CartProductCard({item, quantity, onTap}: CartProductCardProps) {
             <View>
               <TouchableOpacity
                 style={styles.buttonCount}
-                onPress={() => dispatch(reduceItemCountWithoutRemove(item.id))}>
+                onPress={() => dispatch(reduceItemCountWithoutRemove(item.id))}
+                activeOpacity={0.7}>
                 <Ionicons
                   name="remove-outline"
                   size={30}
@@ -52,7 +57,8 @@ function CartProductCard({item, quantity, onTap}: CartProductCardProps) {
             <View>
               <TouchableOpacity
                 style={styles.buttonCount}
-                onPress={() => dispatch(increaseItemCount(item.id))}>
+                onPress={() => dispatch(increaseItemCount(item.id))}
+                activeOpacity={0.7}>
                 <Ionicons name="add-outline" size={30} color={Colors.white} />
               </TouchableOpacity>
             </View>
