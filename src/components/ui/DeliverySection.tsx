@@ -35,6 +35,7 @@ function DeliverySection({onPress}: DeliverySectionProps) {
     const isSelected = selectedMethod === item.id;
     return (
       <TouchableOpacity
+        accessibilityHint="delivery-method-item"
         style={styles.item}
         activeOpacity={0.8}
         onPress={() => {
@@ -68,6 +69,7 @@ function DeliverySection({onPress}: DeliverySectionProps) {
 
   return (
     <FlatList
+      accessibilityHint="delivery-section"
       data={deliveryMethods}
       renderItem={renderItem}
       keyExtractor={item => item.id}
