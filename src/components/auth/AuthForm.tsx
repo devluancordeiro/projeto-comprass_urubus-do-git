@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import {Image, StyleSheet, Text, View} from 'react-native';

@@ -18,7 +18,7 @@ import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
 const Home = () => {
   const {t} = useTranslation();
   const [categories, setCategories] = useState<category[]>([]);
-  const [products, setProducts] = useState<product[]>([]);
+  const [products, setProducts] = useState<product[][]>([]);
 
   useEffect(() => {
     async function fetchCategories() {

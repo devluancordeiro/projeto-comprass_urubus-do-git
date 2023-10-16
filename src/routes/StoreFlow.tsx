@@ -122,6 +122,9 @@ export type StoreFlowParamList = {
   app: undefined;
   auth: undefined;
   details: {productOpened: product};
+  checkout: {orderPrice: number};
+  address: undefined;
+  load: undefined;
 };
 
 function StoreFlow() {

@@ -3,14 +3,15 @@ import {StyleSheet, FlatList, View, Text} from 'react-native';
 import {getProductById} from '../../utils/fetchProducts';
 import {product} from '../../constants/storeTypes';
 import CartProductCard from './CartProductCard';
-import {useSelector} from 'react-redux';
-import type {RootState} from '../../redux/counterSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import type {RootState} from '../../redux/store';
 import RedButton from '../ui/RedButton';
 import {Colors} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../../routes/StoreFlow';
+import {deleteItemCount} from '../../redux/counterSlice';
 
 const CartProducts = () => {
   const {t} = useTranslation();
@@ -19,6 +20,7 @@ const CartProducts = () => {
   const [products, setProducts] = useState(
     new Map<number, {productItem: product; quantity: number}>(),
   );
+  const dispatch = useDispatch();
   const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
 
   useEffect(() => {
@@ -44,6 +46,8 @@ const CartProducts = () => {
                     productItem: productItem,
                     quantity: quantity,
                   });
+                } else {
+                  dispatch(deleteItemCount(id));
                 }
               }),
             );
