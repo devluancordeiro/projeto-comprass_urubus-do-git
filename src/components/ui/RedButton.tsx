@@ -21,12 +21,21 @@ const RedButton: React.FC<RedButtonProps> = props => {
     <TouchableOpacity
       onPress={props.onPress}
       disabled={props.disabled}
-      activeOpacity={0.8}>
-      <View style={[styles.button, props.disabled && styles.disabledButton]}>
+      activeOpacity={0.8}
+      testID="redButton">
+      <View
+        style={[styles.button, props.disabled && styles.disabledButton]}
+        testID="redButtonView">
         {props.validating ? (
-          <ActivityIndicator color={Colors.white} size={Sizes.xxl} />
+          <ActivityIndicator
+            color={Colors.white}
+            size={Sizes.xxl}
+            testID="redButtonActivityIndicator"
+          />
         ) : (
-          <Text style={styles.buttonText}>{props.children}</Text>
+          <Text style={styles.buttonText} testID="redButtonText">
+            {props.children}
+          </Text>
         )}
       </View>
     </TouchableOpacity>
