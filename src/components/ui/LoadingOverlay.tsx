@@ -26,7 +26,11 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({message}) => {
             style={styles.logo}
           />
           <Text style={styles.message}>{message}</Text>
-          <ActivityIndicator size={80} color={Colors.red_500} />
+          <ActivityIndicator
+            size={80}
+            color={Colors.red_500}
+            testID="activity-indicator"
+          />
         </View>
       </ImageBackground>
     </View>
