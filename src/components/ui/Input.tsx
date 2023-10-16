@@ -13,7 +13,7 @@ import {Colors, Sizes} from '../../constants/styles';
 
 export type validation = 'validating' | 'sucess' | 'error' | '';
 
-interface AuthInputProps extends TextInputProps {
+interface InputProps extends TextInputProps {
   label: string;
   value: string | undefined;
   enableAutoCapitalize?: boolean;
@@ -33,7 +33,7 @@ const validationIcons = {
   error: require('../../assets/icons/ui/error.png'),
 };
 
-function AuthInput({
+function Input({
   label,
   value,
   isPassword,
@@ -42,7 +42,7 @@ function AuthInput({
   disabled,
   border,
   ...props
-}: AuthInputProps): JSX.Element {
+}: InputProps): JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
   const [isShowing, setIsShowing] = useState(isPassword);
 
@@ -100,7 +100,7 @@ function AuthInput({
   );
 }
 
-export default AuthInput;
+export default Input;
 
 const styles = StyleSheet.create({
   inputViewWrapper: {
