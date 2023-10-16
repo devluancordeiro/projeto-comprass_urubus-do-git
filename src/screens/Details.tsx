@@ -128,7 +128,7 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
         <View style={styles.counterWrapper}>
           <TouchableOpacity
             hitSlop={20}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => dispatch(reduceItemCount(productOpened.id))}>
             <Image
               style={styles.quantityModifier}
@@ -140,7 +140,7 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
           </View>
           <TouchableOpacity
             hitSlop={20}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => dispatch(increaseItemCount(productOpened.id))}>
             <Image
               style={styles.quantityModifier}

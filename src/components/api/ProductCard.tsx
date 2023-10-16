@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Image, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
 
 import {product} from '../../constants/storeTypes';
 import {Colors, Sizes} from '../../constants/styles';
@@ -12,7 +12,10 @@ interface ProductCardProps {
 
 function ProductCard({item, onTap}: ProductCardProps) {
   return (
-    <Pressable onPress={onTap} style={styles.productView}>
+    <TouchableOpacity
+      onPress={onTap}
+      style={styles.productView}
+      activeOpacity={0.7}>
       <Image style={styles.productImage} source={{uri: item.images[0]}} />
       <Text numberOfLines={1} style={styles.productCategory}>
         {item.category.name}
@@ -21,7 +24,7 @@ function ProductCard({item, onTap}: ProductCardProps) {
         {item.title}
       </Text>
       <Text style={styles.productPrice}>{formatCurrency(item.price)}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

@@ -18,7 +18,10 @@ interface RedButtonProps {
 
 const RedButton: React.FC<RedButtonProps> = props => {
   return (
-    <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      disabled={props.disabled}
+      activeOpacity={0.8}>
       <View style={[styles.button, props.disabled && styles.disabledButton]}>
         {props.validating ? (
           <ActivityIndicator color={Colors.white} size={Sizes.xxl} />

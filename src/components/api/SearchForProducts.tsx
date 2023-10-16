@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   TextInput,
   FlatList,
@@ -43,14 +43,15 @@ function SearchForProducts() {
 
   return (
     <View style={styles.container}>
-      <Pressable
+      <TouchableOpacity
         onPress={() => setisSearching(prev => !prev)}
-        style={styles.viewSearch}>
+        style={styles.viewSearch}
+        activeOpacity={0.6}>
         <Image
           source={require('../../assets/images/search.png')}
           style={styles.searchIcon}
         />
-      </Pressable>
+      </TouchableOpacity>
       {isSearching && (
         <View style={styles.search}>
           <View style={styles.inputWrapper}>
