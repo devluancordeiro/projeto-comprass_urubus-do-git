@@ -150,7 +150,7 @@ const Profile = () => {
     loadData();
     if (data) {
       return (
-        <>
+        <View style={styles.container}>
           <StatusBar
             backgroundColor={Colors.white}
             translucent={false}
@@ -229,12 +229,12 @@ const Profile = () => {
             </View>
             {modalHandler()}
           </View>
-        </>
+        </View>
       );
     }
   }
   return (
-    <>
+    <View style={styles.container}>
       <StatusBar
         backgroundColor={Colors.white}
         translucent={false}
@@ -265,13 +265,17 @@ const Profile = () => {
         </TouchableOpacity>
         {modalHandler()}
       </View>
-    </>
+    </View>
   );
 };
 
 export default Profile;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
   titleView: {
     marginTop: 64,
     marginLeft: 16,

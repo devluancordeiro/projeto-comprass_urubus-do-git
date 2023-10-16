@@ -81,6 +81,7 @@ export default Home;
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
   headerBackground: {
     width: '100%',

@@ -59,7 +59,10 @@ function MainFlow() {
   const hasItemsInCart =
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0;
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Tab.Screen
         name="Home"
         component={Home}
@@ -128,7 +131,10 @@ function StoreFlow() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="app"
-            screenOptions={{headerShown: false}}>
+            screenOptions={{
+              headerShown: false,
+              cardStyle: {backgroundColor: Colors.white},
+            }}>
             <Stack.Screen name="app" component={MainFlow} />
             <Stack.Screen name="auth" component={AuthFlow} />
             <Stack.Screen name="details" component={Details} />

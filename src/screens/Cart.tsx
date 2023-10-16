@@ -15,7 +15,7 @@ function Cart() {
   );
   if (cartHasItems) {
     return (
-      <>
+      <View style={styles.container}>
         <View>
           <View style={styles.titleView}>
             <Text style={styles.title}>{t('Cart')}</Text>
@@ -36,11 +36,11 @@ function Cart() {
             <RedButton children={t('Buy')} disabled onPress={() => {}} />
           </View>
         </View>
-      </>
+      </View>
     );
   }
   return (
-    <>
+    <View style={styles.container}>
       <View>
         <View style={styles.titleView}>
           <Text style={styles.title}>{t('Cart')}</Text>
@@ -49,12 +49,16 @@ function Cart() {
           <CartProduct />
         </View>
       </View>
-    </>
+    </View>
   );
 }
 export default Cart;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
   viewAll: {
     height: '80%',
   },
