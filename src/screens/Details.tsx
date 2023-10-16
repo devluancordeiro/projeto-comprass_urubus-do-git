@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import ProductCard from '../components/api/ProductCard';
+import ProductCard from '../components/shop/ProductCard';
 import ExpansableItem from '../components/ui/ExpansableItem';
 import {product} from '../constants/storeTypes';
 import {Colors} from '../constants/styles';

@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
-import {resetPassword, search} from '../components/api/User';
+import {resetPassword, search} from '../utils/User';
 import {Alert} from 'react-native';
 import {AuthContext} from '../components/auth/AuthContext';
 import {useNavigation} from '@react-navigation/native';
@@ -40,7 +40,7 @@ export function ForgotPassword() {
         ctx.isSearching(false);
       }
     },
-    [ctx],
+    [ctx, t],
   );
 
   async function forgotHandler({email, password}: FormData) {

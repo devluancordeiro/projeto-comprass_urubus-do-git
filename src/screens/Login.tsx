@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
-import {login} from '../components/api/User';
+import {login} from '../utils/User';
 import {AuthContext} from '../components/auth/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 

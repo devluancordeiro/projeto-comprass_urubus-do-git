@@ -8,8 +8,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import ProductsList from '../components/api/ProductsList';
-import SearchForProducts from '../components/api/SearchForProducts';
+import ProductsList from '../components/shop/ProductsList';
+import SearchForProducts from '../components/shop/SearchForProducts';
 import AuthWelcome from '../components/auth/AuthWelcome';
 import {category, product} from '../constants/storeTypes';
 import {Colors, Sizes} from '../constants/styles';
@@ -43,6 +43,7 @@ const Home = () => {
       }
     }
     fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (ctx.oppening) {

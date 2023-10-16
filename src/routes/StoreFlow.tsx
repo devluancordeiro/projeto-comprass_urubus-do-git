@@ -15,7 +15,6 @@ import {product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import AuthContextProvider, {AuthContext} from '../components/auth/AuthContext';
-import LoadingOverlay from '../components/ui/LoadingOverlay';
 import Checkout from '../screens/Checkout';
 import Address from '../screens/Address';
 

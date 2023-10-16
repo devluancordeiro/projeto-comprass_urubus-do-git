@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RedButton from '../components/ui/RedButton';
 import {useSelector} from 'react-redux';
 import type {RootState} from '../redux/store';
-import CartProduct from '../components/api/CartProducts';
+import CartProduct from '../components/shop/CartProducts';
 import {useTranslation} from 'react-i18next';
 
 function Cart() {

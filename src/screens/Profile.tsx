@@ -18,7 +18,7 @@ import i18next from '../utils/i18next';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../components/auth/AuthContext';
-import {User, editData, fetchUser} from '../components/api/User';
+import {User, editData, fetchUser} from '../utils/User';
 import IconFAB from '../components/ui/IconFAB';
 
 const Profile = () => {
