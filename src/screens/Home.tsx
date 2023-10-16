@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Image,
@@ -14,11 +14,14 @@ import AuthWelcome from '../components/auth/AuthWelcome';
 import {category, product} from '../constants/storeTypes';
 import {Colors, Sizes} from '../constants/styles';
 import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
+import {AuthContext} from '../components/auth/AuthContext';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const Home = () => {
   const {t} = useTranslation();
   const [categories, setCategories] = useState<category[]>([]);
   const [products, setProducts] = useState<product[][]>([]);
+  const ctx = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -33,13 +36,18 @@ const Home = () => {
             setProducts(prevProducts => [...prevProducts, productsFetched]);
           }
         }
+        ctx.isOppening(false);
       } catch (error) {
+        ctx.isOppening(false);
         console.error('Error fetching data:', error);
       }
     }
     fetchCategories();
   }, []);
 
+  if (ctx.oppening) {
+    return <LoadingOverlay />;
+  }
   return (
     <>
       <ScrollView style={styles.view}>

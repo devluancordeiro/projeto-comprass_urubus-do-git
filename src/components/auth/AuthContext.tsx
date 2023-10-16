@@ -1,10 +1,12 @@
 import React from 'react';
+import {MMKVLoader, useMMKVStorage} from 'react-native-mmkv-storage';
 
 export const AuthContext = React.createContext({
   id: '',
   isLogged: false,
   email: '',
   loading: false,
+  oppening: true,
   error: true,
   searching: false,
   authLogin: (_newId: string | undefined) => {},
@@ -13,14 +15,18 @@ export const AuthContext = React.createContext({
   isLoading: (_loading: boolean | undefined) => {},
   isSearching: (_searching: boolean | undefined) => {},
   generateError: (_error: boolean | undefined) => {},
+  isOppening: (_oppening: boolean | undefined) => {},
 });
 
 interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
+const storage = new MMKVLoader().initialize();
+
 function AuthContextProvider({children}: AuthContextProviderProps) {
-  const [id, setId] = React.useState<string>('');
+  const [id, setId] = useMMKVStorage('id', storage, '');
+  const [oppening, setOppening] = React.useState<boolean>(true);
   const [email, setEmail] = React.useState<string>('');
   const [error, setError] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -29,6 +35,12 @@ function AuthContextProvider({children}: AuthContextProviderProps) {
   function authLogin(newId: string | undefined) {
     if (newId) {
       setId(newId);
+    }
+  }
+
+  function isOppening(newOppening: boolean | undefined) {
+    if (newOppening !== undefined) {
+      setOppening(newOppening);
     }
   }
 
@@ -67,12 +79,14 @@ function AuthContextProvider({children}: AuthContextProviderProps) {
     loading: loading,
     error: error,
     searching: searching,
+    oppening: oppening,
     authLogin: authLogin,
     authLogout: authLogout,
     saveEmail: saveEmail,
     isLoading: isLoading,
     generateError: generateError,
     isSearching: isSearching,
+    isOppening: isOppening,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

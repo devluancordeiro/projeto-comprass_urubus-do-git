@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Home from '../screens/Home';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,8 +14,8 @@ import Details from '../screens/Details';
 import {product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import AuthContextProvider from '../components/auth/AuthContext';
-import LoadingOverlay from '../screens/LoadingOverlay';
+import AuthContextProvider, {AuthContext} from '../components/auth/AuthContext';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 import Checkout from '../screens/Checkout';
 import Address from '../screens/Address';
 
@@ -58,6 +58,7 @@ function ProfileTabBarIcon({size, color, focused}: TabBarIconProps) {
 function MainFlow() {
   const hasItemsInCart =
     Object.keys(useSelector((state: RootState) => state.counter)).length !== 0;
+  const ctx = useContext(AuthContext);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -69,6 +70,7 @@ function MainFlow() {
         options={{
           tabBarIcon: HomeTabBarIcon,
           tabBarActiveTintColor: Colors.red_500,
+          tabBarStyle: {display: ctx.oppening ? 'none' : 'flex'},
         }}
       />
       <Tab.Screen
@@ -129,25 +131,21 @@ export type StoreFlowParamList = {
 
 function StoreFlow() {
   return (
-    <>
-      <AuthContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="app"
-            screenOptions={{
-              headerShown: false,
-              cardStyle: {backgroundColor: Colors.white},
-            }}>
-            <Stack.Screen name="app" component={MainFlow} />
-            <Stack.Screen name="auth" component={AuthFlow} />
-            <Stack.Screen name="details" component={Details} />
-            <Stack.Screen name="checkout" component={Checkout} />
-            <Stack.Screen name="address" component={Address} />
-            <Stack.Screen name="load" component={LoadingOverlay} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthContextProvider>
-    </>
+    <AuthContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyle: {backgroundColor: Colors.white},
+          }}>
+          <Stack.Screen name="app" component={MainFlow} />
+          <Stack.Screen name="auth" component={AuthFlow} />
+          <Stack.Screen name="details" component={Details} />
+          <Stack.Screen name="checkout" component={Checkout} />
+          <Stack.Screen name="address" component={Address} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContextProvider>
   );
 }
 
