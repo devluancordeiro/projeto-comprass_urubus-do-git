@@ -12,7 +12,11 @@ function Header({title, goBack}: HeaderProps) {
   return (
     <View style={styles.headerContainer}>
       {!!goBack && (
-        <Pressable onPress={goBack} hitSlop={10} style={styles.backWrapper}>
+        <Pressable
+          accessibilityHint="back-button"
+          onPress={goBack}
+          hitSlop={10}
+          style={styles.backWrapper}>
           <Ionicons
             name={'chevron-forward-outline'}
             size={22}
