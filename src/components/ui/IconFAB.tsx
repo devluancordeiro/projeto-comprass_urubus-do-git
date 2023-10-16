@@ -12,10 +12,12 @@ interface IconFABProps {
 
 const IconFAB: React.FC<IconFABProps> = props => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={props.onPress} testID="touchable-component">
       <View
         style={{backgroundColor: props.color, borderRadius: props.size / 2}}>
-        <View style={[styles.secView, {height: props.size, width: props.size}]}>
+        <View
+          style={[styles.secView, {height: props.size, width: props.size}]}
+          testID="icon-component">
           <Icon
             name={props.icon}
             size={props.size / 1.7}
