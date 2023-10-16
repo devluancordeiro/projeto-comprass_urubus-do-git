@@ -17,15 +17,12 @@ const Checkout: React.FC = ({navigation, route}) => {
   const {t} = useTranslation();
   const {orderPrice} = route.params;
 
-  const [selectedPayment, setSelectedPayment] = useState('None added');
+  const [methodPayment, setMethodPayment] = useState('None');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
   const hide = () => setOpenModal(false);
-  const [methodPayment1, setMethodPayment1] = useState(false);
-  const [methodPayment2, setMethodPayment2] = useState(false);
-  const [methodPayment3, setMethodPayment3] = useState(false);
 
   const handleDeliverySelect = () => {
     setDeliveryPrice(15.0);
@@ -56,48 +53,54 @@ const Checkout: React.FC = ({navigation, route}) => {
           </View>
           <TouchableOpacity
             style={
-              methodPayment1 ? styles.buttonPressed : styles.buttonNotPressed
+              methodPayment === 'Credit or debit card'
+                ? styles.buttonPressed
+                : styles.buttonNotPressed
             }
             onPress={() => {
-              setMethodPayment1(true);
-              setMethodPayment2(false);
-              setMethodPayment3(false);
+              setMethodPayment('Credit or debit card');
             }}>
             <Text
               style={
-                methodPayment1 ? styles.textPressed : styles.textNotPressed
+                methodPayment === 'Credit or debit card'
+                  ? styles.textPressed
+                  : styles.textNotPressed
               }>
               {t('Credit or debit card')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={
-              methodPayment2 ? styles.buttonPressed : styles.buttonNotPressed
+              methodPayment === 'Pix'
+                ? styles.buttonPressed
+                : styles.buttonNotPressed
             }
             onPress={() => {
-              setMethodPayment1(false);
-              setMethodPayment2(true);
-              setMethodPayment3(false);
+              setMethodPayment('Pix');
             }}>
             <Text
               style={
-                methodPayment2 ? styles.textPressed : styles.textNotPressed
+                methodPayment === 'Pix'
+                  ? styles.textPressed
+                  : styles.textNotPressed
               }>
               {t('Pix')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={
-              methodPayment3 ? styles.buttonPressed : styles.buttonNotPressed
+              methodPayment === 'Bank slip'
+                ? styles.buttonPressed
+                : styles.buttonNotPressed
             }
             onPress={() => {
-              setMethodPayment1(false);
-              setMethodPayment2(false);
-              setMethodPayment3(true);
+              setMethodPayment('Bank slip');
             }}>
             <Text
               style={
-                methodPayment3 ? styles.textPressed : styles.textNotPressed
+                methodPayment === 'Bank slip'
+                  ? styles.textPressed
+                  : styles.textNotPressed
               }>
               {t('Bank slip')}
             </Text>
@@ -129,7 +132,7 @@ const Checkout: React.FC = ({navigation, route}) => {
             <Text style={styles.changePaymentText}>{t('Change')}</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.textNone}>{t('None added')}</Text>
+        <Text style={styles.textNone}>{t(methodPayment)}</Text>
         <Text style={styles.textBold}>{t('Delivery method')}</Text>
         <View style={styles.deliveryView}>
           <DeliverySection onPress={handleDeliverySelect} />
