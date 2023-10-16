@@ -1,9 +1,9 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
-import AuthInput from '../../../src/components/auth/AuthInput';
+import Input from '../../../src/components/ui/Input';
 import {Colors} from '../../../src/constants/styles';
 
-describe('AuthInput component', () => {
+describe('Input component', () => {
   it('renders correctly with provided props', () => {
     const mockProps = {
       label: 'Test',
@@ -14,7 +14,7 @@ describe('AuthInput component', () => {
       disabled: false,
       border: true,
     };
-    const {getByText, getByDisplayValue} = render(<AuthInput {...mockProps} />);
+    const {getByText, getByDisplayValue} = render(<Input {...mockProps} />);
     expect(getByText('Test')).toBeTruthy();
     expect(getByDisplayValue('Test')).toBeTruthy();
   });
@@ -25,7 +25,7 @@ describe('AuthInput component', () => {
       value: 'TestPassword',
       isPassword: true,
     };
-    const {getByTestId} = render(<AuthInput {...mockProps} />);
+    const {getByTestId} = render(<Input {...mockProps} />);
     const toggleButton = getByTestId('password-visibility-icon');
     fireEvent.press(toggleButton);
     expect(toggleButton).toBeTruthy();
@@ -37,7 +37,7 @@ describe('AuthInput component', () => {
       value: 'test@example.com',
       validation: 'validating',
     };
-    const {getByTestId} = render(<AuthInput {...mockProps} />);
+    const {getByTestId} = render(<Input {...mockProps} />);
     const validatingIcon = getByTestId('validating-icon');
     expect(validatingIcon).toBeTruthy();
   });
@@ -48,7 +48,7 @@ describe('AuthInput component', () => {
       value: 'Test',
       validation: 'sucess',
     };
-    const {getByTestId} = render(<AuthInput {...mockProps} />);
+    const {getByTestId} = render(<Input {...mockProps} />);
     const sucessComponent = getByTestId('sucess-icon');
     expect(sucessComponent).toBeTruthy();
   });
@@ -59,14 +59,12 @@ describe('AuthInput component', () => {
       value: 'Test',
       validation: 'error',
     };
-    const {getByTestId} = render(<AuthInput {...mockProps} />);
+    const {getByTestId} = render(<Input {...mockProps} />);
     const errorComponent = getByTestId('error-icon');
     expect(errorComponent).toBeTruthy();
   });
   it('should apply border styles when border prop is true', () => {
-    const {getByTestId} = render(
-      <AuthInput label="Test Label" value="" border />,
-    );
+    const {getByTestId} = render(<Input label="Test Label" value="" border />);
 
     const inputViewWrapper = getByTestId('auth-input-container');
     const styles = inputViewWrapper.props.style[3];
@@ -78,7 +76,7 @@ describe('AuthInput component', () => {
   });
 
   it('should apply disabled styles when disabled prop is true', () => {
-    const {getByTestId} = render(<AuthInput label="Test" value="" disabled />);
+    const {getByTestId} = render(<Input label="Test" value="" disabled />);
 
     const inputViewWrapper = getByTestId('auth-input-container');
     expect(inputViewWrapper.props.style).toContainEqual({
@@ -86,7 +84,7 @@ describe('AuthInput component', () => {
     });
   });
   it('should set isFocused to true on input focus and to !!value on blur', () => {
-    const {getByTestId} = render(<AuthInput label="Test" value="" />);
+    const {getByTestId} = render(<Input label="Test" value="" />);
 
     const input = getByTestId('auth-input-text');
 
