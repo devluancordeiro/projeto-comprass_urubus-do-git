@@ -10,3 +10,5 @@ export interface product {
 export interface category {
   name: string;
 }
+
+export type methods = 'Credit or debit card' | 'Pix' | 'Bank slip' | 'None';

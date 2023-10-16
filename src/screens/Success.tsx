@@ -4,9 +4,28 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../routes/StoreFlow';
 
-const Success = () => {
+type SuccessProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'success'>;
+  route: RouteProp<StoreFlowParamList, 'success'>;
+};
+
+const Success = ({navigation, route}: SuccessProps) => {
+  const {paymentMethod} = route.params;
   const {t} = useTranslation();
+
+  const handlePayment = () => {
+    if (paymentMethod === 'Pix') {
+      navigation.navigate('successPix');
+    } else if (paymentMethod === 'Credit or debit card') {
+      navigation.navigate('successCC');
+    } else if (paymentMethod === 'Bank slip') {
+      navigation.navigate('successBillet');
+    }
+  };
   return (
     <>
       <StatusBar
@@ -26,9 +45,7 @@ const Success = () => {
             {t('Thank you for choosing our app')}!
           </Text>
           <View style={styles.button}>
-            <RedButton onPress={function (): void {}}>
-              {t('Continue')}
-            </RedButton>
+            <RedButton onPress={handlePayment}>{t('Continue')}</RedButton>
           </View>
         </ImageBackground>
       </View>

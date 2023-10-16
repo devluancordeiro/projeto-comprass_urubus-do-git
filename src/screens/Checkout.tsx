@@ -15,6 +15,7 @@ import {useTranslation} from 'react-i18next';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 import {RouteProp} from '@react-navigation/native';
+import {methods} from '../constants/storeTypes';
 
 type CheckoutProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'checkout'>;
@@ -25,7 +26,7 @@ function Checkout({navigation, route}: CheckoutProps) {
   const {t} = useTranslation();
   const {orderPrice} = route.params;
 
-  const [methodPayment, setMethodPayment] = useState('None');
+  const [methodPayment, setMethodPayment] = useState<methods>('None');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -167,7 +168,11 @@ function Checkout({navigation, route}: CheckoutProps) {
           </View>
         </View>
         <View style={styles.button}>
-          <RedButton disabled onPress={function (): void {}}>
+          <RedButton
+            disabled={methodPayment !== 'None'}
+            onPress={() => {
+              navigation.navigate('success', {paymentMethod: methodPayment});
+            }}>
             {t('Submit Order')}
           </RedButton>
         </View>
