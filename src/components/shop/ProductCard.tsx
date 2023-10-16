@@ -13,6 +13,7 @@ interface ProductCardProps {
 function ProductCard({item, onTap}: ProductCardProps) {
   return (
     <TouchableOpacity
+      accessibilityHint="product-card"
       onPress={onTap}
       style={styles.productView}
       activeOpacity={0.7}>
