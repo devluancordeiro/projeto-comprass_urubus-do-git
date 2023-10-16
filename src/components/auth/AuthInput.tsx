@@ -13,7 +13,7 @@ import {Colors, Sizes} from '../../constants/styles';
 
 export type validation = 'validating' | 'sucess' | 'error' | '';
 
-interface AuthInputProps extends TextInputProps {
+export interface AuthInputProps extends TextInputProps {
   label: string;
   value: string | undefined;
   enableAutoCapitalize?: boolean;
@@ -55,6 +55,7 @@ function AuthInput({
 
   return (
     <View
+      testID="auth-input-container"
       style={[
         styles.inputViewWrapper,
         validation === 'sucess' && styles.inputViewWrapperSucess,
@@ -63,9 +64,14 @@ function AuthInput({
         disabled && styles.inputViewWrapperDisabled,
       ]}>
       <View style={styles.inputContainer}>
-        <Text style={[styles.inputLabel, labelConditionalStyle]}>{label}</Text>
+        <Text
+          testID="auth-input-label"
+          style={[styles.inputLabel, labelConditionalStyle]}>
+          {label}
+        </Text>
         <View>
           <TextInput
+            testID="auth-input-text"
             style={styles.input}
             value={value}
             onFocus={() => setIsFocused(true)}
@@ -79,9 +85,11 @@ function AuthInput({
       </View>
       {isPassword ? (
         <Pressable
+          testID="password-visibility-icon"
           style={styles.inputIconWrapper}
           onPress={() => setIsShowing(!isShowing)}>
           <Image
+            testID="check-or-error"
             source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
           />
         </Pressable>
@@ -89,9 +97,16 @@ function AuthInput({
         validation && (
           <View style={styles.inputIconWrapper}>
             {validation === 'validating' ? (
-              <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
+              <ActivityIndicator
+                testID="validating-icon"
+                color={Colors.red_500}
+                size={Sizes.xxl}
+              />
             ) : (
-              <Image source={validationIcons[validation]} />
+              <Image
+                testID={validation === 'sucess' ? 'sucess-icon' : 'error-icon'}
+                source={validationIcons[validation]}
+              />
             )}
           </View>
         )
