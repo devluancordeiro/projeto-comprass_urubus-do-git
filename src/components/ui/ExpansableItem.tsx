@@ -20,6 +20,7 @@ function ExpansableItem({
       <Pressable
         onPress={() => setExpand(prev => !prev)}
         hitSlop={16}
+        accessibilityHint="toggle-expansable-item"
         style={styles.pressableHeader}>
         <Text style={styles.label}>{label}</Text>
         <Ionicons
