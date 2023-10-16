@@ -39,10 +39,12 @@ const CartProducts = () => {
           } else {
             productPromises.push(
               getProductById(id).then(productItem => {
-                updatedProducts.set(id, {
-                  productItem: productItem,
-                  quantity: quantity,
-                });
+                if (productItem.name !== 'EntityNotFoundError') {
+                  updatedProducts.set(id, {
+                    productItem: productItem,
+                    quantity: quantity,
+                  });
+                }
               }),
             );
           }
