@@ -4,8 +4,14 @@ import {StyleSheet, View} from 'react-native';
 import Header from '../components/ui/Header';
 import Input, {validation} from '../components/ui/Input';
 import RedButton from '../components/ui/RedButton';
+import {StoreFlowParamList} from '../routes/StoreFlow';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-function Address() {
+type AddressProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'address'>;
+}
+
+function Address({navigation}: AddressProps) {
   const {t} = useTranslation();
   const [cep, setCep] = useState('');
   const [address, setAddress] = useState('');
@@ -47,7 +53,10 @@ function Address() {
 
   return (
     <View style={styles.container}>
-      <Header title={t('Adding Shipping Address')} />
+      <Header
+        title={t('Adding Shipping Address')}
+        goBack={() => navigation.goBack()}
+      />
       <View style={styles.form}>
         <View>
           <Input

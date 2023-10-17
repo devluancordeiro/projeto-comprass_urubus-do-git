@@ -16,6 +16,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 import {RouteProp} from '@react-navigation/native';
 import {methods} from '../constants/storeTypes';
+import Header from '../components/ui/Header';
+import Input from '../components/ui/Input';
 
 type CheckoutProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'checkout'>;
@@ -31,7 +33,14 @@ function Checkout({navigation, route}: CheckoutProps) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
   const hide = () => setOpenModal(false);
+  const hide2 = () => setOpenModal2(false);
+
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [expire, setExpire] = useState('');
+  const [cvv, setCvv] = useState('');
 
   const handleDeliverySelect = () => {
     setDeliveryPrice(15.0);
@@ -68,6 +77,8 @@ function Checkout({navigation, route}: CheckoutProps) {
             }
             onPress={() => {
               setMethodPayment('Credit or debit card');
+              setOpenModal(false);
+              setOpenModal2(true);
             }}>
             <Text
               style={
@@ -119,11 +130,66 @@ function Checkout({navigation, route}: CheckoutProps) {
     );
   };
 
+  const modalCardHandler = () => {
+    return (
+      <Modal visible={openModal2} animationType="slide" transparent={true}>
+        <Modal
+          visible={openModal2}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setOpenModal2(false)}>
+          <View style={styles.viewTransparent}>
+            <TouchableOpacity onPress={hide2} style={styles.pressOutside} />
+          </View>
+        </Modal>
+        <View style={styles.modalCredit}>
+          <View style={styles.modalHeader}>
+            <View style={styles.grayLine} />
+            <Text style={styles.modalTitle}>Add new card</Text>
+          </View>
+          <View style={styles.inputs}>
+            <Input
+              label="Name on card"
+              value={name}
+              onChangeText={text => setName(text)}
+              border
+            />
+            <Input
+              label="Card number"
+              value={number}
+              onChangeText={text => setNumber(text)}
+              border
+            />
+            <Input
+              label="Expire date"
+              value={expire}
+              onChangeText={text => setExpire(text)}
+              border
+            />
+            <Input
+              label="CVV"
+              value={cvv}
+              onChangeText={text => setCvv(text)}
+              border
+            />
+          </View>
+          <View style={styles.buttonCard}>
+            <RedButton
+              children={'add card'}
+              disabled={!name || !number || !expire || !cvv}
+              onPress={() => {}}
+            />
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <>
       <StatusBar backgroundColor={'transparent'} barStyle={'dark-content'} />
       <View style={styles.view}>
-        <Text style={styles.textCheckout}>{t('Checkout')}</Text>
+        <Header title={t('Checkout')} goBack={() => navigation.goBack()} />
         <Text style={styles.textBold}>{t('Shipping address')}</Text>
         <TouchableOpacity
           style={styles.touchable}
@@ -177,6 +243,7 @@ function Checkout({navigation, route}: CheckoutProps) {
           </RedButton>
         </View>
         {modalHandler()}
+        {modalCardHandler()}
       </View>
     </>
   );
@@ -376,5 +443,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingVertical: 15,
     paddingLeft: 16,
+  },
+  modalCredit: {
+    borderTopRightRadius: 35,
+    borderTopLeftRadius: 35,
+    backgroundColor: Colors.white,
+    width: '100%',
+    height: '80%',
+    marginTop: '68%',
+  },
+  inputs: {
+    marginHorizontal: 16,
+    marginBottom: 32,
+  },
+  buttonCard: {
+    marginHorizontal: 16,
   },
 });
