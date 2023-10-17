@@ -1,5 +1,5 @@
 import React from 'react';
-import {MMKVLoader, useMMKVStorage} from 'react-native-mmkv-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = React.createContext({
   id: '',
@@ -22,19 +22,39 @@ interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
-const storage = new MMKVLoader().initialize();
+const STORAGE_KEY = '123';
 
 function AuthContextProvider({children}: AuthContextProviderProps) {
-  const [id, setId] = useMMKVStorage('id', storage, '');
+  const [id, setId] = React.useState<string>('');
   const [oppening, setOppening] = React.useState<boolean>(true);
   const [email, setEmail] = React.useState<string>('');
   const [error, setError] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [searching, setSearching] = React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(STORAGE_KEY);
+      if (value !== null) {
+        setId(value);
+      }
+    } catch {}
+  };
+
+  const storeData = async (value: string) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, value);
+    } catch {}
+  };
+
   function authLogin(newId: string | undefined) {
     if (newId) {
       setId(newId);
+      storeData(newId);
     }
   }
 
@@ -46,6 +66,7 @@ function AuthContextProvider({children}: AuthContextProviderProps) {
 
   function authLogout() {
     setId('');
+    AsyncStorage.removeItem(STORAGE_KEY);
   }
 
   function saveEmail(newEmail: string | undefined) {
@@ -88,6 +109,7 @@ function AuthContextProvider({children}: AuthContextProviderProps) {
     isSearching: isSearching,
     isOppening: isOppening,
   };
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

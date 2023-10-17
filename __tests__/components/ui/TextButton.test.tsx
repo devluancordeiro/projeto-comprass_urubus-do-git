@@ -17,11 +17,9 @@ describe('TextButton Component', () => {
       <TextButton onPress={onPressMock}>Click Me</TextButton>,
     );
 
-    // Find and press the button
     const button = getByText('Click Me');
     fireEvent.press(button);
 
-    // Assert that the onPress function was called
     expect(onPressMock).toHaveBeenCalled();
   });
 });

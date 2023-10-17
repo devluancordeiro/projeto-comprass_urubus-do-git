@@ -18,7 +18,7 @@ import {StoreFlowParamList} from '../routes/StoreFlow';
 import {RouteProp} from '@react-navigation/native';
 import {methods} from '../constants/storeTypes';
 import Header from '../components/ui/Header';
-import Input from '../components/ui/Input';
+import Input, {validation} from '../components/ui/Input';
 
 type CheckoutProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'checkout'>;
@@ -43,11 +43,14 @@ function Checkout({navigation, route}: CheckoutProps) {
   const [number, setNumber] = useState('');
   const [expire, setExpire] = useState('');
   const [cvv, setCvv] = useState('');
+  const [numberStatus, setNumberStatus] = useState<validation>('');
+  const [cvvStatus, setCvvStatus] = useState<validation>('');
+  const [addressText, setAddressText] = useState(false);
 
   const paymentMethodImages = {
     'Credit or debit card': require('../assets/images/mastercard.png'),
     Pix: require('../assets/images/pix-small.png'),
-    'Bank slip': require('../assets/images/bank.png'),
+    'Bank slip': require('../assets/images/bank-slip.png'),
   };
 
   const handlePaymentMethodSelect = method => {
@@ -92,6 +95,7 @@ function Checkout({navigation, route}: CheckoutProps) {
               setMethodPayment('Credit or debit card');
               setOpenModal(false);
               setOpenModal2(true);
+              setPaymentMethodImage(null);
             }}>
             <Text
               style={
@@ -110,6 +114,7 @@ function Checkout({navigation, route}: CheckoutProps) {
             }
             onPress={() => {
               setMethodPayment('Pix');
+              handlePaymentMethodSelect('Pix');
             }}>
             <Text
               style={
@@ -128,6 +133,7 @@ function Checkout({navigation, route}: CheckoutProps) {
             }
             onPress={() => {
               setMethodPayment('Bank slip');
+              handlePaymentMethodSelect('Bank slip');
             }}>
             <Text
               style={
@@ -144,6 +150,31 @@ function Checkout({navigation, route}: CheckoutProps) {
   };
 
   const modalCardHandler = () => {
+    useEffect(() => {
+      function validateNumberCard() {
+        if (number) {
+          const validaNumber = /^(\d{4}\s?){4}$/;
+          if (validaNumber.test(number)) {
+            setNumberStatus('sucess');
+          } else {
+            setNumberStatus('error');
+          }
+        }
+      }
+      function validateCVV() {
+        if (cvv) {
+          const validaCVV = /^[0-9]{3}$/;
+          if (validaCVV.test(cvv)) {
+            setCvvStatus('sucess');
+          } else {
+            setCvvStatus('error');
+          }
+        }
+      }
+      validateNumberCard();
+      validateCVV();
+    }, [number, cvv]);
+
     return (
       <Modal visible={openModal2} animationType="slide" transparent={true}>
         <Modal
@@ -167,12 +198,23 @@ function Checkout({navigation, route}: CheckoutProps) {
               onChangeText={text => setName(text)}
               border
             />
-            <Input
-              label="Card number"
-              value={number}
-              onChangeText={text => setNumber(text)}
-              border
-            />
+            <View>
+              <Input
+                label="Card number"
+                value={number}
+                validation={
+                  numberStatus === 'sucess' ? undefined : numberStatus
+                }
+                onChangeText={text => setNumber(text)}
+                border
+              />
+              {numberStatus === 'sucess' ? (
+                <Image
+                  source={require('../assets/images/mastercard.png')}
+                  style={styles.inputImage}
+                />
+              ) : null}
+            </View>
             <Input
               label="Expire date"
               value={expire}
@@ -182,6 +224,7 @@ function Checkout({navigation, route}: CheckoutProps) {
             <Input
               label="CVV"
               value={cvv}
+              validation={cvvStatus}
               onChangeText={text => setCvv(text)}
               border
             />
@@ -189,8 +232,17 @@ function Checkout({navigation, route}: CheckoutProps) {
           <View style={styles.buttonCard}>
             <RedButton
               children={'add card'}
-              disabled={!name || !number || !expire || !cvv}
-              onPress={() => {}}
+              disabled={
+                !(numberStatus === 'sucess') ||
+                !(cvvStatus === 'sucess') ||
+                !number ||
+                !expire ||
+                !cvv
+              }
+              onPress={() => {
+                setOpenModal2(false);
+                handlePaymentMethodSelect('Credit or debit card');
+              }}
             />
           </View>
         </View>
@@ -210,9 +262,21 @@ function Checkout({navigation, route}: CheckoutProps) {
           onPress={() => {
             navigation.navigate('address');
           }}>
-          <Text style={styles.touchableClickText}>
-            {t('Click to add an adress')}
-          </Text>
+          <View>
+            {addressText ? (
+              <View style={styles.addressViewText}>
+                <Text style={styles.fullName}>Jane Doe</Text>
+                <Text style={styles.addressText}>3 Newbridge Court</Text>
+                <Text style={styles.addressText}>
+                  Chino Hills, CA 91709, United States
+                </Text>
+              </View>
+            ) : (
+              <Text style={styles.touchableClickText}>
+                {t('Click to add an adress')}
+              </Text>
+            )}
+          </View>
           <Text style={styles.touchableChangeText}>{t('Change')}</Text>
         </TouchableOpacity>
         <View style={styles.container}>
@@ -223,11 +287,24 @@ function Checkout({navigation, route}: CheckoutProps) {
         </View>
         <View style={styles.containerMethod}>
           {paymentMethodImage && (
-            <Image source={paymentMethodImage} style={styles.methodImage} />
-          )}
-          {paymentMethodImage && (
-            <View style={styles.textContainerMethod}>
-              <Text style={styles.textWithMethod}>{t(methodPayment)}</Text>
+            <View style={styles.methodView}>
+              <View style={styles.viewMasterImage}>
+                <Image
+                  source={paymentMethodImage}
+                  style={
+                    methodPayment === 'Credit or debit card'
+                      ? styles.methodImageCC
+                      : styles.methodImage
+                  }
+                />
+              </View>
+              <View style={styles.textContainerMethod}>
+                <Text style={styles.textWithMethod}>
+                  {methodPayment === 'Credit or debit card'
+                    ? number
+                    : t(methodPayment)}
+                </Text>
+              </View>
             </View>
           )}
           {!paymentMethodImage && (
@@ -260,7 +337,7 @@ function Checkout({navigation, route}: CheckoutProps) {
         </View>
         <View style={styles.button}>
           <RedButton
-            disabled={methodPayment === 'None'}
+            disabled={methodPayment === 'None' || deliveryPrice <= 0}
             onPress={() => {
               navigation.navigate('success', {paymentMethod: methodPayment});
             }}>
@@ -280,17 +357,6 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: Colors.white,
-  },
-
-  textCheckout: {
-    color: Colors.black,
-    fontSize: Sizes.l,
-    fontFamily: 'OpenSans-ExtraBold',
-    marginTop: 14,
-    marginBottom: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    justifyContent: 'center',
   },
 
   textBold: {
@@ -353,36 +419,52 @@ const styles = StyleSheet.create({
   containerMethod: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: '5%',
+    marginBottom: '12%',
   },
 
   textNone: {
     color: Colors.gray_500,
     fontSize: Sizes.s,
     marginHorizontal: 16,
-    marginTop: 24,
-    marginBottom: 70,
+    marginTop: '2%',
+    marginBottom: '5%',
     fontFamily: 'OpenSans-Bold',
   },
 
   textWithMethod: {
-    color: Colors.gray_500,
+    color: Colors.black,
     fontSize: Sizes.s,
-    marginHorizontal: 96,
-    marginTop: 24,
-    marginBottom: 70,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'OpenSans-SemiBold',
   },
 
   textContainerMethod: {
+    marginHorizontal: 16,
+  },
+  methodView: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   methodImage: {
+    width: 30,
+    height: 35,
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  methodImageCC: {
+    width: 45,
+    height: 35,
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  viewMasterImage: {
+    borderRadius: 8,
     backgroundColor: Colors.white,
-    width: 64,
-    height: 38,
-    resizeMode: 'contain',
+    width: '30%',
+    elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 16,
   },
 
   deliveryView: {
@@ -509,5 +591,27 @@ const styles = StyleSheet.create({
   },
   buttonCard: {
     marginHorizontal: 16,
+  },
+  addressViewText: {
+    marginHorizontal: 24,
+  },
+  fullName: {
+    fontFamily: 'OpenSans-Bold',
+    fontSize: 14,
+    color: Colors.black,
+    marginBottom: 4,
+  },
+  addressText: {
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 14,
+    color: Colors.black,
+  },
+  inputImage: {
+    position: 'absolute',
+    height: 27,
+    width: 35,
+    alignSelf: 'flex-end',
+    top: '35%',
+    right: '5%',
   },
 });

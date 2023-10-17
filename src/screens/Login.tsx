@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {login} from '../utils/User';
-import {AuthContext} from '../components/auth/AuthContext';
+import {AuthContext} from '../components/context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 
 export function Login() {
