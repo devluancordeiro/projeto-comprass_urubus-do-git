@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {Image, Text, View} from 'react-native';
 import {Colors} from '../../constants/styles';
 import {User, fetchUser} from '../../utils/User';
-import {AuthContext} from './AuthContext';
+import {AuthContext} from '../context/AuthContext';
 import {StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 

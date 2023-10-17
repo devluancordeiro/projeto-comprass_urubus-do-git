@@ -6,8 +6,16 @@ import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
 import RNFetchBlob from 'rn-fetch-blob';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../routes/StoreFlow';
 
-const SuccessBillet = () => {
+type SuccessBilletProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'successBillet'>;
+  route: RouteProp<StoreFlowParamList, 'successBillet'>;
+};
+
+function SuccessBillet({navigation}: SuccessBilletProps) {
   const {t} = useTranslation();
   const billetDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
@@ -49,14 +57,14 @@ const SuccessBillet = () => {
           </RedButton>
         </View>
         <View style={styles.buttonContinue}>
-          <RedButton onPress={function (): void {}}>
+          <RedButton onPress={() => navigation.navigate('app')}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>
       </View>
     </>
   );
-};
+}
 
 export default SuccessBillet;
 

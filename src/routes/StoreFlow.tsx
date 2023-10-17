@@ -14,7 +14,7 @@ import Details from '../screens/Details';
 import {methods, product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import AuthContextProvider, {AuthContext} from '../components/auth/AuthContext';
+import AuthContextProvider, {AuthContext} from '../components/context/AuthContext';
 import Checkout from '../screens/Checkout';
 import Address from '../screens/Address';
 import Success from '../screens/Success';

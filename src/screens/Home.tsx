@@ -14,7 +14,7 @@ import AuthWelcome from '../components/auth/AuthWelcome';
 import {category, product} from '../constants/storeTypes';
 import {Colors, Sizes} from '../constants/styles';
 import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
-import {AuthContext} from '../components/auth/AuthContext';
+import {AuthContext} from '../components/context/AuthContext';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const Home = () => {

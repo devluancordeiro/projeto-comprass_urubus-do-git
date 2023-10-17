@@ -17,7 +17,7 @@ import RedButton from '../components/ui/RedButton';
 import i18next from '../utils/i18next';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../components/auth/AuthContext';
+import {AuthContext} from '../components/context/AuthContext';
 import {User, editData, fetchUser} from '../utils/User';
 import IconFAB from '../components/ui/IconFAB';
 
