@@ -22,19 +22,23 @@ function IncrementalProductCard({item, onTap}: IncrementalProductCardProps) {
         <TouchableOpacity
           hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => dispatch(reduceItemCount(item.id))}>
+          onPress={() => dispatch(reduceItemCount(item.id))}
+          accessibilityHint="handle-reduce-count">
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/reduce-count.png')}
           />
         </TouchableOpacity>
         <View style={styles.numberView}>
-          <Text style={styles.number}>{count || 0}</Text>
+          <Text accessibilityHint="counter" style={styles.number}>
+            {count || 0}
+          </Text>
         </View>
         <TouchableOpacity
           hitSlop={20}
           activeOpacity={0.7}
-          onPress={() => dispatch(increaseItemCount(item.id))}>
+          onPress={() => dispatch(increaseItemCount(item.id))}
+          accessibilityHint="handle-increase-count">
           <Image
             style={styles.quantityModifier}
             source={require('../../assets/images/increase-count.png')}
