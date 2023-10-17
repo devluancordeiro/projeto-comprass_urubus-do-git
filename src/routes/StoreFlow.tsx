@@ -11,7 +11,7 @@ import SingUp from '../screens/SignUp';
 import Login from '../screens/Login';
 import ForgotPassword from '../screens/ForgotPassword';
 import Details from '../screens/Details';
-import {address, methods, product} from '../constants/storeTypes';
+import {methods, product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import AuthContextProvider, {
@@ -130,7 +130,7 @@ export type StoreFlowParamList = {
   app: undefined;
   auth: undefined;
   details: {productOpened: product};
-  checkout: {addressFromRoute: address};
+  checkout: {orderPrice: number};
   checkoutNotlog: undefined;
   success: {paymentMethod: methods};
   address: undefined;
@@ -151,18 +151,13 @@ function StoreFlow() {
           }}>
           <Stack.Screen name="app" component={MainFlow} />
           <Stack.Screen name="auth" component={AuthFlow} />
-          <Stack.Screen name="details" component={Details} initialParams={{}} />
-          <Stack.Screen
-            name="checkout"
-            component={Checkout}
-            initialParams={{}}
-          />
+          <Stack.Screen name="details" component={Details} />
+          <Stack.Screen name="checkout" component={Checkout} />
           <Stack.Screen name="checkoutNotlog" component={CheckoutNotLogged} />
           <Stack.Screen
             name="success"
             component={Success}
             options={{gestureEnabled: false}}
-            initialParams={{}}
           />
           <Stack.Screen name="successPix" component={SuccessPix} />
           <Stack.Screen name="successBillet" component={SuccessBillet} />
