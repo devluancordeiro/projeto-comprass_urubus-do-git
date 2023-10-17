@@ -46,7 +46,7 @@ function Checkout({navigation, route}: CheckoutProps) {
 
   const paymentMethodImages = {
     'Credit or debit card': require('../assets/images/mastercard.png'),
-    'Pix': require('../assets/images/pix-small.png'),
+    Pix: require('../assets/images/pix-small.png'),
     'Bank slip': require('../assets/images/bank.png'),
   };
 
