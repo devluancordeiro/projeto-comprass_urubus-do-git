@@ -2,8 +2,8 @@
 
 Challenge made for the SP scholarship program - Hybrid Mobile Journey (React Native) - AWS Cloud Context - Compass UOL
 
-## Features
-# Full E-Commerce app for mobile with:
+# Features
+## Full E-Commerce app for mobile with:
 1. Loading splash to render the itens before home screen appear.
 2. Home screen with categories and products fetched with https://fakeapi.platzi.com/ api.
 3. Full login screen with sign up, forgot password and authentication using https://fakeapi.platzi.com/ for backend.
