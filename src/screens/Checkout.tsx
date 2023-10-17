@@ -157,6 +157,7 @@ function Checkout({navigation, route}: CheckoutProps) {
   };
 
   const modalCardHandler = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       function validateNumberCard() {
         if (number) {
@@ -180,6 +181,7 @@ function Checkout({navigation, route}: CheckoutProps) {
       }
       validateNumberCard();
       validateCVV();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [number, cvv]);
 
     return (

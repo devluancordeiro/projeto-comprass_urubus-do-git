@@ -4,13 +4,11 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
-import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 
 type SuccessPixProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'successPix'>;
-  route: RouteProp<StoreFlowParamList, 'successPix'>;
 };
 
 function SuccessPix({navigation}: SuccessPixProps) {

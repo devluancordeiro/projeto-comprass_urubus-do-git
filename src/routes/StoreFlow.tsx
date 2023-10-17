@@ -151,13 +151,18 @@ function StoreFlow() {
           }}>
           <Stack.Screen name="app" component={MainFlow} />
           <Stack.Screen name="auth" component={AuthFlow} />
-          <Stack.Screen name="details" component={Details} />
-          <Stack.Screen name="checkout" component={Checkout} />
+          <Stack.Screen name="details" component={Details} initialParams={{}} />
+          <Stack.Screen
+            name="checkout"
+            component={Checkout}
+            initialParams={{}}
+          />
           <Stack.Screen name="checkoutNotlog" component={CheckoutNotLogged} />
           <Stack.Screen
             name="success"
             component={Success}
             options={{gestureEnabled: false}}
+            initialParams={{}}
           />
           <Stack.Screen name="successPix" component={SuccessPix} />
           <Stack.Screen name="successBillet" component={SuccessBillet} />

@@ -6,13 +6,11 @@ import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
 import RNFetchBlob from 'rn-fetch-blob';
-import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 
 type SuccessBilletProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'successBillet'>;
-  route: RouteProp<StoreFlowParamList, 'successBillet'>;
 };
 
 function SuccessBillet({navigation}: SuccessBilletProps) {

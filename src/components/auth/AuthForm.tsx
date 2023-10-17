@@ -71,8 +71,7 @@ function AuthForm({
           <Text style={styles.text}>
             {t(
               'Choose a really cool name that only contains spaces as special characters. Oh, and your password must have more than 4 digits!',
-            )}{' '}
-            :)
+            )}
           </Text>
         </View>
       ) : (
@@ -81,8 +80,7 @@ function AuthForm({
           <Text style={styles.text}>
             {t(
               'Enter your email and let us see if it exists for you to change your password',
-            )}{' '}
-            :)
+            )}
           </Text>
         </View>
       )}
