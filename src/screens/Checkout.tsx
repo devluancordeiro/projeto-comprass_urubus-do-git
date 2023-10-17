@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
+  Image,
   StatusBar,
   Modal,
 } from 'react-native';
@@ -26,12 +27,24 @@ function Checkout({navigation, route}: CheckoutProps) {
   const {t} = useTranslation();
   const {orderPrice} = route.params;
 
+  const [paymentMethodImage, setPaymentMethodImage] = useState(null);
   const [methodPayment, setMethodPayment] = useState<methods>('None');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
   const hide = () => setOpenModal(false);
+
+  const paymentMethodImages = {
+    'Credit or debit card': require('../assets/images/mastercard.png'),
+    'Pix': require('../assets/images/pix-small.png'),
+    'Bank slip': require('../assets/images/bank.png'),
+  };
+
+  const handlePaymentMethodSelect = method => {
+    setMethodPayment(method);
+    setPaymentMethodImage(paymentMethodImages[method]);
+  };
 
   const handleDeliverySelect = () => {
     setDeliveryPrice(15.0);
@@ -142,7 +155,19 @@ function Checkout({navigation, route}: CheckoutProps) {
             <Text style={styles.changePaymentText}>{t('Change')}</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.textNone}>{t(methodPayment)}</Text>
+        <View style={styles.containerMethod}>
+          {paymentMethodImage && (
+            <Image source={paymentMethodImage} style={styles.methodImage} />
+          )}
+          {paymentMethodImage && (
+            <View style={styles.textContainerMethod}>
+              <Text style={styles.textWithMethod}>{t(methodPayment)}</Text>
+            </View>
+          )}
+          {!paymentMethodImage && (
+            <Text style={styles.textNone}>{t(methodPayment)}</Text>
+          )}
+        </View>
         <Text style={styles.textBold}>{t('Delivery method')}</Text>
         <View style={styles.deliveryView}>
           <DeliverySection onPress={handleDeliverySelect} />
@@ -258,6 +283,11 @@ const styles = StyleSheet.create({
     marginRight: '12%',
   },
 
+  containerMethod: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   textNone: {
     color: Colors.gray_500,
     fontSize: Sizes.s,
@@ -265,6 +295,27 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 70,
     fontFamily: 'OpenSans-Bold',
+  },
+
+  textWithMethod: {
+    color: Colors.gray_500,
+    fontSize: Sizes.s,
+    marginHorizontal: 96,
+    marginTop: 24,
+    marginBottom: 70,
+    fontFamily: 'OpenSans-Bold',
+  },
+
+  textContainerMethod: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  methodImage: {
+    backgroundColor: Colors.white,
+    width: 64,
+    height: 38,
+    resizeMode: 'contain',
   },
 
   deliveryView: {
