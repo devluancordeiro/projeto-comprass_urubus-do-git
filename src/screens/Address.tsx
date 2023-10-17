@@ -19,11 +19,15 @@ function Address() {
       try {
         if (cep) {
           var addressFetched;
+          var cepWithoutSeparator = cep;
+          if (cep[5] === '-') {
+            cepWithoutSeparator = cep.replace('-', '');
+          }
           const validacep = /^[0-9]{8}$/;
-          if (validacep.test(cep)) {
+          if (validacep.test(cepWithoutSeparator)) {
             setStatus('validating');
             const response = await fetch(
-              `https://viacep.com.br/ws/${cep}/json/`,
+              `https://viacep.com.br/ws/${cepWithoutSeparator}/json/`,
             );
             addressFetched = await response.json();
           }
