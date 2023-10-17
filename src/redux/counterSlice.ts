@@ -34,6 +34,7 @@ const counterSlice = createSlice({
     deleteItemCount: (state, action: PayloadAction<number>) => {
       delete state[action.payload];
     },
+    resetItemCount: () => initialState,
   },
 });
 
@@ -42,6 +43,7 @@ export const {
   reduceItemCount,
   reduceItemCountWithoutRemove,
   deleteItemCount,
+  resetItemCount,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
