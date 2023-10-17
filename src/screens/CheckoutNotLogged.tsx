@@ -17,7 +17,7 @@ const CheckoutNotLogged = ({navigation}: CheckoutNotLoggedProps) => {
       <Header title={t('Checkout')} goBack={() => navigation.goBack()} />
       <View style={styles.centralView}>
         <Text style={styles.text}>
-          You need to connect to complete your purchase, come on?
+          {t('You need to connect to complete your purchase, come on?')}
         </Text>
         <View style={styles.viewButton}>
           <RedButton
