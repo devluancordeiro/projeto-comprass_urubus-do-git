@@ -6,6 +6,8 @@ import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
+import {resetItemCount} from '../redux/counterSlice';
+import {useDispatch} from 'react-redux';
 
 type SuccessPixProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'successPix'>;
@@ -13,6 +15,7 @@ type SuccessPixProps = {
 
 function SuccessPix({navigation}: SuccessPixProps) {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   return (
     <>
       <StatusBar
@@ -33,7 +36,11 @@ function SuccessPix({navigation}: SuccessPixProps) {
           {t('then follow the steps sent by email')}.
         </Text>
         <View style={styles.button}>
-          <RedButton onPress={() => navigation.navigate('app')}>
+          <RedButton
+            onPress={() => {
+              navigation.navigate('app');
+              dispatch(resetItemCount());
+            }}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>

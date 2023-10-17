@@ -45,7 +45,10 @@ function IncrementalProductCard({item, onTap}: IncrementalProductCardProps) {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={onTap}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={onTap}
+        accessibilityHint="item">
         <Image source={{uri: item.images[0]}} style={styles.productImage} />
         <Text numberOfLines={1} style={styles.productTitle}>
           {item.title}

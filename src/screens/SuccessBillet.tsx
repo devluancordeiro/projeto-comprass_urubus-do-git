@@ -8,6 +8,8 @@ import {useTranslation} from 'react-i18next';
 import RNFetchBlob from 'rn-fetch-blob';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
+import {useDispatch} from 'react-redux';
+import {resetItemCount} from '../redux/counterSlice';
 
 type SuccessBilletProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'successBillet'>;
@@ -15,6 +17,7 @@ type SuccessBilletProps = {
 
 function SuccessBillet({navigation}: SuccessBilletProps) {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   const billetDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
   const handleDownloadTicket = async () => {
@@ -55,7 +58,11 @@ function SuccessBillet({navigation}: SuccessBilletProps) {
           </RedButton>
         </View>
         <View style={styles.buttonContinue}>
-          <RedButton onPress={() => navigation.navigate('app')}>
+          <RedButton
+            onPress={() => {
+              navigation.navigate('app');
+              dispatch(resetItemCount());
+            }}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>

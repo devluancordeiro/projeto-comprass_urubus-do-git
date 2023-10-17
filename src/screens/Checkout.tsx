@@ -198,18 +198,18 @@ function Checkout({navigation, route}: CheckoutProps) {
         <View style={styles.modalCredit}>
           <View style={styles.modalHeader}>
             <View style={styles.grayLine} />
-            <Text style={styles.modalTitle}>Add new card</Text>
+            <Text style={styles.modalTitle}>{t('Add new card')}</Text>
           </View>
           <View style={styles.inputs}>
             <Input
-              label="Name on card"
+              label={t('Name on card')}
               value={name}
               onChangeText={text => setName(text)}
               border
             />
             <View>
               <Input
-                label="Card number"
+                label={t('Card number')}
                 value={number}
                 validation={
                   numberStatus === 'sucess' ? undefined : numberStatus
@@ -225,13 +225,13 @@ function Checkout({navigation, route}: CheckoutProps) {
               ) : null}
             </View>
             <Input
-              label="Expire date"
+              label={t('Expire date')}
               value={expire}
               onChangeText={text => setExpire(text)}
               border
             />
             <Input
-              label="CVV"
+              label={t('CVV')}
               value={cvv}
               validation={cvvStatus}
               onChangeText={text => setCvv(text)}
@@ -240,7 +240,7 @@ function Checkout({navigation, route}: CheckoutProps) {
           </View>
           <View style={styles.buttonCard}>
             <RedButton
-              children={'add card'}
+              children={t('add card')}
               disabled={
                 !(numberStatus === 'sucess') ||
                 !(cvvStatus === 'sucess') ||

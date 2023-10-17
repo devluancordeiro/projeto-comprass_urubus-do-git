@@ -101,6 +101,13 @@
     "CONTINUE SHOPPING": "CONTINUE SHOPPING",
     "Pay your pix using the QR code above and": "Pay your pix using the QR code above and",
     "then follow the steps sent by email": "then follow the steps sent by email",
-    "Hello": "Hello"
+    "Hello": "Hello",
+    "You need to connect to complete your purchase, come on?": "You need to connect to complete your purchase, come on?",
+    "Add new card": "Add new card",
+    "Name on card": "Name on card",
+    "Card number": "Card number",
+    "Expire date": "Expire date",
+    "CVV": "CVV",
+    "add card": "add card"
     
 }

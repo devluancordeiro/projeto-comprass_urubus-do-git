@@ -6,6 +6,8 @@ import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../routes/StoreFlow';
+import {resetItemCount} from '../redux/counterSlice';
+import {useDispatch} from 'react-redux';
 
 type SuccessCardProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'successCC'>;
@@ -13,6 +15,7 @@ type SuccessCardProps = {
 
 function SuccessCC({navigation}: SuccessCardProps) {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   return (
     <>
       <StatusBar
@@ -33,7 +36,11 @@ function SuccessCC({navigation}: SuccessCardProps) {
           {t('Thank you for choosing our app')}!
         </Text>
         <View style={styles.button}>
-          <RedButton onPress={() => navigation.navigate('app')}>
+          <RedButton
+            onPress={() => {
+              navigation.navigate('app');
+              dispatch(resetItemCount());
+            }}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>

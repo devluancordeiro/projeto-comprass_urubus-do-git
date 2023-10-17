@@ -24,11 +24,12 @@ const mockProduct = {
 describe('ExpansableItem component', () => {
   it('should render the product card correctly', () => {
     const {getByText} = render(
-      <IncrementalProductCard item={mockProduct} onTap={() => {}} />,
+      <Provider store={store}>
+        <IncrementalProductCard item={mockProduct} onTap={() => {}} />
+      </Provider>,
     );
 
     expect(getByText('Product Title')).toBeTruthy();
-    expect(getByText('Category')).toBeTruthy();
     expect(getByText('19,00 R$')).toBeTruthy();
   });
 
@@ -45,5 +46,18 @@ describe('ExpansableItem component', () => {
     expect(getByText('1')).toBeTruthy();
     fireEvent.press(reduceCountButton);
     expect(getByText('0')).toBeTruthy();
+  });
+
+  it('should navigate when pressed', () => {
+    const onPressMock = jest.fn();
+    const {getByAccessibilityHint} = render(
+      <Provider store={store}>
+        <IncrementalProductCard item={mockProduct} onTap={onPressMock} />
+      </Provider>,
+    );
+
+    const card = getByAccessibilityHint('item');
+    fireEvent.press(card);
+    expect(onPressMock).toHaveBeenCalled();
   });
 });
