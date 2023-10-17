@@ -20,6 +20,19 @@ Challenge made for the SP scholarship program - Hybrid Mobile Journey (React Nat
 1. React Native
 2. TypeScript / TSX
 
+## Libs
+- rn-fetch-blob
+- moment
+- react-redux
+- Redux toolkit
+- Redux persist
+- Axios
+- @react-native-async-storage/async-storage
+- react-native-vector-icons/Feather
+- react-hook-form
+- react-i18next
+- @react-navigation/native Stack and Tabs
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
