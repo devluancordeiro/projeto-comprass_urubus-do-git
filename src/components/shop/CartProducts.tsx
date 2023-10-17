@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList, View, Text} from 'react-native';
-import {getProductById} from '../../utils/fetchProducts';
-import {product} from '../../constants/storeTypes';
-import CartProductCard from './CartProductCard';
-import {useDispatch, useSelector} from 'react-redux';
-import type {RootState} from '../../redux/store';
-import RedButton from '../ui/RedButton';
-import {Colors} from '../../constants/styles';
-import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StoreFlowParamList} from '../../routes/StoreFlow';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {product} from '../../constants/storeTypes';
+import {Colors} from '../../constants/styles';
 import {deleteItemCount} from '../../redux/counterSlice';
+import {setOrderSlice} from '../../redux/orderSlice';
+import type {RootState} from '../../redux/store';
+import {StoreFlowParamList} from '../../routes/StoreFlow';
+import {getProductById} from '../../utils/fetchProducts';
+import RedButton from '../ui/RedButton';
+import CartProductCard from './CartProductCard';
 
 const CartProducts = () => {
   const {t} = useTranslation();
@@ -71,7 +72,8 @@ const CartProducts = () => {
       total += price * quantity;
     });
     setAddPrices(total);
-  }, [products]);
+    dispatch(setOrderSlice(total));
+  }, [dispatch, products]);
 
   return (
     <>
@@ -106,7 +108,7 @@ const CartProducts = () => {
             <RedButton
               children={t('Buy')}
               onPress={() => {
-                navigation.navigate('checkout', {orderPrice: addPrices});
+                navigation.navigate('checkout', {completeAddress: {}});
               }}
             />
           ) : (

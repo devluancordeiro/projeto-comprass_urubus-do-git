@@ -9,7 +9,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 type AddressProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'address'>;
-}
+};
 
 function Address({navigation}: AddressProps) {
   const {t} = useTranslation();
@@ -104,7 +104,17 @@ function Address({navigation}: AddressProps) {
           />
         </View>
         <RedButton
-          onPress={() => console.log('Address must be saved!')}
+          onPress={() =>
+            navigation.navigate('checkout', {
+              addressFromRoute: {
+                cep: cep,
+                address: address,
+                city: city,
+                state: state,
+                fullName: fullName,
+              },
+            })
+          }
           disabled={
             !(status === 'sucess') || !address || !city || !state || !fullName
           }>

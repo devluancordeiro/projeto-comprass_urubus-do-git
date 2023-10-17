@@ -11,7 +11,7 @@ import SingUp from '../screens/SignUp';
 import Login from '../screens/Login';
 import ForgotPassword from '../screens/ForgotPassword';
 import Details from '../screens/Details';
-import {methods, product} from '../constants/storeTypes';
+import {address, methods, product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import AuthContextProvider, {AuthContext} from '../components/auth/AuthContext';
@@ -127,7 +127,7 @@ export type StoreFlowParamList = {
   app: undefined;
   auth: undefined;
   details: {productOpened: product};
-  checkout: {orderPrice: number};
+  checkout: {addressFromRoute: address};
   success: {paymentMethod: methods};
   address: undefined;
   load: undefined;
