@@ -20,7 +20,7 @@ Challenge made for the SP scholarship program - Hybrid Mobile Journey (React Nat
 1. React Native
 2. TypeScript / TSX
 
-## Libs
+### Libs
 - rn-fetch-blob
 - moment
 - react-redux
