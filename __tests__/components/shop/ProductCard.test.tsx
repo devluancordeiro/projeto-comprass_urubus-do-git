@@ -18,7 +18,6 @@ describe('ProductCard Component', () => {
       <ProductCard item={mockProduct} onTap={() => {}} />,
     );
 
-    // Check if the components are rendered correctly
     expect(getByAccessibilityHint('product-card')).toBeTruthy();
     expect(getByText('Product Title')).toBeTruthy();
     expect(getByText('Category')).toBeTruthy();

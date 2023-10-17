@@ -14,11 +14,9 @@ describe('Header Component', () => {
       <Header title="Test Title" goBack={goBackMock} />,
     );
 
-    // Find and press the back button
     const backButton = getByAccessibilityHint('back-button');
     fireEvent.press(backButton);
 
-    // Assert that the goBack function was called
     expect(goBackMock).toHaveBeenCalled();
   });
 

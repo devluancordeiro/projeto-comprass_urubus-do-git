@@ -17,11 +17,9 @@ describe('DeliverySection Component', () => {
       <DeliverySection onPress={onPressMock} />,
     );
 
-    // Find the first delivery method item and press it
     const firstItem = getAllByAccessibilityHint('delivery-method-item')[0];
     fireEvent.press(firstItem);
 
-    // Assert that the onPress callback was called
     expect(onPressMock).toHaveBeenCalled();
   });
 });
