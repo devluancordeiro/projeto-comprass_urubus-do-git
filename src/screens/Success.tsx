@@ -1,11 +1,10 @@
-import React from 'react';
-import {View, ImageBackground, StyleSheet, Text, StatusBar} from 'react-native';
-import {Colors} from '../constants/styles';
-import {Sizes} from '../constants/styles';
-import RedButton from '../components/ui/RedButton';
-import {useTranslation} from 'react-i18next';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {ImageBackground, StatusBar, StyleSheet, Text, View} from 'react-native';
+import RedButton from '../components/ui/RedButton';
+import {Colors, Sizes} from '../constants/styles';
 import {StoreFlowParamList} from '../routes/StoreFlow';
 
 type SuccessProps = {
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    justifyContent: 'center',
   },
 
   textBold: {
