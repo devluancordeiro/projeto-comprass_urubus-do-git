@@ -5,10 +5,24 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const SuccessBillet = () => {
   const {t} = useTranslation();
   const billetDate = moment().add(1, 'days').format('DD/MM/YYYY');
+
+  const handleDownloadTicket = async () => {
+    const response = await RNFetchBlob.config({
+      fileCache: true,
+    }).fetch(
+      'GET',
+      'https://www.ufms.br/wp-content/uploads/2017/09/PDF-teste.pdf',
+    );
+
+    const filePath = response.path();
+
+    RNFetchBlob.fs.unlink(filePath);
+  };
 
   return (
     <>
@@ -30,7 +44,7 @@ const SuccessBillet = () => {
           {t('follow the steps sent by email')}.
         </Text>
         <View style={styles.buttonBillet}>
-          <RedButton onPress={function (): void {}}>
+          <RedButton onPress={handleDownloadTicket}>
             {t('DOWNLOAD TICKET')}
           </RedButton>
         </View>
