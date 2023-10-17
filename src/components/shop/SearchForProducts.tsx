@@ -46,7 +46,8 @@ function SearchForProducts() {
       <TouchableOpacity
         onPress={() => setisSearching(prev => !prev)}
         style={styles.viewSearch}
-        activeOpacity={0.6}>
+        activeOpacity={0.6}
+        accessibilityHint="search">
         <Image
           source={require('../../assets/images/search.png')}
           style={styles.searchIcon}
