@@ -12,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../../routes/StoreFlow';
 import {deleteItemCount} from '../../redux/counterSlice';
-import {AuthContext} from '../auth/AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 const CartProducts = () => {
   const {t} = useTranslation();
