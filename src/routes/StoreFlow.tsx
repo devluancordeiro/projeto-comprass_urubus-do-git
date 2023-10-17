@@ -149,7 +149,11 @@ function StoreFlow() {
           <Stack.Screen name="auth" component={AuthFlow} />
           <Stack.Screen name="details" component={Details} />
           <Stack.Screen name="checkout" component={Checkout} />
-          <Stack.Screen name="success" component={Success} />
+          <Stack.Screen
+            name="success"
+            component={Success}
+            options={{gestureEnabled: false}}
+          />
           <Stack.Screen name="successPix" component={SuccessPix} />
           <Stack.Screen name="successBillet" component={SuccessBillet} />
           <Stack.Screen name="successCC" component={SuccessCC} />
