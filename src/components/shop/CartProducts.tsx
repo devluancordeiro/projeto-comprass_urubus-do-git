@@ -2,7 +2,13 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useTranslation} from 'react-i18next';
 import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, FlatList, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import {product} from '../../constants/storeTypes';
 import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../../constants/styles';
@@ -29,6 +35,7 @@ const CartProducts = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
+        ctx.isLoading(true);
         const productIds = Object.keys(productsCart);
         const updatedProducts = new Map();
         const productPromises = [];
@@ -56,6 +63,7 @@ const CartProducts = () => {
             );
           }
         }
+        ctx.isLoading(false);
         await Promise.all(productPromises);
         setProducts(updatedProducts);
       } catch (error) {
@@ -79,49 +87,55 @@ const CartProducts = () => {
 
   return (
     <>
-      <View>
-        <FlatList
-          style={styles.cartScroll}
-          data={Array.from(products.values())}
-          keyExtractor={({productItem}) => productItem.id.toString()}
-          renderItem={({item}) => {
-            return (
-              <CartProductCard
-                key={item.productItem.id}
-                quantity={item.quantity}
-                item={item.productItem}
-                onTap={() =>
-                  navigation.navigate('details', {
-                    productOpened: item.productItem,
-                  })
-                }
-              />
-            );
-          }}
-        />
-      </View>
-      <View style={styles.bottomView}>
-        <View style={styles.priceView}>
-          <Text style={styles.amountText}>{t('Total amount:')}</Text>
-          <Text style={styles.priceText}>R$ {addPrices.toString()},00</Text>
-        </View>
-        <View style={styles.buttonView}>
-          {addPrices > 0 ? (
-            <RedButton
-              children={t('Buy')}
-              onPress={() => {
-                if (ctx.isLogged) {
-                  navigation.navigate('checkout');
-                } else {
-                  navigation.navigate('checkoutNotlog');
-                }
+      {ctx.loading ? (
+        <ActivityIndicator size="large" color={Colors.red_500} />
+      ) : (
+        <>
+          <View>
+            <FlatList
+              style={styles.cartScroll}
+              data={Array.from(products.values())}
+              keyExtractor={({productItem}) => productItem.id.toString()}
+              renderItem={({item}) => {
+                return (
+                  <CartProductCard
+                    key={item.productItem.id}
+                    quantity={item.quantity}
+                    item={item.productItem}
+                    onTap={() =>
+                      navigation.navigate('details', {
+                        productOpened: item.productItem,
+                      })
+                    }
+                  />
+                );
               }}
             />
-          ) : (
-            <RedButton children={t('Buy')} disabled onPress={() => {}} />
-          )}
-        </View>
-      </View>
+          </View>
+          <View style={styles.bottomView}>
+            <View style={styles.priceView}>
+              <Text style={styles.amountText}>{t('Total amount:')}</Text>
+              <Text style={styles.priceText}>R$ {addPrices.toString()},00</Text>
+            </View>
+            <View style={styles.buttonView}>
+              {addPrices > 0 ? (
+                <RedButton
+                  children={t('Buy')}
+                  onPress={() => {
+                    if (ctx.isLogged) {
+                      navigation.navigate('checkout' as never);
+                    } else {
+                      navigation.navigate('checkoutNotlog');
+                    }
+                  }}
+                />
+              ) : (
+                <RedButton children={t('Buy')} disabled onPress={() => {}} />
+              )}
+            </View>
+          </View>
+        </>
+      )}
     </>
   );
 };
