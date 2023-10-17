@@ -1,12 +1,14 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {View} from 'react-native';
-import Home from './screens/Home';
+import StoreFlow from './routes/StoreFlow';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
 
 function App(): JSX.Element {
   return (
-    <View>
-      <Home />
-    </View>
+    <Provider store={store}>
+      <StoreFlow />
+    </Provider>
   );
 }
 

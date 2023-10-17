@@ -22,7 +22,7 @@ export default TextButton;
 
 const styles = StyleSheet.create({
   viewStyles: {
-    paddingVertical: Sizes.xl,
+    paddingVertical: Sizes.s,
     alignItems: 'center',
   },
   textStyles: {

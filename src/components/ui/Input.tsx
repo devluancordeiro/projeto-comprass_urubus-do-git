@@ -11,13 +11,16 @@ import {
 } from 'react-native';
 import {Colors, Sizes} from '../../constants/styles';
 
-interface AuthInputProps extends TextInputProps {
+export type validation = 'validating' | 'sucess' | 'error' | '';
+
+export interface InputProps extends TextInputProps {
   label: string;
-  value: string;
+  value: string | undefined;
   enableAutoCapitalize?: boolean;
   isPassword?: boolean;
-  validation?: 'validating' | 'sucess' | 'error';
+  validation?: validation;
   disabled?: boolean;
+  border?: boolean;
 }
 
 const passwordVisibilityIcons = {
@@ -30,20 +33,21 @@ const validationIcons = {
   error: require('../../assets/icons/ui/error.png'),
 };
 
-function AuthInput({
+function Input({
   label,
   value,
   isPassword,
   validation,
   enableAutoCapitalize,
   disabled,
+  border,
   ...props
-}: AuthInputProps): JSX.Element {
+}: InputProps): JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
-  const [isShowing, setIsShowing] = useState(!!isPassword);
+  const [isShowing, setIsShowing] = useState(isPassword);
 
   const labelConditionalStyle = {
-    top: !isFocused ? 22 : 11,
+    top: !isFocused && !value ? 22 : 11,
     fontSize: !isFocused ? Sizes.s : Sizes.xs,
   };
 
@@ -51,16 +55,23 @@ function AuthInput({
 
   return (
     <View
+      testID="auth-input-container"
       style={[
         styles.inputViewWrapper,
-        disabled && styles.inputViewWrapperDisabled,
         validation === 'sucess' && styles.inputViewWrapperSucess,
         validation === 'error' && styles.inputViewWrapperError,
+        border && styles.borderConditionalStyle,
+        disabled && styles.inputViewWrapperDisabled,
       ]}>
       <View style={styles.inputContainer}>
-        <Text style={[styles.inputLabel, labelConditionalStyle]}>{label}</Text>
+        <Text
+          testID="auth-input-label"
+          style={[styles.inputLabel, labelConditionalStyle]}>
+          {label}
+        </Text>
         <View>
           <TextInput
+            testID="auth-input-text"
             style={styles.input}
             value={value}
             onFocus={() => setIsFocused(true)}
@@ -72,32 +83,39 @@ function AuthInput({
           />
         </View>
       </View>
-
-      {!disabled &&
-        (isPassword ? (
-          <Pressable
-            style={styles.inputIconWrapper}
-            onPress={() => setIsShowing(!isShowing)}>
-            <Image
-              source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
-            />
-          </Pressable>
-        ) : (
-          validation && (
-            <View style={styles.inputIconWrapper}>
-              {validation === 'validating' ? (
-                <ActivityIndicator color={Colors.red_500} size={Sizes.xxl} />
-              ) : (
-                <Image source={validationIcons[validation]} />
-              )}
-            </View>
-          )
-        ))}
+      {isPassword ? (
+        <Pressable
+          testID="password-visibility-icon"
+          style={styles.inputIconWrapper}
+          onPress={() => setIsShowing(!isShowing)}>
+          <Image
+            testID="check-or-error"
+            source={passwordVisibilityIcons[isShowing ? 'hidden' : 'visible']}
+          />
+        </Pressable>
+      ) : (
+        validation && (
+          <View style={styles.inputIconWrapper}>
+            {validation === 'validating' ? (
+              <ActivityIndicator
+                testID="validating-icon"
+                color={Colors.red_500}
+                size={Sizes.xxl}
+              />
+            ) : (
+              <Image
+                testID={validation === 'sucess' ? 'sucess-icon' : 'error-icon'}
+                source={validationIcons[validation]}
+              />
+            )}
+          </View>
+        )
+      )}
     </View>
   );
 }
 
-export default AuthInput;
+export default Input;
 
 const styles = StyleSheet.create({
   inputViewWrapper: {
@@ -105,8 +123,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     paddingHorizontal: Sizes.m,
-    borderRadius: 16,
+    borderRadius: 12,
     elevation: 2,
+    marginVertical: Sizes.xxs,
   },
   inputViewWrapperSucess: {
     borderWidth: 2,
@@ -118,6 +137,10 @@ const styles = StyleSheet.create({
   },
   inputViewWrapperDisabled: {
     backgroundColor: Colors.gray_200,
+  },
+  borderConditionalStyle: {
+    borderWidth: 1,
+    borderColor: Colors.gray_200,
   },
   inputContainer: {
     flex: 1,

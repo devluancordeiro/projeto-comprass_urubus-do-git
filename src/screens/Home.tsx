@@ -1,50 +1,86 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
-  View,
-  ImageBackground,
-  StyleSheet,
   Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
   Text,
-  StatusBar,
+  View,
 } from 'react-native';
-import Products from '../components/api/Products';
+import ProductsList from '../components/shop/ProductsList';
+import SearchForProducts from '../components/shop/SearchForProducts';
+import AuthWelcome from '../components/auth/AuthWelcome';
+import {category, product} from '../constants/storeTypes';
+import {Colors, Sizes} from '../constants/styles';
+import {getCategories, getProductsByCategoryId} from '../utils/fetchProducts';
+import {AuthContext} from '../components/context/AuthContext';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const Home = () => {
+  const {t} = useTranslation();
+  const [categories, setCategories] = useState<category[]>([]);
+  const [products, setProducts] = useState<product[][]>([]);
+  const ctx = useContext(AuthContext);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const categoriesFetched = await getCategories();
+        setCategories(categoriesFetched);
+        for (const categoryFetched of categoriesFetched) {
+          if (categoryFetched.id <= 5) {
+            const productsFetched = await getProductsByCategoryId(
+              categoryFetched.id,
+            );
+            setProducts(prevProducts => [...prevProducts, productsFetched]);
+          }
+        }
+        ctx.isOppening(false);
+      } catch (error) {
+        ctx.isOppening(false);
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (ctx.oppening) {
+    return <LoadingOverlay />;
+  }
   return (
     <>
-      <StatusBar
-        backgroundColor={'transparent'}
-        translucent={true}
-        barStyle={'light-content'}
-      />
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         <ImageBackground
           source={require('../assets/images/background-compass.png')}
-          style={styles.background}>
-          <View style={styles.viewSearch}>
+          style={styles.headerBackground}>
+          <View style={styles.headerWrapper}>
             <Image
-              source={require('../assets/images/redDot.png')}
-              style={styles.redDot}
+              source={require('../assets/images/comprass-logo.png')}
+              style={styles.headerImage}
             />
-            <Image
-              source={require('../assets/images/search.png')}
-              style={styles.search}
-            />
+            <View style={styles.viewTextCart}>
+              <Text style={styles.text}>{t('Here you always win!')}</Text>
+              <Image
+                source={require('../assets/images/cart-icon.png')}
+                style={styles.imageCart}
+              />
+            </View>
           </View>
-          <Image
-            source={require('../assets/images/Comprass-logo1.png')}
-            style={styles.imageCompras}
-          />
-          <View style={styles.viewTextCart}>
-            <Text style={styles.text}>Aqui você sempre ganha!</Text>
-            <Image
-              source={require('../assets/images/cart-svgrepo-com1.png')}
-              style={styles.imageCart}
-            />
-          </View>
-          <Products />
         </ImageBackground>
-      </View>
+        <View style={styles.shoppingSection}>
+          {products.map((data, index) => (
+            <ProductsList
+              key={index}
+              data={data}
+              title={categories[index]?.name}
+            />
+          ))}
+        </View>
+      </ScrollView>
+      <AuthWelcome />
+      <SearchForProducts />
     </>
   );
 };
@@ -54,51 +90,38 @@ export default Home;
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
-  background: {
+  headerBackground: {
     width: '100%',
     height: 400,
-    marginBottom: 16,
   },
-  imageCompras: {
+  headerWrapper: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  headerImage: {
     alignSelf: 'center',
-    width: '70%',
-    height: 60,
-    marginTop: '41%',
-    marginBottom: '27%',
-    marginHorizontal: 56,
+    width: '75%',
+    resizeMode: 'contain',
+    marginTop: '33%',
+  },
+  viewTextCart: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
   },
   text: {
-    color: 'white',
-    fontSize: 18,
-    marginHorizontal: 16,
+    color: Colors.white,
+    fontSize: Sizes.m,
     fontFamily: 'OpenSans-SemiBold',
   },
   imageCart: {
     height: 46,
     width: 46,
   },
-  viewTextCart: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  viewSearch: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    top: 66,
-    right: 16,
-    position: 'absolute',
-  },
-  search: {
-    height: 26,
-    width: 26,
-    marginRight: 12,
-    marginBottom: 4,
-  },
-  redDot: {
-    position: 'absolute',
-    height: 46,
-    width: 46,
+  shoppingSection: {
+    marginVertical: 8,
   },
 });
