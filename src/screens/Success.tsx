@@ -2,7 +2,14 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {ImageBackground, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  ImageBackground,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  BackHandler,
+} from 'react-native';
 import RedButton from '../components/ui/RedButton';
 import {Colors, Sizes} from '../constants/styles';
 import {StoreFlowParamList} from '../routes/StoreFlow';
@@ -25,6 +32,19 @@ const Success = ({navigation, route}: SuccessProps) => {
       navigation.navigate('successBillet');
     }
   };
+
+  React.useEffect(() => {
+    const backAction = () => {
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <>
       <StatusBar

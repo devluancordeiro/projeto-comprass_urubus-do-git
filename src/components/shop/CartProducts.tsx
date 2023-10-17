@@ -1,17 +1,18 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, FlatList, View, Text} from 'react-native';
-import {getProductById} from '../../utils/fetchProducts';
-import {product} from '../../constants/storeTypes';
-import CartProductCard from './CartProductCard';
-import {useDispatch, useSelector} from 'react-redux';
-import type {RootState} from '../../redux/store';
-import RedButton from '../ui/RedButton';
-import {Colors} from '../../constants/styles';
-import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StoreFlowParamList} from '../../routes/StoreFlow';
+import {useTranslation} from 'react-i18next';
+import React, {useEffect, useState, useContext} from 'react';
+import {StyleSheet, FlatList, View, Text} from 'react-native';
+import {product} from '../../constants/storeTypes';
+import {useDispatch, useSelector} from 'react-redux';
+import {Colors} from '../../constants/styles';
 import {deleteItemCount} from '../../redux/counterSlice';
+import {setOrderSlice} from '../../redux/orderSlice';
+import type {RootState} from '../../redux/store';
+import {StoreFlowParamList} from '../../routes/StoreFlow';
+import {getProductById} from '../../utils/fetchProducts';
+import RedButton from '../ui/RedButton';
+import CartProductCard from './CartProductCard';
 import {AuthContext} from '../context/AuthContext';
 
 const CartProducts = () => {
@@ -73,7 +74,8 @@ const CartProducts = () => {
       total += price * quantity;
     });
     setAddPrices(total);
-  }, [products]);
+    dispatch(setOrderSlice(total));
+  }, [dispatch, products]);
 
   return (
     <>
@@ -109,7 +111,7 @@ const CartProducts = () => {
               children={t('Buy')}
               onPress={() => {
                 if (ctx.isLogged) {
-                  navigation.navigate('checkout', {orderPrice: addPrices});
+                  navigation.navigate('checkout', {completeAddress: {}});
                 } else {
                   navigation.navigate('checkoutNotlog');
                 }

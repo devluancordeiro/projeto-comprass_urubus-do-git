@@ -12,3 +12,11 @@ export interface category {
 }
 
 export type methods = 'Credit or debit card' | 'Pix' | 'Bank slip' | 'None';
+
+export interface address {
+  cep: string;
+  address: string;
+  city: string;
+  state: string;
+  fullName: string;
+}

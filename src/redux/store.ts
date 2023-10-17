@@ -1,19 +1,21 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {
-  persistReducer,
-  persistStore,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
 } from 'redux-persist';
 import counterReducer from './counterSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import orderReducer from './orderSlice';
 
 const rootReducer = combineReducers({
   counter: counterReducer,
+  price: orderReducer,
 });
 
 const persistConfig = {

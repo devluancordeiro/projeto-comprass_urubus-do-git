@@ -19,6 +19,8 @@ import {RouteProp} from '@react-navigation/native';
 import {methods} from '../constants/storeTypes';
 import Header from '../components/ui/Header';
 import Input, {validation} from '../components/ui/Input';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 type CheckoutProps = {
   navigation: StackNavigationProp<StoreFlowParamList, 'checkout'>;
@@ -27,7 +29,11 @@ type CheckoutProps = {
 
 function Checkout({navigation, route}: CheckoutProps) {
   const {t} = useTranslation();
-  const {orderPrice} = route.params;
+  var completeAddress;
+  if (route.params) {
+    const {addressFromRoute} = route.params;
+    completeAddress = addressFromRoute;
+  }
 
   const [paymentMethodImage, setPaymentMethodImage] = useState(null);
   const [methodPayment, setMethodPayment] = useState<methods>('None');
@@ -43,9 +49,10 @@ function Checkout({navigation, route}: CheckoutProps) {
   const [number, setNumber] = useState('');
   const [expire, setExpire] = useState('');
   const [cvv, setCvv] = useState('');
+
   const [numberStatus, setNumberStatus] = useState<validation>('');
   const [cvvStatus, setCvvStatus] = useState<validation>('');
-  const [addressText, setAddressText] = useState(false);
+  const orderPrice = useSelector((state: RootState) => state.price);
 
   const paymentMethodImages = {
     'Credit or debit card': require('../assets/images/mastercard.png'),
@@ -263,12 +270,15 @@ function Checkout({navigation, route}: CheckoutProps) {
             navigation.navigate('address');
           }}>
           <View>
-            {addressText ? (
+            {completeAddress ? (
               <View style={styles.addressViewText}>
-                <Text style={styles.fullName}>Jane Doe</Text>
-                <Text style={styles.addressText}>3 Newbridge Court</Text>
+                <Text style={styles.fullName}>{completeAddress.fullName}</Text>
                 <Text style={styles.addressText}>
-                  Chino Hills, CA 91709, United States
+                  {completeAddress.address}
+                </Text>
+                <Text style={styles.addressText}>
+                  {completeAddress.city}, {completeAddress.state}{' '}
+                  {completeAddress.cep}
                 </Text>
               </View>
             ) : (
@@ -318,7 +328,9 @@ function Checkout({navigation, route}: CheckoutProps) {
         <View style={styles.priceContainer}>
           <Text style={styles.textInfo}>{t('Order')}: </Text>
           <View style={styles.flexContainer}>
-            <Text style={styles.textPrice}>{orderPrice.toFixed(2)} R$ </Text>
+            <Text style={styles.textPrice}>
+              {(orderPrice || 0).toFixed(2)} R${' '}
+            </Text>
           </View>
         </View>
         <View style={styles.priceContainer}>
@@ -337,7 +349,9 @@ function Checkout({navigation, route}: CheckoutProps) {
         </View>
         <View style={styles.button}>
           <RedButton
-            disabled={methodPayment === 'None' || deliveryPrice <= 0}
+            disabled={
+              methodPayment === 'None' || !completeAddress || !deliveryPrice
+            }
             onPress={() => {
               navigation.navigate('success', {paymentMethod: methodPayment});
             }}>
