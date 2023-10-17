@@ -56,7 +56,6 @@ const Home = () => {
           source={require('../assets/images/background-compass.png')}
           style={styles.headerBackground}>
           <View style={styles.headerWrapper}>
-            <AuthWelcome />
             <Image
               source={require('../assets/images/comprass-logo.png')}
               style={styles.headerImage}
@@ -80,6 +79,7 @@ const Home = () => {
           ))}
         </View>
       </ScrollView>
+      <AuthWelcome />
       <SearchForProducts />
     </>
   );

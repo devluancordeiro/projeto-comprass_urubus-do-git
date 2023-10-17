@@ -111,7 +111,7 @@ const CartProducts = () => {
               children={t('Buy')}
               onPress={() => {
                 if (ctx.isLogged) {
-                  navigation.navigate('checkout', {completeAddress: {}});
+                  navigation.navigate('checkout');
                 } else {
                   navigation.navigate('checkoutNotlog');
                 }
