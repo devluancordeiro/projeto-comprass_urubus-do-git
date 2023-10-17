@@ -80,7 +80,7 @@ function AuthForm({
           <Text style={styles.text}>
             {t(
               'Enter your email and let us see if it exists for you to change your password',
-            )}{' '}
+            )}
           </Text>
         </View>
       )}

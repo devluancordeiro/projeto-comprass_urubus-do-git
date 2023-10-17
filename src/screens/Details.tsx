@@ -73,7 +73,9 @@ function Details({navigation, route}: DetailsProps): JSX.Element {
           <View style={styles.detailsCard}>
             <View style={styles.infoContainer}>
               <View style={styles.mainInfoWrapper}>
-                <Text style={styles.itemName}>{productOpened.title}</Text>
+                <Text style={styles.itemName} accessibilityHint="titleP">
+                  {productOpened.title}
+                </Text>
                 <Text style={styles.itemCategory}>
                   {productOpened.category.name}
                 </Text>
