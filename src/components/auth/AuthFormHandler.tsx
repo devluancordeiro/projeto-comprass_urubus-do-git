@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import AuthForm from './AuthForm';
 import {ImageBackground, StyleSheet, View} from 'react-native';
-import {AuthContext} from './AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 interface FormData {
   name?: string | undefined;
