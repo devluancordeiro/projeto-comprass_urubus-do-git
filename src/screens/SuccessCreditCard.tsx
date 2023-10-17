@@ -4,8 +4,16 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../routes/StoreFlow';
 
-const SuccessCC = () => {
+type SuccessCardProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'successCC'>;
+  route: RouteProp<StoreFlowParamList, 'successCC'>;
+};
+
+function SuccessCC({navigation}: SuccessCardProps) {
   const {t} = useTranslation();
   return (
     <>
@@ -27,14 +35,14 @@ const SuccessCC = () => {
           {t('Thank you for choosing our app')}!
         </Text>
         <View style={styles.button}>
-          <RedButton onPress={function (): void {}}>
+          <RedButton onPress={() => navigation.navigate('app')}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>
       </View>
     </>
   );
-};
+}
 
 export default SuccessCC;
 
