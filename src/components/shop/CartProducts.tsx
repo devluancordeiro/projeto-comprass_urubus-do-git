@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {StyleSheet, FlatList, View, Text} from 'react-native';
 import {getProductById} from '../../utils/fetchProducts';
 import {product} from '../../constants/storeTypes';
@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StoreFlowParamList} from '../../routes/StoreFlow';
 import {deleteItemCount} from '../../redux/counterSlice';
+import {AuthContext} from '../auth/AuthContext';
 
 const CartProducts = () => {
   const {t} = useTranslation();
@@ -22,6 +23,7 @@ const CartProducts = () => {
   );
   const dispatch = useDispatch();
   const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
+  const ctx = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -106,7 +108,11 @@ const CartProducts = () => {
             <RedButton
               children={t('Buy')}
               onPress={() => {
-                navigation.navigate('checkout', {orderPrice: addPrices});
+                if (ctx.isLogged) {
+                  navigation.navigate('checkout', {orderPrice: addPrices});
+                } else {
+                  navigation.navigate('checkoutNotlog');
+                }
               }}
             />
           ) : (
