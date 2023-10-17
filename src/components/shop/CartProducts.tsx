@@ -1,10 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useEffect, useState, useContext} from 'react';
+import {StyleSheet, FlatList, View, Text} from 'react-native';
 import {product} from '../../constants/storeTypes';
+import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../../constants/styles';
 import {deleteItemCount} from '../../redux/counterSlice';
 import {setOrderSlice} from '../../redux/orderSlice';
@@ -13,6 +13,7 @@ import {StoreFlowParamList} from '../../routes/StoreFlow';
 import {getProductById} from '../../utils/fetchProducts';
 import RedButton from '../ui/RedButton';
 import CartProductCard from './CartProductCard';
+import {AuthContext} from '../context/AuthContext';
 
 const CartProducts = () => {
   const {t} = useTranslation();
@@ -23,6 +24,7 @@ const CartProducts = () => {
   );
   const dispatch = useDispatch();
   const navigation = useNavigation<StackNavigationProp<StoreFlowParamList>>();
+  const ctx = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -108,7 +110,11 @@ const CartProducts = () => {
             <RedButton
               children={t('Buy')}
               onPress={() => {
-                navigation.navigate('checkout', {completeAddress: {}});
+                if (ctx.isLogged) {
+                  navigation.navigate('checkout', {completeAddress: {}});
+                } else {
+                  navigation.navigate('checkoutNotlog');
+                }
               }}
             />
           ) : (

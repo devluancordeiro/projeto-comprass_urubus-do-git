@@ -3,7 +3,7 @@ import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {Alert} from 'react-native';
 import {register} from '../utils/User';
 import {useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../components/auth/AuthContext';
+import {AuthContext} from '../components/context/AuthContext';
 
 export function SingUp() {
   interface FormData {

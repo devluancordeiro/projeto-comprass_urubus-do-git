@@ -7,7 +7,7 @@ import {Colors, Sizes} from '../../constants/styles';
 import Input from '../ui/Input';
 import RedButton from '../ui/RedButton';
 import TextButton from '../ui/TextButton';
-import {AuthContext} from './AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 interface AuthFormProps {
   isName?: boolean;
@@ -59,7 +59,7 @@ function AuthForm({
   }, [ctx, ctx.searching, errors.email]);
 
   return (
-    <View style={styles.viewStyle}>
+    <View style={styles.viewStyle} testID="auth-form">
       {type === 'login' ? (
         <Image
           style={styles.logo}
@@ -101,6 +101,7 @@ function AuthForm({
                 value ? (errors.name ? 'error' : 'sucess') : undefined
               }
               disabled={ctx.loading}
+              testID="NameInput"
             />
           )}
         />
@@ -121,6 +122,7 @@ function AuthForm({
               onChangeText={onChange}
               validation={value ? emailValidation : undefined}
               disabled={ctx.loading}
+              testID="EmailInput"
             />
           )}
         />
@@ -143,6 +145,7 @@ function AuthForm({
               validation={
                 value ? (errors.password ? 'error' : 'sucess') : undefined
               }
+              testID="PasswordInput"
             />
           )}
         />
@@ -169,13 +172,14 @@ function AuthForm({
                     : 'sucess'
                   : undefined
               }
+              testID="ConfirmPasswordInput"
             />
           )}
         />
       )}
       {errors.name && (
         <Text style={styles.errorText}>
-          {t('Your name is not valid, use only letters and numbers')}{' '}
+          {t('Your name is not valid, use only letters and numbers')}
         </Text>
       )}
       {errors.email && (
@@ -183,7 +187,7 @@ function AuthForm({
       )}
       {errors.password && (
         <Text style={styles.errorText}>
-          {t('Your password must be longer than 6 digits.')}{' '}
+          {t('Your password must be longer than 6 digits.')}
         </Text>
       )}
       {errors.confirmPassword && (
@@ -251,7 +255,7 @@ function AuthForm({
       )}
 
       {type === 'signup' && (
-        <View style={styles.buttons}>
+        <View style={styles.buttons} testID="signup">
           <RedButton
             onPress={handleSubmit(onSubmit)}
             disabled={

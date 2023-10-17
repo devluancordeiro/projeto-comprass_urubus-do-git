@@ -4,8 +4,16 @@ import {Colors} from '../constants/styles';
 import {Sizes} from '../constants/styles';
 import RedButton from '../components/ui/RedButton';
 import {useTranslation} from 'react-i18next';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StoreFlowParamList} from '../routes/StoreFlow';
 
-const SuccessPix = () => {
+type SuccessPixProps = {
+  navigation: StackNavigationProp<StoreFlowParamList, 'successPix'>;
+  route: RouteProp<StoreFlowParamList, 'successPix'>;
+};
+
+function SuccessPix({navigation}: SuccessPixProps) {
   const {t} = useTranslation();
   return (
     <>
@@ -27,14 +35,14 @@ const SuccessPix = () => {
           {t('then follow the steps sent by email')}.
         </Text>
         <View style={styles.button}>
-          <RedButton onPress={function (): void {}}>
+          <RedButton onPress={() => navigation.navigate('app')}>
             {t('CONTINUE SHOPPING')}
           </RedButton>
         </View>
       </View>
     </>
   );
-};
+}
 
 export default SuccessPix;
 

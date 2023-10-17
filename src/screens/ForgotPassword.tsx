@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import AuthFormHandler from '../components/auth/AuthFormHandler';
 import {resetPassword, search} from '../utils/User';
 import {Alert} from 'react-native';
-import {AuthContext} from '../components/auth/AuthContext';
+import {AuthContext} from '../components/context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 

@@ -14,13 +14,16 @@ import Details from '../screens/Details';
 import {address, methods, product} from '../constants/storeTypes';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import AuthContextProvider, {AuthContext} from '../components/auth/AuthContext';
+import AuthContextProvider, {
+  AuthContext,
+} from '../components/context/AuthContext';
 import Checkout from '../screens/Checkout';
 import Address from '../screens/Address';
 import Success from '../screens/Success';
 import SuccessPix from '../screens/SuccessPix';
 import SuccessBillet from '../screens/SuccessBillet';
 import SuccessCC from '../screens/SuccessCreditCard';
+import CheckoutNotLogged from '../screens/CheckoutNotLogged';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -128,6 +131,7 @@ export type StoreFlowParamList = {
   auth: undefined;
   details: {productOpened: product};
   checkout: {addressFromRoute: address};
+  checkoutNotlog: undefined;
   success: {paymentMethod: methods};
   address: undefined;
   load: undefined;
@@ -149,6 +153,7 @@ function StoreFlow() {
           <Stack.Screen name="auth" component={AuthFlow} />
           <Stack.Screen name="details" component={Details} />
           <Stack.Screen name="checkout" component={Checkout} />
+          <Stack.Screen name="checkoutNotlog" component={CheckoutNotLogged} />
           <Stack.Screen
             name="success"
             component={Success}

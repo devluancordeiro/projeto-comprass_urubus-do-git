@@ -18,7 +18,7 @@ import {StoreFlowParamList} from '../routes/StoreFlow';
 import {RouteProp} from '@react-navigation/native';
 import {methods} from '../constants/storeTypes';
 import Header from '../components/ui/Header';
-import Input from '../components/ui/Input';
+import Input, {validation} from '../components/ui/Input';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 
@@ -50,6 +50,8 @@ function Checkout({navigation, route}: CheckoutProps) {
   const [expire, setExpire] = useState('');
   const [cvv, setCvv] = useState('');
 
+  const [numberStatus, setNumberStatus] = useState<validation>('');
+  const [cvvStatus, setCvvStatus] = useState<validation>('');
   const orderPrice = useSelector((state: RootState) => state.price);
 
   const paymentMethodImages = {
@@ -155,6 +157,31 @@ function Checkout({navigation, route}: CheckoutProps) {
   };
 
   const modalCardHandler = () => {
+    useEffect(() => {
+      function validateNumberCard() {
+        if (number) {
+          const validaNumber = /^(\d{4}\s?){4}$/;
+          if (validaNumber.test(number)) {
+            setNumberStatus('sucess');
+          } else {
+            setNumberStatus('error');
+          }
+        }
+      }
+      function validateCVV() {
+        if (cvv) {
+          const validaCVV = /^[0-9]{3}$/;
+          if (validaCVV.test(cvv)) {
+            setCvvStatus('sucess');
+          } else {
+            setCvvStatus('error');
+          }
+        }
+      }
+      validateNumberCard();
+      validateCVV();
+    }, [number, cvv]);
+
     return (
       <Modal visible={openModal2} animationType="slide" transparent={true}>
         <Modal
@@ -178,12 +205,23 @@ function Checkout({navigation, route}: CheckoutProps) {
               onChangeText={text => setName(text)}
               border
             />
-            <Input
-              label="Card number"
-              value={number}
-              onChangeText={text => setNumber(text)}
-              border
-            />
+            <View>
+              <Input
+                label="Card number"
+                value={number}
+                validation={
+                  numberStatus === 'sucess' ? undefined : numberStatus
+                }
+                onChangeText={text => setNumber(text)}
+                border
+              />
+              {numberStatus === 'sucess' ? (
+                <Image
+                  source={require('../assets/images/mastercard.png')}
+                  style={styles.inputImage}
+                />
+              ) : null}
+            </View>
             <Input
               label="Expire date"
               value={expire}
@@ -193,6 +231,7 @@ function Checkout({navigation, route}: CheckoutProps) {
             <Input
               label="CVV"
               value={cvv}
+              validation={cvvStatus}
               onChangeText={text => setCvv(text)}
               border
             />
@@ -200,7 +239,13 @@ function Checkout({navigation, route}: CheckoutProps) {
           <View style={styles.buttonCard}>
             <RedButton
               children={'add card'}
-              disabled={!name || !number || !expire || !cvv}
+              disabled={
+                !(numberStatus === 'sucess') ||
+                !(cvvStatus === 'sucess') ||
+                !number ||
+                !expire ||
+                !cvv
+              }
               onPress={() => {
                 setOpenModal2(false);
                 handlePaymentMethodSelect('Credit or debit card');
@@ -326,17 +371,6 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     backgroundColor: Colors.white,
-  },
-
-  textCheckout: {
-    color: Colors.black,
-    fontSize: Sizes.l,
-    fontFamily: 'OpenSans-ExtraBold',
-    marginTop: 14,
-    marginBottom: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    justifyContent: 'center',
   },
 
   textBold: {
@@ -585,5 +619,13 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans-Regular',
     fontSize: 14,
     color: Colors.black,
+  },
+  inputImage: {
+    position: 'absolute',
+    height: 27,
+    width: 35,
+    alignSelf: 'flex-end',
+    top: '35%',
+    right: '5%',
   },
 });
